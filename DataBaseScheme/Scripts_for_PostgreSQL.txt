@@ -1,0 +1,375 @@
+-- MySQL Workbench Forward Engineering
+
+@OLD_UNIQUE_CHECKS:=@@UNIQUE_CHECKS, UNIQUE_CHECKS:=0;
+@OLD_FOREIGN_KEY_CHECKS:=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS:=0;
+@OLD_SQL_MODE:=@@SQL_MODE, SQL_MODE:='TRADITIONAL,ALLOW_INVALID_DATES';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `mydb` ;
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
+USE mydb ;
+
+-- -----------------------------------------------------
+-- Table `mydb`.`track`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS mydb.track ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`track` (
+  id INT NOT NULL,
+  title VARCHAR(1024) NULL,
+  artist VARCHAR(1024) NULL,
+  album VARCHAR(1024) NULL,
+  year INT NULL,
+  filename VARCHAR(1024) NOT NULL,
+  duration VARCHAR(45) NULL,
+  rating INT NULL,
+  PRIMARY KEY (id))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`genre`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS mydb.genre ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`genre` (
+  id INT NOT NULL,
+  name VARCHAR(45) NOT NULL,
+  PRIMARY KEY (id))
+ENGINE = InnoDB;
+
+CREATE UNIQUE INDEX `name_UNIQUE` ON `mydb`.`genre` (name ASC);
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`track_has_genre`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS mydb.track_has_genre ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`track_has_genre` (
+  track_id INT NOT NULL,
+  genre_id INT NOT NULL,
+  PRIMARY KEY (track_id, genre_id),
+  CONSTRAINT fk_track_has_genre_track
+    FOREIGN KEY (track_id)
+    REFERENCES `mydb`.`track` (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT fk_track_has_genre_genre1
+    FOREIGN KEY (genre_id)
+    REFERENCES `mydb`.`genre` (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_track_has_genre_genre1_idx` ON `mydb`.`track_has_genre` (genre_id ASC);
+
+CREATE INDEX `fk_track_has_genre_track_idx` ON `mydb`.`track_has_genre` (track_id ASC);
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`account_info`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS mydb.account_info ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`account_info` (
+  id INT NOT NULL,
+  firstname VARCHAR(45) NULL,
+  lastname VARCHAR(45) NULL,
+  nick VARCHAR(45) NULL,
+  birthday TIMESTAMP(0) NULL,
+  PRIMARY KEY (id))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`account`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS mydb.account ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`account` (
+  id INT NOT NULL,
+  email VARCHAR(45) NOT NULL,
+  password VARCHAR(45) NOT NULL,
+  account_info_id INT NOT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT fk_account_account_info1
+    FOREIGN KEY (account_info_id)
+    REFERENCES `mydb`.`account_info` (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_account_account_info1_idx` ON `mydb`.`account` (account_info_id ASC);
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`friends`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS mydb.friends ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`friends` (
+  account_id INT NOT NULL,
+  friend_id INT NOT NULL,
+  PRIMARY KEY (account_id, friend_id),
+  CONSTRAINT fk_account_info_has_account_info_account_info1
+    FOREIGN KEY (account_id)
+    REFERENCES `mydb`.`account_info` (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT fk_account_info_has_account_info_account_info2
+    FOREIGN KEY (friend_id)
+    REFERENCES `mydb`.`account_info` (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_account_info_has_account_info_account_info2_idx` ON `mydb`.`friends` (friend_id ASC);
+
+CREATE INDEX `fk_account_info_has_account_info_account_info1_idx` ON `mydb`.`friends` (account_id ASC);
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`mood`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS mydb.mood ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`mood` (
+  id INT NOT NULL,
+  name VARCHAR(45) NOT NULL,
+  PRIMARY KEY (id))
+ENGINE = InnoDB;
+
+CREATE UNIQUE INDEX `name_UNIQUE` ON `mydb`.`mood` (name ASC);
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`track_has_mood`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS mydb.track_has_mood ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`track_has_mood` (
+  track_id INT NOT NULL,
+  mood_id INT NOT NULL,
+  account_info_id INT NOT NULL,
+  PRIMARY KEY (track_id, mood_id, account_info_id),
+  CONSTRAINT fk_track_has_mood_track1
+    FOREIGN KEY (track_id)
+    REFERENCES `mydb`.`track` (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT fk_track_has_mood_mood1
+    FOREIGN KEY (mood_id)
+    REFERENCES `mydb`.`mood` (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT fk_track_has_mood_mood1
+    FOREIGN KEY (account_info_id)
+    REFERENCES `mydb`.`account_info` (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_track_has_mood_mood1_idx` ON `mydb`.`track_has_mood` (mood_id ASC);
+
+CREATE INDEX `fk_track_has_mood_track1_idx` ON `mydb`.`track_has_mood` (track_id ASC);
+
+CREATE INDEX `fk_track_has_mood_mood1_idx1` ON `mydb`.`track_has_mood` (account_info_id ASC);
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`tracklist`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS mydb.tracklist ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`tracklist` (
+  id INT NOT NULL,
+  name VARCHAR(45) NOT NULL,
+  date_create TIMESTAMP NULL,
+  account_info_id INT NOT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT fk_tracklist_account_info1
+    FOREIGN KEY (account_info_id)
+    REFERENCES `mydb`.`account_info` (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_tracklist_account_info1_idx` ON `mydb`.`tracklist` (account_info_id ASC);
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`tracklist_has_track`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS mydb.tracklist_has_track ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`tracklist_has_track` (
+  tracklist_id INT NOT NULL,
+  track_id INT NOT NULL,
+  PRIMARY KEY (tracklist_id, track_id),
+  CONSTRAINT fk_tracklist_has_track_tracklist1
+    FOREIGN KEY (tracklist_id)
+    REFERENCES `mydb`.`tracklist` (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT fk_tracklist_has_track_track1
+    FOREIGN KEY (track_id)
+    REFERENCES `mydb`.`track` (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_tracklist_has_track_track1_idx` ON `mydb`.`tracklist_has_track` (track_id ASC);
+
+CREATE INDEX `fk_tracklist_has_track_tracklist1_idx` ON `mydb`.`tracklist_has_track` (tracklist_id ASC);
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`message`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS mydb.message ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`message` (
+  id INT NOT NULL,
+  create TIMESTAMP NOT NULL,
+  text VARCHAR(1024) NOT NULL,
+  parent_id INT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT fk_message_message1
+    FOREIGN KEY (parent_id)
+    REFERENCES `mydb`.`message` (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_message_message1_idx` ON `mydb`.`message` (parent_id ASC);
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`account_info_has_message`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS mydb.account_info_has_message ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`account_info_has_message` (
+  account_info_id INT NOT NULL,
+  message_id INT NOT NULL,
+  PRIMARY KEY (account_info_id, message_id),
+  CONSTRAINT fk_account_info_has_message_account_info1
+    FOREIGN KEY (account_info_id)
+    REFERENCES `mydb`.`account_info` (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT fk_account_info_has_message_message1
+    FOREIGN KEY (message_id)
+    REFERENCES `mydb`.`message` (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_account_info_has_message_message1_idx` ON `mydb`.`account_info_has_message` (message_id ASC);
+
+CREATE INDEX `fk_account_info_has_message_account_info1_idx` ON `mydb`.`account_info_has_message` (account_info_id ASC);
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`rating`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS mydb.rating ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`rating` (
+  track_id INT NOT NULL,
+  account_info_id INT NOT NULL,
+  value VARCHAR(45) NULL,
+  PRIMARY KEY (track_id, account_info_id),
+  CONSTRAINT fk_rating_track1
+    FOREIGN KEY (track_id)
+    REFERENCES `mydb`.`track` (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT fk_rating_account_info1
+    FOREIGN KEY (account_info_id)
+    REFERENCES `mydb`.`account_info` (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_rating_track1_idx` ON `mydb`.`rating` (track_id ASC);
+
+CREATE INDEX `fk_rating_account_info1_idx` ON `mydb`.`rating` (account_info_id ASC);
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`comments`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS mydb.comments ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`comments` (
+  id INT NOT NULL,
+  track_id INT NOT NULL,
+  text VARCHAR(45) NULL,
+  parent_id INT NOT NULL,
+  order VARCHAR(45) NULL,
+  account_info_id INT NOT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT fk_comments_track1
+    FOREIGN KEY (track_id)
+    REFERENCES `mydb`.`track` (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT fk_comments_comments1
+    FOREIGN KEY (parent_id)
+    REFERENCES `mydb`.`comments` (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT fk_comments_account_info1
+    FOREIGN KEY (account_info_id)
+    REFERENCES `mydb`.`account_info` (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_comments_track1_idx` ON `mydb`.`comments` (track_id ASC);
+
+CREATE INDEX `fk_comments_comments1_idx` ON `mydb`.`comments` (parent_id ASC);
+
+CREATE INDEX `fk_comments_account_info1_idx` ON `mydb`.`comments` (account_info_id ASC);
+
+
+-- -----------------------------------------------------
+-- Table `mydb`.`more_track_info`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS mydb.more_track_info ;
+
+CREATE TABLE IF NOT EXISTS `mydb`.`more_track_info` (
+  id INT NOT NULL,
+  track_id INT NOT NULL,
+  text VARCHAR(45) NULL,
+  account_info_id INT NOT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT fk_more_track_info_track1
+    FOREIGN KEY (track_id)
+    REFERENCES `mydb`.`track` (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT fk_more_track_info_account_info1
+    FOREIGN KEY (account_info_id)
+    REFERENCES `mydb`.`account_info` (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+CREATE INDEX `fk_more_track_info_track1_idx` ON `mydb`.`more_track_info` (track_id ASC);
+
+CREATE INDEX `fk_more_track_info_account_info1_idx` ON `mydb`.`more_track_info` (account_info_id ASC);
+
+
+SQL_MODE:=@OLD_SQL_MODE;
+FOREIGN_KEY_CHECKS:=@OLD_FOREIGN_KEY_CHECKS;
+UNIQUE_CHECKS:=@OLD_UNIQUE_CHECKS;
+
