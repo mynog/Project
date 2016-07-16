@@ -1,0 +1,48 @@
+- hosts: all
+  gather_facts: no
+  tasks:
+  - name: Update cache
+    apt: update_cache=yes
+    become: yes
+  - name: Install packages
+    apt: name={{item}}
+    with_items:
+      - postgresql
+      - python-psycopg2
+    become: yes
+
+- hosts: all
+  sudo: yes
+  sudo_user: postgres
+  gather_facts: no
+  vars:
+    dbname: music_cloud
+    dbuser: viktor_kulygin
+    dbpassword: 123456
+    port: 5432
+  tasks:
+  - name: Copy Prostgres config (1 / 2)
+    copy: src=/vagrant/cm/postgresql_configuration/postgresql.conf dest=/etc/postgresql/9.3/main/postgresql.conf owner=postgres group=postgres
+    become: yes
+  - name: Copy Prostgres config (2 / 2)
+    copy: src=/vagrant/cm/postgresql_configuration/pg_hba.conf dest=/etc/postgresql/9.3/main/pg_hba.conf owner=postgres group=postgres
+    become: yes
+  - name: Restart Postgres service
+    service: name=postgresql state=restarted
+  - name: Create database
+    postgresql_db: name={{dbname}} port={{port}}
+    become: yes
+  - name: Ensure user has access to database
+    postgresql_user: db={{dbname}} name={{dbuser}} password={{dbpassword}} priv=ALL port={{port}}
+#  - name: Ensure user does not have unnecessary privilege
+#    postgresql_user: name={{dbuser}} role_attr_flags=NOSUPERUSER,NOCREATEDB
+  - name: Set psql user as usperuser
+    postgresql_user: name={{dbuser}} role_attr_flags=SUPERUSER port={{port}}
+  - name: Restart Postgres service
+    service: name=postgresql state=restarted
+    become: yes
+  - name: Build database schema
+    shell: "psql -d {{dbname}} -a -f /vagrant/DataBaseScheme/database_scheme.sql"
+  - name: Start Postgresql on boot
+    shell: "update-rc.d postgresql defaults"
+    become: yes
