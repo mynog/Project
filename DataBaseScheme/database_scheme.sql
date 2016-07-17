@@ -16,11 +16,11 @@ CREATE SCHEMA IF NOT EXISTS music_cloud DEFAULT CHARACTER SET utf8 ;
 USE music_cloud ;
 
 -- -----------------------------------------------------
--- Table `music_cloud`.`track`
+-- Table `track`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS music_cloud.track ;
+DROP TABLE IF EXISTS track ;
 
-CREATE TABLE IF NOT EXISTS music_cloud.track (
+CREATE TABLE IF NOT EXISTS track (
   id INT NOT NULL,
   title VARCHAR(1024) NULL,
   artist VARCHAR(1024) NULL,
@@ -34,51 +34,51 @@ CREATE TABLE IF NOT EXISTS music_cloud.track (
 
 
 -- -----------------------------------------------------
--- Table `music_cloud`.`genre`
+-- Table `genre`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS music_cloud.genre ;
+DROP TABLE IF EXISTS genre ;
 
-CREATE TABLE IF NOT EXISTS music_cloud.genre (
+CREATE TABLE IF NOT EXISTS genre (
   id INT NOT NULL,
   name VARCHAR(45) NOT NULL,
   PRIMARY KEY (id))
 ;
 
-CREATE UNIQUE INDEX name_UNIQUE ON music_cloud.genre (name ASC);
+CREATE UNIQUE INDEX name_UNIQUE ON genre (name ASC);
 
 
 -- -----------------------------------------------------
--- Table `music_cloud`.`track_has_genre`
+-- Table `track_has_genre`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS music_cloud.track_has_genre ;
+DROP TABLE IF EXISTS track_has_genre ;
 
-CREATE TABLE IF NOT EXISTS music_cloud.track_has_genre (
+CREATE TABLE IF NOT EXISTS track_has_genre (
   track_id INT NOT NULL,
   genre_id INT NOT NULL,
   PRIMARY KEY (track_id, genre_id),
   CONSTRAINT fk_track_has_genre_track
     FOREIGN KEY (track_id)
-    REFERENCES music_cloud.track (id)
+    REFERENCES track (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT fk_track_has_genre_genre1
     FOREIGN KEY (genre_id)
-    REFERENCES music_cloud.genre (id)
+    REFERENCES genre (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ;
 
-CREATE INDEX fk_track_has_genre_genre1_idx ON music_cloud.track_has_genre (genre_id ASC);
+CREATE INDEX fk_track_has_genre_genre1_idx ON track_has_genre (genre_id ASC);
 
-CREATE INDEX fk_track_has_genre_track_idx ON music_cloud.track_has_genre (track_id ASC);
+CREATE INDEX fk_track_has_genre_track_idx ON track_has_genre (track_id ASC);
 
 
 -- -----------------------------------------------------
--- Table `music_cloud`.`account_info`
+-- Table `account_info`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS music_cloud.account_info ;
+DROP TABLE IF EXISTS account_info ;
 
-CREATE TABLE IF NOT EXISTS music_cloud.account_info (
+CREATE TABLE IF NOT EXISTS account_info (
   id INT NOT NULL,
   firstname VARCHAR(45) NULL,
   lastname VARCHAR(45) NULL,
@@ -89,11 +89,11 @@ CREATE TABLE IF NOT EXISTS music_cloud.account_info (
 
 
 -- -----------------------------------------------------
--- Table `music_cloud`.`account`
+-- Table `account`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS music_cloud.account ;
+DROP TABLE IF EXISTS account ;
 
-CREATE TABLE IF NOT EXISTS music_cloud.account (
+CREATE TABLE IF NOT EXISTS account (
   id INT NOT NULL,
   email VARCHAR(45) NOT NULL,
   password VARCHAR(45) NOT NULL,
@@ -102,94 +102,94 @@ CREATE TABLE IF NOT EXISTS music_cloud.account (
   PRIMARY KEY (id),
   CONSTRAINT fk_account_account_info1
     FOREIGN KEY (account_info_id)
-    REFERENCES music_cloud.account_info (id)
+    REFERENCES account_info (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ;
 
-CREATE INDEX fk_account_account_info1_idx ON music_cloud.account (account_info_id ASC);
+CREATE INDEX fk_account_account_info1_idx ON account (account_info_id ASC);
 
 
 -- -----------------------------------------------------
--- Table `music_cloud`.`friends`
+-- Table `friends`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS music_cloud.friends ;
+DROP TABLE IF EXISTS friends ;
 
-CREATE TABLE IF NOT EXISTS music_cloud.friends (
+CREATE TABLE IF NOT EXISTS friends (
   account_id INT NOT NULL,
   friend_id INT NOT NULL,
   PRIMARY KEY (account_id, friend_id),
   CONSTRAINT fk_account_info_has_account_info_account_info1
     FOREIGN KEY (account_id)
-    REFERENCES music_cloud.account_info (id)
+    REFERENCES account_info (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT fk_account_info_has_account_info_account_info2
     FOREIGN KEY (friend_id)
-    REFERENCES music_cloud.account_info (id)
+    REFERENCES account_info (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ;
 
-CREATE INDEX fk_account_info_has_account_info_account_info2_idx ON music_cloud.friends (friend_id ASC);
+CREATE INDEX fk_account_info_has_account_info_account_info2_idx ON friends (friend_id ASC);
 
-CREATE INDEX fk_account_info_has_account_info_account_info1_idx ON music_cloud.friends (account_id ASC);
+CREATE INDEX fk_account_info_has_account_info_account_info1_idx ON friends (account_id ASC);
 
 
 -- -----------------------------------------------------
--- Table `music_cloud`.`mood`
+-- Table `mood`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS music_cloud.mood ;
+DROP TABLE IF EXISTS mood ;
 
-CREATE TABLE IF NOT EXISTS music_cloud.mood (
+CREATE TABLE IF NOT EXISTS mood (
   id INT NOT NULL,
   name VARCHAR(45) NOT NULL,
   PRIMARY KEY (id))
 ;
 
-CREATE UNIQUE INDEX name_UNIQUE ON music_cloud.mood (name ASC);
+CREATE UNIQUE INDEX name_UNIQUE ON mood (name ASC);
 
 
 -- -----------------------------------------------------
--- Table `music_cloud`.`track_has_mood`
+-- Table `track_has_mood`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS music_cloud.track_has_mood ;
+DROP TABLE IF EXISTS track_has_mood ;
 
-CREATE TABLE IF NOT EXISTS music_cloud.track_has_mood (
+CREATE TABLE IF NOT EXISTS track_has_mood (
   track_id INT NOT NULL,
   mood_id INT NOT NULL,
   account_info_id INT NOT NULL,
   PRIMARY KEY (track_id, mood_id, account_info_id),
   CONSTRAINT fk_track_has_mood_track1
     FOREIGN KEY (track_id)
-    REFERENCES music_cloud.track (id)
+    REFERENCES track (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT fk_track_has_mood_mood1
     FOREIGN KEY (mood_id)
-    REFERENCES music_cloud.mood (id)
+    REFERENCES mood (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT fk_track_has_mood_mood1
     FOREIGN KEY (account_info_id)
-    REFERENCES music_cloud.account_info (id)
+    REFERENCES account_info (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ;
 
-CREATE INDEX fk_track_has_mood_mood1_idx ON music_cloud.track_has_mood (mood_id ASC);
+CREATE INDEX fk_track_has_mood_mood1_idx ON track_has_mood (mood_id ASC);
 
-CREATE INDEX fk_track_has_mood_track1_idx ON music_cloud.track_has_mood (track_id ASC);
+CREATE INDEX fk_track_has_mood_track1_idx ON track_has_mood (track_id ASC);
 
-CREATE INDEX fk_track_has_mood_mood1_idx1 ON music_cloud.track_has_mood (account_info_id ASC);
+CREATE INDEX fk_track_has_mood_mood1_idx1 ON track_has_mood (account_info_id ASC);
 
 
 -- -----------------------------------------------------
--- Table `music_cloud`.`tracklist`
+-- Table `tracklist`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS music_cloud.tracklist ;
+DROP TABLE IF EXISTS tracklist ;
 
-CREATE TABLE IF NOT EXISTS music_cloud.tracklist (
+CREATE TABLE IF NOT EXISTS tracklist (
   id INT NOT NULL,
   name VARCHAR(45) NOT NULL,
   date_create TIMESTAMP(0) NULL,
@@ -197,46 +197,46 @@ CREATE TABLE IF NOT EXISTS music_cloud.tracklist (
   PRIMARY KEY (id),
   CONSTRAINT fk_tracklist_account_info1
     FOREIGN KEY (account_info_id)
-    REFERENCES music_cloud.account_info (id)
+    REFERENCES account_info (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ;
 
-CREATE INDEX fk_tracklist_account_info1_idx ON music_cloud.tracklist (account_info_id ASC);
+CREATE INDEX fk_tracklist_account_info1_idx ON tracklist (account_info_id ASC);
 
 
 -- -----------------------------------------------------
--- Table `music_cloud`.`tracklist_has_track`
+-- Table `tracklist_has_track`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS music_cloud.tracklist_has_track ;
+DROP TABLE IF EXISTS tracklist_has_track ;
 
-CREATE TABLE IF NOT EXISTS music_cloud.tracklist_has_track (
+CREATE TABLE IF NOT EXISTS tracklist_has_track (
   tracklist_id INT NOT NULL,
   track_id INT NOT NULL,
   PRIMARY KEY (tracklist_id, track_id),
   CONSTRAINT fk_tracklist_has_track_tracklist1
     FOREIGN KEY (tracklist_id)
-    REFERENCES music_cloud.tracklist (id)
+    REFERENCES tracklist (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT fk_tracklist_has_track_track1
     FOREIGN KEY (track_id)
-    REFERENCES music_cloud.track (id)
+    REFERENCES track (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ;
 
-CREATE INDEX fk_tracklist_has_track_track1_idx ON music_cloud.tracklist_has_track (track_id ASC);
+CREATE INDEX fk_tracklist_has_track_track1_idx ON tracklist_has_track (track_id ASC);
 
-CREATE INDEX fk_tracklist_has_track_tracklist1_idx ON music_cloud.tracklist_has_track (tracklist_id ASC);
+CREATE INDEX fk_tracklist_has_track_tracklist1_idx ON tracklist_has_track (tracklist_id ASC);
 
 
 -- -----------------------------------------------------
--- Table `music_cloud`.`message`
+-- Table `message`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS music_cloud.message ;
+DROP TABLE IF EXISTS message ;
 
-CREATE TABLE IF NOT EXISTS music_cloud.message (
+CREATE TABLE IF NOT EXISTS message (
   id INT NOT NULL,
   create TIMESTAMP(0) NOT NULL,
   text VARCHAR(1024) NOT NULL,
@@ -244,73 +244,73 @@ CREATE TABLE IF NOT EXISTS music_cloud.message (
   PRIMARY KEY (id),
   CONSTRAINT fk_message_message1
     FOREIGN KEY (parent_id)
-    REFERENCES music_cloud.message (id)
+    REFERENCES message (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ;
 
-CREATE INDEX fk_message_message1_idx ON music_cloud.message (parent_id ASC);
+CREATE INDEX fk_message_message1_idx ON message (parent_id ASC);
 
 
 -- -----------------------------------------------------
--- Table `music_cloud`.`account_info_has_message`
+-- Table `account_info_has_message`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS music_cloud.account_info_has_message ;
+DROP TABLE IF EXISTS account_info_has_message ;
 
-CREATE TABLE IF NOT EXISTS music_cloud.account_info_has_message (
+CREATE TABLE IF NOT EXISTS account_info_has_message (
   account_info_id INT NOT NULL,
   message_id INT NOT NULL,
   PRIMARY KEY (account_info_id, message_id),
   CONSTRAINT fk_account_info_has_message_account_info1
     FOREIGN KEY (account_info_id)
-    REFERENCES music_cloud.account_info (id)
+    REFERENCES account_info (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT fk_account_info_has_message_message1
     FOREIGN KEY (message_id)
-    REFERENCES music_cloud.message (id)
+    REFERENCES message (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ;
 
-CREATE INDEX fk_account_info_has_message_message1_idx ON music_cloud.account_info_has_message (message_id ASC);
+CREATE INDEX fk_account_info_has_message_message1_idx ON account_info_has_message (message_id ASC);
 
-CREATE INDEX fk_account_info_has_message_account_info1_idx ON music_cloud.account_info_has_message (account_info_id ASC);
+CREATE INDEX fk_account_info_has_message_account_info1_idx ON account_info_has_message (account_info_id ASC);
 
 
 -- -----------------------------------------------------
--- Table `music_cloud`.`rating`
+-- Table `rating`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS music_cloud.rating ;
+DROP TABLE IF EXISTS rating ;
 
-CREATE TABLE IF NOT EXISTS music_cloud.rating (
+CREATE TABLE IF NOT EXISTS rating (
   track_id INT NOT NULL,
   account_info_id INT NOT NULL,
   value VARCHAR(45) NULL,
   PRIMARY KEY (track_id, account_info_id),
   CONSTRAINT fk_rating_track1
     FOREIGN KEY (track_id)
-    REFERENCES music_cloud.track (id)
+    REFERENCES track (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT fk_rating_account_info1
     FOREIGN KEY (account_info_id)
-    REFERENCES music_cloud.account_info (id)
+    REFERENCES account_info (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ;
 
-CREATE INDEX fk_rating_track1_idx ON music_cloud.rating (track_id ASC);
+CREATE INDEX fk_rating_track1_idx ON rating (track_id ASC);
 
-CREATE INDEX fk_rating_account_info1_idx ON music_cloud.rating (account_info_id ASC);
+CREATE INDEX fk_rating_account_info1_idx ON rating (account_info_id ASC);
 
 
 -- -----------------------------------------------------
 -- Table `music_cloud`.`comments`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS music_cloud.comments ;
+DROP TABLE IF EXISTS comments ;
 
-CREATE TABLE IF NOT EXISTS music_cloud.comments (
+CREATE TABLE IF NOT EXISTS comments (
   id INT NOT NULL,
   track_id INT NOT NULL,
   text VARCHAR(45) NULL,
@@ -320,34 +320,34 @@ CREATE TABLE IF NOT EXISTS music_cloud.comments (
   PRIMARY KEY (id),
   CONSTRAINT fk_comments_track1
     FOREIGN KEY (track_id)
-    REFERENCES music_cloud.track (id)
+    REFERENCES track (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT fk_comments_comments1
     FOREIGN KEY (parent_id)
-    REFERENCES music_cloud.comments (id)
+    REFERENCES comments (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT fk_comments_account_info1
     FOREIGN KEY (account_info_id)
-    REFERENCES music_cloud.account_info (id)
+    REFERENCES account_info (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ;
 
-CREATE INDEX fk_comments_track1_idx ON music_cloud.comments (track_id ASC);
+CREATE INDEX fk_comments_track1_idx ON comments (track_id ASC);
 
-CREATE INDEX fk_comments_comments1_idx ON music_cloud.comments (parent_id ASC);
+CREATE INDEX fk_comments_comments1_idx ON comments (parent_id ASC);
 
-CREATE INDEX fk_comments_account_info1_idx ON music_cloud.comments (account_info_id ASC);
+CREATE INDEX fk_comments_account_info1_idx ON comments (account_info_id ASC);
 
 
 -- -----------------------------------------------------
--- Table `music_cloud`.`more_track_info`
+-- Table `more_track_info`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS music_cloud.more_track_info ;
+DROP TABLE IF EXISTS more_track_info ;
 
-CREATE TABLE IF NOT EXISTS music_cloud.more_track_info (
+CREATE TABLE IF NOT EXISTS more_track_info (
   id INT NOT NULL,
   track_id INT NOT NULL,
   text VARCHAR(45) NULL,
@@ -355,27 +355,27 @@ CREATE TABLE IF NOT EXISTS music_cloud.more_track_info (
   PRIMARY KEY (id),
   CONSTRAINT fk_more_track_info_track1
     FOREIGN KEY (track_id)
-    REFERENCES music_cloud.track (id)
+    REFERENCES track (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT fk_more_track_info_account_info1
     FOREIGN KEY (account_info_id)
-    REFERENCES music_cloud.account_info (id)
+    REFERENCES account_info (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ;
 
-CREATE INDEX fk_more_track_info_track1_idx ON music_cloud.more_track_info (track_id ASC);
+CREATE INDEX fk_more_track_info_track1_idx ON more_track_info (track_id ASC);
 
-CREATE INDEX fk_more_track_info_account_info1_idx ON music_cloud.more_track_info (account_info_id ASC);
+CREATE INDEX fk_more_track_info_account_info1_idx ON more_track_info (account_info_id ASC);
 
 
 -- -----------------------------------------------------
--- Table `music_cloud`.`account_role`
+-- Table `account_role`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS music_cloud.account_role ;
+DROP TABLE IF EXISTS account_role ;
 
-CREATE TABLE IF NOT EXISTS music_cloud.account_role (
+CREATE TABLE IF NOT EXISTS account_role (
   id INT NOT NULL,
   name VARCHAR(45) NOT NULL,
   PRIMARY KEY (id))
@@ -383,29 +383,29 @@ CREATE TABLE IF NOT EXISTS music_cloud.account_role (
 
 
 -- -----------------------------------------------------
--- Table `music_cloud`.`account_has_account_role`
+-- Table `account_has_account_role`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS music_cloud.account_has_account_role ;
+DROP TABLE IF EXISTS account_has_account_role ;
 
-CREATE TABLE IF NOT EXISTS music_cloud.account_has_account_role (
+CREATE TABLE IF NOT EXISTS account_has_account_role (
   account_id INT NOT NULL,
   account_role_id INT NOT NULL,
   PRIMARY KEY (account_id, account_role_id),
   CONSTRAINT fk_account_has_account_role_account1
     FOREIGN KEY (account_id)
-    REFERENCES music_cloud.account (id)
+    REFERENCES account (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT fk_account_has_account_role_account_role1
     FOREIGN KEY (account_role_id)
-    REFERENCES music_cloud.account_role (id)
+    REFERENCES account_role (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ;
 
-CREATE INDEX fk_account_has_account_role_account_role1_idx ON music_cloud.account_has_account_role (account_role_id ASC);
+CREATE INDEX fk_account_has_account_role_account_role1_idx ON account_has_account_role (account_role_id ASC);
 
-CREATE INDEX fk_account_has_account_role_account1_idx ON music_cloud.account_has_account_role (account_id ASC);
+CREATE INDEX fk_account_has_account_role_account1_idx ON account_has_account_role (account_id ASC);
 
 
 /* SET SQL_MODE=@OLD_SQL_MODE; */
