@@ -1,9 +1,3 @@
--- MySQL Workbench Forward Engineering
-
-/* SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0; */
-/* SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0; */
-/* SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES'; */
-
 -- -----------------------------------------------------
 -- Schema music_cloud
 -- -----------------------------------------------------
@@ -28,7 +22,7 @@ CREATE TABLE IF NOT EXISTS track (
   year INT NULL,
   filename VARCHAR(1024) NOT NULL,
   duration VARCHAR(45) NULL,
-  rating INT NULL,
+  rating DOUBLE PRECISION NULL,
   PRIMARY KEY (id))
 ;
 
@@ -98,7 +92,7 @@ CREATE TABLE IF NOT EXISTS account (
   email VARCHAR(45) NOT NULL,
   password VARCHAR(45) NOT NULL,
   account_info_id INT NOT NULL,
-  date_create TIMESTAMP(0) NULL,
+  date_create TIMESTAMP NOT NULL DEFAULT current_timestamp,
   PRIMARY KEY (id),
   CONSTRAINT fk_account_account_info1
     FOREIGN KEY (account_info_id)
@@ -170,7 +164,7 @@ CREATE TABLE IF NOT EXISTS track_has_mood (
     REFERENCES mood (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT fk_track_has_mood_mood1
+  CONSTRAINT fk_track_has_mood_account_info1
     FOREIGN KEY (account_info_id)
     REFERENCES account_info (id)
     ON DELETE NO ACTION
@@ -181,7 +175,7 @@ CREATE INDEX fk_track_has_mood_mood1_idx ON track_has_mood (mood_id ASC);
 
 CREATE INDEX fk_track_has_mood_track1_idx ON track_has_mood (track_id ASC);
 
-CREATE INDEX fk_track_has_mood_mood1_idx1 ON track_has_mood (account_info_id ASC);
+CREATE INDEX fk_track_has_mood_account_info1_idx ON track_has_mood (account_info_id ASC);
 
 
 -- -----------------------------------------------------
@@ -192,7 +186,7 @@ DROP TABLE IF EXISTS tracklist ;
 CREATE TABLE IF NOT EXISTS tracklist (
   id INT NOT NULL,
   name VARCHAR(45) NOT NULL,
-  date_create TIMESTAMP(0) NULL,
+  date_create TIMESTAMP NOT NULL DEFAULT current_timestamp,
   account_info_id INT NOT NULL,
   PRIMARY KEY (id),
   CONSTRAINT fk_tracklist_account_info1
@@ -238,7 +232,7 @@ DROP TABLE IF EXISTS message ;
 
 CREATE TABLE IF NOT EXISTS message (
   id INT NOT NULL,
-  create TIMESTAMP(0) NOT NULL,
+  create_message TIMESTAMP NOT NULL DEFAULT current_timestamp,
   text VARCHAR(1024) NOT NULL,
   parent_id INT NULL,
   PRIMARY KEY (id),
@@ -286,7 +280,7 @@ DROP TABLE IF EXISTS rating ;
 CREATE TABLE IF NOT EXISTS rating (
   track_id INT NOT NULL,
   account_info_id INT NOT NULL,
-  value VARCHAR(45) NULL,
+  value INT NULL,
   PRIMARY KEY (track_id, account_info_id),
   CONSTRAINT fk_rating_track1
     FOREIGN KEY (track_id)
@@ -315,7 +309,7 @@ CREATE TABLE IF NOT EXISTS comments (
   track_id INT NOT NULL,
   text VARCHAR(45) NULL,
   parent_id INT NOT NULL,
-  order VARCHAR(45) NULL,
+  order_comments INT NULL,
   account_info_id INT NOT NULL,
   PRIMARY KEY (id),
   CONSTRAINT fk_comments_track1
@@ -406,9 +400,3 @@ CREATE TABLE IF NOT EXISTS account_has_account_role (
 CREATE INDEX fk_account_has_account_role_account_role1_idx ON account_has_account_role (account_role_id ASC);
 
 CREATE INDEX fk_account_has_account_role_account1_idx ON account_has_account_role (account_id ASC);
-
-
-/* SET SQL_MODE=@OLD_SQL_MODE; */
-/* SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS; */
-/* SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS; */
-
