@@ -29,6 +29,9 @@
     become: yes
   - name: Restart Postgres service
     service: name=postgresql state=restarted
+  - name: Drop database
+    postgresql_db: name={{dbname}} port={{port}} state=absent
+    become: yes
   - name: Create database
     postgresql_db: name={{dbname}} port={{port}}
     become: yes
