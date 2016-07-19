@@ -233,43 +233,24 @@ CREATE TABLE IF NOT EXISTS message (
   id INT NOT NULL,
   create_message TIMESTAMP NOT NULL DEFAULT current_timestamp,
   text VARCHAR(1024) NOT NULL,
-  parent_id INT NULL,
+  sender_one_id INT NULL,
+  sender_two_id INT NULL,
   PRIMARY KEY (id),
-  CONSTRAINT fk_message_message1
-    FOREIGN KEY (parent_id)
-    REFERENCES message (id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-;
-
-CREATE INDEX fk_message_message1_idx ON message (parent_id ASC);
-
-
--- -----------------------------------------------------
--- Table `account_info_has_message`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS account_info_has_message ;
-
-CREATE TABLE IF NOT EXISTS account_info_has_message (
-  account_info_id INT NOT NULL,
-  message_id INT NOT NULL,
-  PRIMARY KEY (account_info_id, message_id),
-  CONSTRAINT fk_account_info_has_message_account_info1
-    FOREIGN KEY (account_info_id)
+  CONSTRAINT fk_message_1
+    FOREIGN KEY (sender_one_id)
     REFERENCES account_info (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT fk_account_info_has_message_message1
-    FOREIGN KEY (message_id)
-    REFERENCES message (id)
+  CONSTRAINT fk_message_2
+    FOREIGN KEY (sender_two_id)
+    REFERENCES account_info (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ;
 
-CREATE INDEX fk_account_info_has_message_message1_idx ON account_info_has_message (message_id ASC);
+CREATE INDEX fk_message_1_idx ON message (sender_one_id ASC);
 
-CREATE INDEX fk_account_info_has_message_account_info1_idx ON account_info_has_message (account_info_id ASC);
-
+CREATE INDEX fk_message_2_idx ON message (sender_two_id ASC);
 
 -- -----------------------------------------------------
 -- Table `rating`
