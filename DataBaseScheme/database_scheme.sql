@@ -260,7 +260,7 @@ DROP TABLE IF EXISTS rating ;
 CREATE TABLE IF NOT EXISTS rating (
   track_id INT NOT NULL,
   account_info_id INT NOT NULL,
-  value INT NULL,
+  rating_value INT NULL,
   PRIMARY KEY (track_id, account_info_id),
   CONSTRAINT fk_rating_track1
     FOREIGN KEY (track_id)
@@ -380,3 +380,20 @@ CREATE TABLE IF NOT EXISTS account_has_account_role (
 CREATE INDEX fk_account_has_account_role_account_role1_idx ON account_has_account_role (account_role_id ASC);
 
 CREATE INDEX fk_account_has_account_role_account1_idx ON account_has_account_role (account_id ASC);
+
+-- -----------------------------------------------------
+-- Table Create trigger update_rating
+-- -----------------------------------------------------
+
+CREATE FUNCTION update_rating() RETURNS TRIGGER AS $update_rating$
+BEGIN
+  UPDATE track SET rating = (SELECT round(avg(rating_value),2)
+                             FROM rating,track
+                             WHERE track.id=NEW.track_id
+                             AND rating.track_id=track.id)
+                             WHERE track.id=NEW.track_id;
+  RETURN NEW;
+END;
+$update_rating$ LANGUAGE plpgsql;
+CREATE TRIGGER update_rating AFTER INSERT OR UPDATE ON rating
+FOR EACH ROW EXECUTE PROCEDURE update_rating();

@@ -233,10 +233,12 @@ VALUES
 -- -----------------------------------------------------
 
 INSERT INTO rating
-  (track_id, account_info_id, value)
+  (track_id, account_info_id, rating_value)
     VALUES
       (8,1,10),
-      (10,1,0);
+      (10,2,1),
+      (8,1,9),
+      (10,2,0);
 
 -- -----------------------------------------------------
 -- Add data for more_track_info
