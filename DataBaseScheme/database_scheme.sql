@@ -387,11 +387,11 @@ CREATE INDEX fk_account_has_account_role_account1_idx ON account_has_account_rol
 
 CREATE FUNCTION update_rating() RETURNS TRIGGER AS $update_rating$
 BEGIN
-  UPDATE track SET rating = (SELECT round(avg(rating_value),2)
-                             FROM rating,track
-                             WHERE track.id=NEW.track_id
-                             AND rating.track_id=track.id)
-                             WHERE track.id=NEW.track_id;
+  UPDATE track SET rating = (SELECT round(avg(rating_value), 2)
+                  	    FROM rating, track
+                            WHERE track.id = rating.track_id 
+                            AND rating.track_id = NEW.track_id)
+                            WHERE track.id = NEW.track_id;
   RETURN NEW;
 END;
 $update_rating$ LANGUAGE plpgsql;
