@@ -9,6 +9,9 @@
     with_items:
       - postgresql
       - python-psycopg2
+      - default-jre
+      - default-jdk
+      - maven
     become: yes
 
 - hosts: all
