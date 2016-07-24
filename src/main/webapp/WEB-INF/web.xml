@@ -29,7 +29,7 @@
 	-->
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:spring/business-config.xml, classpath:spring/tools-config.xml</param-value>
+        <param-value>classpath:spring/business-config.xml</param-value>
     </context-param>
 
     <listener>
@@ -40,7 +40,7 @@
 - Servlet that dispatches request to registered handlers (Controller implementations).
 -->
     <servlet>
-        <servlet-name>musicloud</servlet-name>
+        <servlet-name>music-cloud</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>
@@ -50,7 +50,7 @@
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>musicloud</servlet-name>
+        <servlet-name>music-cloud</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
