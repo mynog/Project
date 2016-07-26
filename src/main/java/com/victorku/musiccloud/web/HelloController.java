@@ -1,12 +1,15 @@
 package com.victorku.musiccloud.web;
 
+import com.victorku.musiccloud.model.Hello;
 import com.victorku.musiccloud.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
+@RequestMapping("/test")
 public class HelloController {
 
     private final TestService testService;
@@ -17,8 +20,7 @@ public class HelloController {
     }
 
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
-    public String sayHello() {
+    public Hello sayHello() {
         return testService.hello();
     }
-
 }

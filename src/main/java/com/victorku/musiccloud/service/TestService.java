@@ -1,5 +1,7 @@
 package com.victorku.musiccloud.service;
 
+import com.victorku.musiccloud.model.Hello;
+
 public interface TestService {
-    String hello();
+    Hello hello();
 }
