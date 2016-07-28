@@ -141,13 +141,13 @@
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:datasources:2.0">
             <datasources>
-                <datasource jta="true" jndi-name="java:/address-list-ds" pool-name="address-list-ds" enabled="true" use-ccm="true">
-                    <connection-url>jdbc:postgresql://localhost:5433/addressbook</connection-url>
+                <datasource jta="true" jndi-name="java:/music-cloud-ds" pool-name="music-cloud-ds" enabled="true" use-ccm="true">
+                    <connection-url>jdbc:postgresql://localhost:5432/music_cloud</connection-url>
                     <driver-class>org.postgresql.Driver</driver-class>
                     <driver>postgresql</driver>
                     <security>
-                        <user-name>addressbook</user-name>
-                        <password>passwd</password>
+                        <user-name>viktor_kulygin</user-name>
+                        <password>123456</password>
                     </security>
                     <validation>
                         <validate-on-match>false</validate-on-match>
@@ -196,7 +196,7 @@
                     <managed-scheduled-executor-service name="default" jndi-name="java:jboss/ee/concurrency/scheduler/default" context-service="default" hung-task-threshold="60000" core-threads="2" keepalive-time="3000"/>
                 </managed-scheduled-executor-services>
             </concurrent>
-            <default-bindings context-service="java:jboss/ee/concurrency/context/default" datasource="java:/address-list-ds" jms-connection-factory="java:jboss/DefaultJMSConnectionFactory" managed-executor-service="java:jboss/ee/concurrency/executor/default" managed-scheduled-executor-service="java:jboss/ee/concurrency/scheduler/default" managed-thread-factory="java:jboss/ee/concurrency/factory/default"/>
+            <default-bindings context-service="java:jboss/ee/concurrency/context/default" datasource="java:/music-cloud-ds" jms-connection-factory="java:jboss/DefaultJMSConnectionFactory" managed-executor-service="java:jboss/ee/concurrency/executor/default" managed-scheduled-executor-service="java:jboss/ee/concurrency/scheduler/default" managed-thread-factory="java:jboss/ee/concurrency/factory/default"/>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:ejb3:2.0">
             <session-bean>

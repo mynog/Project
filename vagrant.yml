@@ -24,10 +24,10 @@
     dbpassword: 123456
     port: 5432
   tasks:
-  - name: Copy Prostgres config (1 / 2)
+  - name: Copy Postgres config (1 / 2)
     copy: src=/vagrant/cm/postgresql_configuration/postgresql.conf dest=/etc/postgresql/9.3/main/postgresql.conf owner=postgres group=postgres
     become: yes
-  - name: Copy Prostgres config (2 / 2)
+  - name: Copy Postgres config (2 / 2)
     copy: src=/vagrant/cm/postgresql_configuration/pg_hba.conf dest=/etc/postgresql/9.3/main/pg_hba.conf owner=postgres group=postgres
     become: yes
   - name: Restart Postgres service
