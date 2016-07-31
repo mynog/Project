@@ -39,6 +39,11 @@ public class Account {
             inverseJoinColumns = @JoinColumn(name = "account_role_id"))
     private Set<AccountRole> accountRoles;
 
+    public Account(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
+
     public Set<AccountRole> getAccountRoles() {
         return accountRoles;
     }
