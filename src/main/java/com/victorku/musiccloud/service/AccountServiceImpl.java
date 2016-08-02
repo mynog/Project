@@ -7,11 +7,12 @@ import com.victorku.musiccloud.model.Account;
 import com.victorku.musiccloud.model.AccountRole;
 import com.victorku.musiccloud.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
 
-
+@Service
 public class AccountServiceImpl implements AccountService {
 
     @Autowired

@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/account")
 public class AccountController {
 
-    @Autowired private AccountService accountService;
+    @Autowired
+    private AccountService accountService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Account getAccount(@PathVariable("id") Long accountId){
