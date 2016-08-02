@@ -35,6 +35,9 @@ public class AccountInfo {
     @DateTimeFormat(pattern = "yyyy/MM/dd")
     private LocalDate birthday;
 
+    public AccountInfo() {
+    }
+
     public Integer getId() {
         return id;
     }

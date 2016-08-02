@@ -6,7 +6,6 @@ import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -38,6 +37,9 @@ public class Account {
             joinColumns = @JoinColumn(name = "account_id"),
             inverseJoinColumns = @JoinColumn(name = "account_role_id"))
     private Set<AccountRole> accountRoles;
+
+    public Account() {
+    }
 
     public Account(String email, String password) {
         this.email = email;

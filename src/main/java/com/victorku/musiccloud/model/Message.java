@@ -27,6 +27,9 @@ public class Message {
     @DateTimeFormat(pattern = "yyyy/MM/dd")
     private LocalDate createMessage;
 
+    public Message() {
+    }
+
     public Integer getId() {
         return id;
     }
