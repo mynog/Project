@@ -7,9 +7,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 
-/**
- * Created by kyluginvv on 28.07.16.
- */
 @Entity
 @Table(name = "account_info")
 public class AccountInfo {

@@ -4,11 +4,7 @@ import com.victorku.musiccloud.exceptions.AccountHasExist;
 import com.victorku.musiccloud.exceptions.AccountIsNotExists;
 import com.victorku.musiccloud.exceptions.AccountRoleIsNotExists;
 import com.victorku.musiccloud.model.Account;
-import com.victorku.musiccloud.model.AccountRole;
 
-/**
- * Created by kyluginvv on 28.07.16.
- */
 public interface AccountService {
 
     Account getAccountById(Long id);

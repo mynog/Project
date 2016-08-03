@@ -8,9 +8,6 @@ import com.victorku.musiccloud.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * Created by kyluginvv on 28.07.16.
- */
 @RestController
 @RequestMapping("/account")
 public class AccountController {

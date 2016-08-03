@@ -5,9 +5,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 import java.util.Set;
 
-/**
- * Created by kyluginvv on 28.07.16.
- */
 @Entity
 @Table(name = "account_role")
 public class AccountRole {

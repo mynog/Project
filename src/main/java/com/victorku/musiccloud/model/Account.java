@@ -8,9 +8,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.util.Set;
 
-/**
- * Created by kyluginvv on 28.07.16.
- */
 @Entity
 @Table(name = "account")
 public class Account {
