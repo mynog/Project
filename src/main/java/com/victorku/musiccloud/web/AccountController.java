@@ -22,8 +22,12 @@ public class AccountController {
     private AccountService accountService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public AccountScreenData getAccount(@PathVariable("id") Long accountId){
-        return convert(accountService.getAccountById(accountId));
+    public AccountScreenData getAccount(@PathVariable("id") Long accountId) throws AccountIsNotExists {
+        Account account = accountService.getAccountById(accountId);
+        if (account == null) {
+            throw new AccountIsNotExists("Invalid id",null);
+        }
+        return convert(account);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
@@ -42,7 +46,7 @@ public class AccountController {
     }
 
     private AccountScreenData convert (Account dbModel) {
-        AccountScreenData jsonModel = new AccountScreenData(dbModel.getId(), dbModel.getEmail(), "*****"); // todo: add create date
+        AccountScreenData jsonModel = new AccountScreenData(dbModel.getId(), dbModel.getEmail(), "******"); // todo: add create date
         Set<RoleScreenData> jsonRoles = new HashSet<>();
         for (AccountRole role : dbModel.getAccountRoles()) {
             jsonRoles.add(new RoleScreenData(role.getId(), role.getName()));

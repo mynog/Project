@@ -1,5 +1,15 @@
 package com.victorku.musiccloud.exceptions;
 
+import org.springframework.validation.Errors;
 
-public class AccountIsNotExists extends Throwable {
+@SuppressWarnings("serial")
+public class AccountIsNotExists extends RuntimeException {
+    private Errors errors;
+
+    public AccountIsNotExists(String message, Errors errors) {
+        super(message);
+        this.errors = errors;
+    }
+
+    public Errors getErrors() { return errors; }
 }
