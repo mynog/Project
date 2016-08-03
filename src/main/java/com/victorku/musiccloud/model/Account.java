@@ -6,12 +6,8 @@ import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Set;
 
-/**
- * Created by kyluginvv on 28.07.16.
- */
 @Entity
 @Table(name = "account")
 public class Account {
@@ -33,11 +29,14 @@ public class Account {
     @DateTimeFormat(pattern = "yyyy/MM/dd")
     private LocalDate dateCreate;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "account_has_account_role",
             joinColumns = @JoinColumn(name = "account_id"),
             inverseJoinColumns = @JoinColumn(name = "account_role_id"))
     private Set<AccountRole> accountRoles;
+
+    public Account() {
+    }
 
     public Account(String email, String password) {
         this.email = email;
