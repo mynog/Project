@@ -29,7 +29,7 @@ public class AccountServiceImpl implements AccountService {
     public void deleteAccountById(Long id) throws AccountIsNotExists {
 
         if(!accountRepository.exists(id)){
-            throw new AccountIsNotExists("Invalid id",null);
+            throw new AccountIsNotExists();
         }
         accountRepository.delete(id);
 
@@ -49,7 +49,7 @@ public class AccountServiceImpl implements AccountService {
     public Account addAccountRole(Long accountId, Long roleId) throws AccountIsNotExists, AccountRoleIsNotExists {
         Account account = getAccountById(accountId);
         if (account == null) {
-            throw new AccountIsNotExists("Invalid id",null);
+            throw new AccountIsNotExists();
         }
         AccountRole accountRole = accountRoleService.getRoleById(roleId);
         if (accountRole == null) {

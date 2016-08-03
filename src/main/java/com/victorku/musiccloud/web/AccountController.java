@@ -25,7 +25,7 @@ public class AccountController {
     public AccountScreenData getAccount(@PathVariable("id") Long accountId) throws AccountIsNotExists {
         Account account = accountService.getAccountById(accountId);
         if (account == null) {
-            throw new AccountIsNotExists("Invalid id",null);
+            throw new AccountIsNotExists();
         }
         return convert(account);
     }

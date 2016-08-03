@@ -1,15 +1,8 @@
 package com.victorku.musiccloud.exceptions;
 
-import org.springframework.validation.Errors;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-@SuppressWarnings("serial")
-public class AccountIsNotExists extends RuntimeException {
-    private Errors errors;
-
-    public AccountIsNotExists(String message, Errors errors) {
-        super(message);
-        this.errors = errors;
-    }
-
-    public Errors getErrors() { return errors; }
+@ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "This account is not found in the system")
+public class AccountIsNotExists extends Exception {
 }
