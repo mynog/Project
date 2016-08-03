@@ -36,13 +36,13 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/",method = RequestMethod.PUT)
-    public Account createAccount(@RequestParam("email") String email,@RequestParam("password") String password) throws AccountHasExist {
-        return accountService.createAccount(email,password);
+    public AccountScreenData createAccount(@RequestParam("email") String email,@RequestParam("password") String password) throws AccountHasExist {
+        return convert(accountService.createAccount(email,password));
     }
 
     @RequestMapping(value ="/{id}",method = RequestMethod.PUT)
-    public Account addAccountRole(@PathVariable("id") Long accountId,@RequestParam("roleId") Long roleId) throws AccountIsNotExists, AccountRoleIsNotExists {
-        return accountService.addAccountRole(accountId, roleId);
+    public AccountScreenData addAccountRole(@PathVariable("id") Long accountId,@RequestParam("roleId") Long roleId) throws AccountIsNotExists, AccountRoleIsNotExists {
+        return convert(accountService.addAccountRole(accountId, roleId));
     }
 
     private AccountScreenData convert (Account dbModel) {
