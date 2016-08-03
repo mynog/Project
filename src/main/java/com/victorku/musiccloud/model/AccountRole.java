@@ -3,12 +3,8 @@ package com.victorku.musiccloud.model;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
-/**
- * Created by kyluginvv on 28.07.16.
- */
 @Entity
 @Table(name = "account_role")
 public class AccountRole {
@@ -21,13 +17,14 @@ public class AccountRole {
     @NotEmpty
     private String name;
 
-
-
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "account_has_account_role",
             joinColumns = @JoinColumn(name = "account_role_id"),
             inverseJoinColumns = @JoinColumn(name = "account_id"))
     private Set<Account> accounts;
+
+    public AccountRole() {
+    }
 
     public Set<Account> getAccounts() {
         return accounts;

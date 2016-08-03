@@ -8,14 +8,12 @@ import com.victorku.musiccloud.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * Created by kyluginvv on 28.07.16.
- */
 @RestController
 @RequestMapping("/account")
 public class AccountController {
 
-    @Autowired private AccountService accountService;
+    @Autowired
+    private AccountService accountService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Account getAccount(@PathVariable("id") Long accountId){

@@ -7,9 +7,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 
-/**
- * Created by kyluginvv on 28.07.16.
- */
 @Entity
 @Table(name = "account_info")
 public class AccountInfo {
@@ -34,6 +31,9 @@ public class AccountInfo {
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
     @DateTimeFormat(pattern = "yyyy/MM/dd")
     private LocalDate birthday;
+
+    public AccountInfo() {
+    }
 
     public Integer getId() {
         return id;
