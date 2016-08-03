@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS mood (
   PRIMARY KEY (id))
 ;
 
-CREATE UNIQUE INDEX name_UNIQUE ON mood (name ASC);
+CREATE UNIQUE INDEX name_UNIQUE2 ON mood (name ASC);
 
 
 -- -----------------------------------------------------
