@@ -32,7 +32,7 @@ public class Account {
     @DateTimeFormat(pattern = "yyyy/MM/dd")
     private LocalDate dateCreate;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "account_has_account_role",
             joinColumns = @JoinColumn(name = "account_id"),
             inverseJoinColumns = @JoinColumn(name = "account_role_id"))

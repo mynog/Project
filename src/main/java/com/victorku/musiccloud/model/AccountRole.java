@@ -20,7 +20,7 @@ public class AccountRole {
     @NotEmpty
     private String name;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "account_has_account_role",
             joinColumns = @JoinColumn(name = "account_role_id"),
             inverseJoinColumns = @JoinColumn(name = "account_id"))
