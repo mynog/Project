@@ -21,7 +21,7 @@ public class Message {
 
     @Column(name = "create_message")
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-    @DateTimeFormat(pattern = "yyyy/MM/dd")
+    @DateTimeFormat(pattern = "yyyy/dd/mm")
     private LocalDate createMessage;
 
     public Message() {

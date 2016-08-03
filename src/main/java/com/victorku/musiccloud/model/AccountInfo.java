@@ -29,7 +29,7 @@ public class AccountInfo {
 
     @Column(name = "birthday")
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
-    @DateTimeFormat(pattern = "yyyy/MM/dd")
+    @DateTimeFormat(pattern = "yyyy/dd/mm")
     private LocalDate birthday;
 
     public AccountInfo() {
