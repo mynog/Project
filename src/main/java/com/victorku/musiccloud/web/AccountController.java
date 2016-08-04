@@ -7,8 +7,12 @@ import com.victorku.musiccloud.model.Account;
 import com.victorku.musiccloud.model.AccountRole;
 import com.victorku.musiccloud.service.AccountService;
 import com.victorku.musiccloud.web.model.AccountScreenData;
+import com.victorku.musiccloud.web.model.ErrorResponseBody;
 import com.victorku.musiccloud.web.model.RoleScreenData;
+import com.victorku.musiccloud.web.util.HeaderUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -22,12 +26,17 @@ public class AccountController {
     private AccountService accountService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public AccountScreenData getAccount(@PathVariable("id") Long accountId) throws AccountIsNotExists {
+    public ResponseEntity<?> getAccount(@PathVariable("id") Long accountId) {
         Account account = accountService.getAccountById(accountId);
         if (account == null) {
-            throw new AccountIsNotExists();
+            return ResponseEntity.badRequest()
+                    .headers(HeaderUtil.createFailureAlert("accountManagement", "accountIdIsNotFound", "Account ID is not found in DB"))
+                    .body(new ErrorResponseBody(1, "Account ID is not found in DB"));
+//              todo: или просто
+//            return new ResponseEntity<>(new ErrorResponseBody(1, "Account ID is not found in DB"),
+//                    HttpStatus.NOT_FOUND);
         }
-        return convert(account);
+        return new ResponseEntity<>(convert(account), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
@@ -35,17 +44,17 @@ public class AccountController {
         accountService.deleteAccountById(accountId);
     }
 
-    @RequestMapping(value = "/",method = RequestMethod.PUT)
-    public AccountScreenData createAccount(@RequestParam("email") String email,@RequestParam("password") String password) throws AccountHasExist {
-        return convert(accountService.createAccount(email,password));
+    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    public AccountScreenData createAccount(@RequestParam("email") String email, @RequestParam("password") String password) throws AccountHasExist {
+        return convert(accountService.createAccount(email, password));
     }
 
-    @RequestMapping(value ="/{id}",method = RequestMethod.PUT)
-    public AccountScreenData addAccountRole(@PathVariable("id") Long accountId,@RequestParam("roleId") Long roleId) throws AccountIsNotExists, AccountRoleIsNotExists {
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public AccountScreenData addAccountRole(@PathVariable("id") Long accountId, @RequestParam("roleId") Long roleId) throws AccountIsNotExists, AccountRoleIsNotExists {
         return convert(accountService.addAccountRole(accountId, roleId));
     }
 
-    private AccountScreenData convert (Account dbModel) {
+    private AccountScreenData convert(Account dbModel) {
         AccountScreenData jsonModel = new AccountScreenData(dbModel.getId(), dbModel.getEmail(), "******"); // todo: add create date
         Set<RoleScreenData> jsonRoles = new HashSet<>();
         for (AccountRole role : dbModel.getAccountRoles()) {
