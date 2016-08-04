@@ -33,6 +33,7 @@ public class AccountInfo {
     private LocalDate birthday;
 
     // todo 2VK: add Account ref
+    // todo 2VK: add Freinds ref
 
     public AccountInfo() {
     }
