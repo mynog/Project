@@ -32,6 +32,8 @@ public class AccountInfo {
     @DateTimeFormat(pattern = "yyyy/dd/mm")
     private LocalDate birthday;
 
+    // todo 2VK: add Account ref
+
     public AccountInfo() {
     }
 
