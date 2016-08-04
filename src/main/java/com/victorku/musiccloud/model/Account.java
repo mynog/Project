@@ -35,6 +35,9 @@ public class Account {
             inverseJoinColumns = @JoinColumn(name = "account_role_id"))
     private Set<AccountRole> accountRoles;
 
+    // todo 2VK: add AccountInfo ref
+    // todo 2VK: add Freinds ref
+
     public Account() {
     }
 
