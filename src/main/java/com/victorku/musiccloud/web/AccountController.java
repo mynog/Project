@@ -6,9 +6,9 @@ import com.victorku.musiccloud.exceptions.AccountRoleIsNotExists;
 import com.victorku.musiccloud.model.Account;
 import com.victorku.musiccloud.model.AccountRole;
 import com.victorku.musiccloud.service.AccountService;
-import com.victorku.musiccloud.web.model.AccountScreenData;
+import com.victorku.musiccloud.web.model.AccountDTO;
 import com.victorku.musiccloud.web.model.ErrorResponseBody;
-import com.victorku.musiccloud.web.model.RoleScreenData;
+import com.victorku.musiccloud.web.model.RoleDTO;
 import com.victorku.musiccloud.web.util.HeaderUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,20 +45,20 @@ public class AccountController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.PUT)
-    public AccountScreenData createAccount(@RequestParam("email") String email, @RequestParam("password") String password) throws AccountHasExist {
+    public AccountDTO createAccount(@RequestParam("email") String email, @RequestParam("password") String password) throws AccountHasExist {
         return convert(accountService.createAccount(email, password));
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public AccountScreenData addAccountRole(@PathVariable("id") Long accountId, @RequestParam("roleId") Long roleId) throws AccountIsNotExists, AccountRoleIsNotExists {
+    public AccountDTO addAccountRole(@PathVariable("id") Long accountId, @RequestParam("roleId") Long roleId) throws AccountIsNotExists, AccountRoleIsNotExists {
         return convert(accountService.addAccountRole(accountId, roleId));
     }
 
-    private AccountScreenData convert(Account dbModel) {
-        AccountScreenData jsonModel = new AccountScreenData(dbModel.getId(), dbModel.getEmail(), "******"); // todo: add create date
-        Set<RoleScreenData> jsonRoles = new HashSet<>();
+    private AccountDTO convert(Account dbModel) {
+        AccountDTO jsonModel = new AccountDTO(dbModel.getId(), dbModel.getEmail(), "******"); // todo: add create date
+        Set<RoleDTO> jsonRoles = new HashSet<>();
         for (AccountRole role : dbModel.getAccountRoles()) {
-            jsonRoles.add(new RoleScreenData(role.getId(), role.getName()));
+            jsonRoles.add(new RoleDTO(role.getId(), role.getName()));
         }
         jsonModel.setRoles(jsonRoles);
         return jsonModel;

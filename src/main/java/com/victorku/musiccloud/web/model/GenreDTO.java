@@ -1,14 +1,14 @@
 package com.victorku.musiccloud.web.model;
 
-public class GenreScreenData {
+public class GenreDTO {
 
     private Long id;
     private String name;
 
-    public GenreScreenData() {
+    public GenreDTO() {
     }
 
-    public GenreScreenData(Long id, String name) {
+    public GenreDTO(Long id, String name) {
         this.id = id;
         this.name = name;
     }

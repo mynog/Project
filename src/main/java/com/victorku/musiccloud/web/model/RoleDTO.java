@@ -1,13 +1,13 @@
 package com.victorku.musiccloud.web.model;
 
-public class RoleScreenData {
+public class RoleDTO {
     private Long id;
     private String name;
 
-    public RoleScreenData() {
+    public RoleDTO() {
     }
 
-    public RoleScreenData(Long id, String name) {
+    public RoleDTO(Long id, String name) {
         this.id = id;
         this.name = name;
     }

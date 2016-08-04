@@ -1,14 +1,14 @@
 package com.victorku.musiccloud.web.model;
 
-public class MoreTrackInfoScreenData {
+public class MoreTrackInfoDTO {
 
     private Long id;
     private String text;
 
-    public MoreTrackInfoScreenData() {
+    public MoreTrackInfoDTO() {
     }
 
-    public MoreTrackInfoScreenData(Long id, String text) {
+    public MoreTrackInfoDTO(Long id, String text) {
         this.id = id;
         this.text = text;
     }

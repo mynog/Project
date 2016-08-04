@@ -2,7 +2,7 @@ package com.victorku.musiccloud.web.model;
 
 import org.joda.time.LocalDate;
 
-public class AccountInfoScreenData {
+public class AccountInfoDTO {
 
     private Long id;
     private String firstName;
@@ -10,10 +10,10 @@ public class AccountInfoScreenData {
     private String nick;
     private LocalDate birthday;
 
-    public AccountInfoScreenData() {
+    public AccountInfoDTO() {
     }
 
-    public AccountInfoScreenData(Long id, String firstName, String lastName, String nick, LocalDate birthday) {
+    public AccountInfoDTO(Long id, String firstName, String lastName, String nick, LocalDate birthday) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;

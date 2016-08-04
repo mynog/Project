@@ -2,16 +2,17 @@ package com.victorku.musiccloud.web.model;
 
 import java.util.Set;
 
-public class AccountScreenData {
+public class AccountDTO {
     private Long id;
     private String email;
     private String password;
-    private Set<RoleScreenData> roles;
+    private Set<RoleDTO> roles;
+    private Long accountInfoId;
 
-    public AccountScreenData() {
+    public AccountDTO() {
     }
 
-    public AccountScreenData(Long id, String email, String password) {
+    public AccountDTO(Long id, String email, String password) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -41,11 +42,19 @@ public class AccountScreenData {
         this.password = password;
     }
 
-    public Set<RoleScreenData> getRoles() {
+    public Set<RoleDTO> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<RoleScreenData> roles) {
+    public void setRoles(Set<RoleDTO> roles) {
         this.roles = roles;
+    }
+
+    public Long getAccountInfoId() {
+        return accountInfoId;
+    }
+
+    public void setAccountInfoId(Long accountInfoId) {
+        this.accountInfoId = accountInfoId;
     }
 }

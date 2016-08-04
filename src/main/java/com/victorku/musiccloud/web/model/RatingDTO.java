@@ -1,14 +1,14 @@
 package com.victorku.musiccloud.web.model;
 
-public class RatingScreenData {
+public class RatingDTO {
 
     private Long id;
     private Integer ratingValue;
 
-    public RatingScreenData() {
+    public RatingDTO() {
     }
 
-    public RatingScreenData(Long id, Integer ratingValue) {
+    public RatingDTO(Long id, Integer ratingValue) {
         this.id = id;
         this.ratingValue = ratingValue;
     }

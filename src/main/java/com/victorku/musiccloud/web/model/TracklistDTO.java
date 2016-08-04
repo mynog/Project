@@ -2,16 +2,16 @@ package com.victorku.musiccloud.web.model;
 
 import org.joda.time.LocalDate;
 
-public class TracklistScreenData {
+public class TracklistDTO {
 
     private Long id;
     private String name;
     private LocalDate dateCreate;
 
-    public TracklistScreenData() {
+    public TracklistDTO() {
     }
 
-    public TracklistScreenData(Long id, String name, LocalDate dateCreate) {
+    public TracklistDTO(Long id, String name, LocalDate dateCreate) {
         this.id = id;
         this.name = name;
         this.dateCreate = dateCreate;

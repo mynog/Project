@@ -1,14 +1,14 @@
 package com.victorku.musiccloud.web.model;
 
-public class MoodScreenData {
+public class MoodDTO {
 
     private Long id;
     private String name;
 
-    public MoodScreenData() {
+    public MoodDTO() {
     }
 
-    public MoodScreenData(Long id, String name) {
+    public MoodDTO(Long id, String name) {
         this.id = id;
         this.name = name;
     }

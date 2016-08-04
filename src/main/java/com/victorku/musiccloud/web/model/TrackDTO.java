@@ -1,6 +1,6 @@
 package com.victorku.musiccloud.web.model;
 
-public class TrackScreenData {
+public class TrackDTO {
 
     private Long id;
     private String title;
@@ -11,10 +11,10 @@ public class TrackScreenData {
     private String duration;
     private Double rating;
 
-    public TrackScreenData() {
+    public TrackDTO() {
     }
 
-    public TrackScreenData(Long id, String title, String artist, String album, Integer year, String filename, String duration, Double rating) {
+    public TrackDTO(Long id, String title, String artist, String album, Integer year, String filename, String duration, Double rating) {
         this.id = id;
         this.title = title;
         this.artist = artist;

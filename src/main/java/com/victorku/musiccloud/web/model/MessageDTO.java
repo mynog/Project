@@ -2,16 +2,16 @@ package com.victorku.musiccloud.web.model;
 
 import org.joda.time.LocalDate;
 
-public class MessageScreenData {
+public class MessageDTO {
 
     private Long id;
     private String nick;
     private LocalDate createMessage;
 
-    public MessageScreenData() {
+    public MessageDTO() {
     }
 
-    public MessageScreenData(Long id, String nick, LocalDate createMessage) {
+    public MessageDTO(Long id, String nick, LocalDate createMessage) {
         this.id = id;
         this.nick = nick;
         this.createMessage = createMessage;

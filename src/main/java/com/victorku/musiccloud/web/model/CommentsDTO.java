@@ -1,16 +1,16 @@
 package com.victorku.musiccloud.web.model;
 
 
-public class CommentsScreenData {
+public class CommentsDTO {
 
     private Long id;
     private String text;
     private Long orderComments;
 
-    public CommentsScreenData() {
+    public CommentsDTO() {
     }
 
-    public CommentsScreenData(Long id, String text, Long orderComments) {
+    public CommentsDTO(Long id, String text, Long orderComments) {
         this.id = id;
         this.text = text;
         this.orderComments = orderComments;
