@@ -6,6 +6,8 @@ import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "account_info")
@@ -31,6 +33,11 @@ public class AccountInfo {
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
     @DateTimeFormat(pattern = "yyyy/dd/mm")
     private LocalDate birthday;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "friends", joinColumns = @JoinColumn(name = "account_id"))
+    @MapKeyColumn(name = "friend_id")
+    private Set<AccountInfo> friends = new HashSet<>();
 
     // todo 2VK: add Account ref
     // todo 2VK: add Freinds ref
@@ -77,4 +84,8 @@ public class AccountInfo {
     public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
+
+    public Set<AccountInfo> getFriends() { return friends; }
+
+    public void setFriends(Set<AccountInfo> friends) { this.friends = friends; }
 }
