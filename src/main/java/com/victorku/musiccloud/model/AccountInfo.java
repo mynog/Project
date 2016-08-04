@@ -34,10 +34,12 @@ public class AccountInfo {
     @DateTimeFormat(pattern = "yyyy/dd/mm")
     private LocalDate birthday;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "friends", joinColumns = @JoinColumn(name = "account_id"))
-    @MapKeyColumn(name = "friend_id")
+    @ManyToMany
+    @JoinTable(name = "friends",
+            joinColumns = @JoinColumn(name = "account_id"),
+            inverseJoinColumns = @JoinColumn(name = "friend_id"))
     private Set<AccountInfo> friends = new HashSet<>();
+
 
     // todo 2VK: add Account ref
     // todo 2VK: add Freinds ref
