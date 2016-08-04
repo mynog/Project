@@ -6,16 +6,19 @@ public class AccountDTO {
     private Long id;
     private String email;
     private String password;
+    private DateDTO dateCreate;
     private Set<RoleDTO> roles;
     private Long accountInfoId;
 
     public AccountDTO() {
     }
 
-    public AccountDTO(Long id, String email, String password) {
+    public AccountDTO(Long id, String email, String password, DateDTO dateCreate, Long accountInfoId) {
         this.id = id;
         this.email = email;
         this.password = password;
+        this.dateCreate = dateCreate;
+        this.accountInfoId = accountInfoId;
     }
 
     public Long getId() {
@@ -48,6 +51,14 @@ public class AccountDTO {
 
     public void setRoles(Set<RoleDTO> roles) {
         this.roles = roles;
+    }
+
+    public DateDTO getDateCreate() {
+        return dateCreate;
+    }
+
+    public void setDateCreate(DateDTO dateCreate) {
+        this.dateCreate = dateCreate;
     }
 
     public Long getAccountInfoId() {

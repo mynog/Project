@@ -35,6 +35,10 @@ public class Account {
             inverseJoinColumns = @JoinColumn(name = "account_role_id"))
     private Set<AccountRole> accountRoles;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="account_info_id")
+    private AccountInfo accountInfo;
+
     // todo 2VK: add AccountInfo ref
 
     public Account() {
@@ -83,5 +87,13 @@ public class Account {
 
     public void setDateCreate(LocalDate dateCreate) {
         this.dateCreate = dateCreate;
+    }
+
+    public AccountInfo getAccountInfo() {
+        return accountInfo;
+    }
+
+    public void setAccountInfo(AccountInfo accountInfo) {
+        this.accountInfo = accountInfo;
     }
 }

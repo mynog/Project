@@ -3,6 +3,7 @@ package com.victorku.musiccloud.web;
 import com.victorku.musiccloud.model.AccountInfo;
 import com.victorku.musiccloud.service.AccountInfoService;
 import com.victorku.musiccloud.web.model.AccountInfoDTO;
+import com.victorku.musiccloud.web.model.DateDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,7 @@ public class AccountInfoController {
     }
 
     private AccountInfoDTO convert (AccountInfo dbModel) {
-        AccountInfoDTO jsonModel = new AccountInfoDTO(dbModel.getId(), dbModel.getFirstName(), dbModel.getLastName(), dbModel.getNick(), dbModel.getBirthday());
+        AccountInfoDTO jsonModel = new AccountInfoDTO(dbModel.getId(), dbModel.getFirstName(), dbModel.getLastName(), dbModel.getNick(), new DateDTO(dbModel.getBirthday()));
         return jsonModel;
     }
 }

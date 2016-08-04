@@ -1,19 +1,17 @@
 package com.victorku.musiccloud.web.model;
 
-import org.joda.time.LocalDate;
-
 public class AccountInfoDTO {
 
     private Long id;
     private String firstName;
     private String lastName;
     private String nick;
-    private LocalDate birthday;
+    private DateDTO birthday;
 
     public AccountInfoDTO() {
     }
 
-    public AccountInfoDTO(Long id, String firstName, String lastName, String nick, LocalDate birthday) {
+    public AccountInfoDTO(Long id, String firstName, String lastName, String nick, DateDTO birthday) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -53,11 +51,11 @@ public class AccountInfoDTO {
         this.nick = nick;
     }
 
-    public LocalDate getBirthday() {
+    public DateDTO getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(LocalDate birthday) {
+    public void setBirthday(DateDTO birthday) {
         this.birthday = birthday;
     }
 }

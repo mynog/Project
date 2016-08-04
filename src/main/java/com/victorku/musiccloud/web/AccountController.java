@@ -7,6 +7,7 @@ import com.victorku.musiccloud.model.Account;
 import com.victorku.musiccloud.model.AccountRole;
 import com.victorku.musiccloud.service.AccountService;
 import com.victorku.musiccloud.web.model.AccountDTO;
+import com.victorku.musiccloud.web.model.DateDTO;
 import com.victorku.musiccloud.web.model.ErrorResponseBody;
 import com.victorku.musiccloud.web.model.RoleDTO;
 import com.victorku.musiccloud.web.util.HeaderUtil;
@@ -55,11 +56,12 @@ public class AccountController {
     }
 
     private AccountDTO convert(Account dbModel) {
-        AccountDTO jsonModel = new AccountDTO(dbModel.getId(), dbModel.getEmail(), "******"); // todo: add create date
+        AccountDTO jsonModel = new AccountDTO(dbModel.getId(), dbModel.getEmail(), "******",new DateDTO(dbModel.getDateCreate()),dbModel.getAccountInfo().getId());
         Set<RoleDTO> jsonRoles = new HashSet<>();
         for (AccountRole role : dbModel.getAccountRoles()) {
             jsonRoles.add(new RoleDTO(role.getId(), role.getName()));
         }
+
         jsonModel.setRoles(jsonRoles);
         return jsonModel;
     }
