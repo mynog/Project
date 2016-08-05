@@ -23,7 +23,7 @@ public class Message {
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
     @DateTimeFormat(pattern = "yyyy/dd/mm")
     private LocalDate createMessage;
-
+    /*
     @ManyToOne
     @JoinColumn(name = "sender_one_id")
     private AccountInfo senderOne;
@@ -31,7 +31,7 @@ public class Message {
     @ManyToOne
     @JoinColumn(name = "sender_two_id")
     private AccountInfo senderTwo;
-
+    */
     public Message() {
     }
 
@@ -58,7 +58,7 @@ public class Message {
     public void setCreateMessage(LocalDate createMessage) {
         this.createMessage = createMessage;
     }
-
+    /*
     public AccountInfo getSenderOne() {return senderOne;}
 
     public void setSenderOne(AccountInfo senderOne) {this.senderOne = senderOne;}
@@ -66,4 +66,5 @@ public class Message {
     public AccountInfo getSenderTwo() {return senderTwo;}
 
     public void setSenderTwo(AccountInfo senderTwo) {this.senderTwo = senderTwo;}
+    */
 }

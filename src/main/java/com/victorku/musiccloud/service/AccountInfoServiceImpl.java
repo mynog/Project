@@ -15,4 +15,11 @@ public class AccountInfoServiceImpl implements AccountInfoService{
     public AccountInfo getAccountInfoById(Long id) {
         return accountInfoRepository.findOne(id);
     }
+
+    @Override
+    public void deleteAccountInfoById(Long id) {
+        accountInfoRepository.delete(id);
+    }
+
+
 }

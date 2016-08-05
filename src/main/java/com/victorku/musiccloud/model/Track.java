@@ -3,6 +3,7 @@ package com.victorku.musiccloud.model;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "tracklist")
@@ -39,6 +40,26 @@ public class Track {
     @Column(name = "rating")
     @NotEmpty
     private Double rating;
+    /*
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "account_info_has_track",
+           joinColumns = @JoinColumn(name = "track_id"),
+           inverseJoinColumns = @JoinColumn(name = "account_info_id"))
+    private Set<AccountInfo> accountInfos;
+
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "tracklist_has_track",
+            joinColumns = @JoinColumn(name = "track_id"),
+            inverseJoinColumns = @JoinColumn(name = "tracklist_id"))
+    private Set<Tracklist> tracklists;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "track_has_genre",
+            joinColumns = @JoinColumn(name = "track_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id"))
+    private Set<Genre> genres;
+    */
 
     public Track() {
     }
@@ -106,4 +127,26 @@ public class Track {
     public void setRating(Double rating) {
         this.rating = rating;
     }
+    /*
+    public Set<AccountInfo> getAccountInfos() {return accountInfos;}
+
+    public void setAccountInfos(Set<AccountInfo> accountInfos) {this.accountInfos = accountInfos;}
+
+    public Set<Tracklist> getTracklists() {
+        return tracklists;
+    }
+
+    public void setTracklists(Set<Tracklist> tracklists) {
+        this.tracklists = tracklists;
+    }
+
+    public Set<Genre> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(Set<Genre> genres) {
+        this.genres = genres;
+    }
+    */
 }
+

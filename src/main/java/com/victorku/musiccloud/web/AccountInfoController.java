@@ -22,6 +22,11 @@ public class AccountInfoController {
         return convert(accountInfoService.getAccountInfoById(accountInfoId));
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public void deleteAccountInfo(@PathVariable("id") Long accountInfoId){
+        accountInfoService.deleteAccountInfoById(accountInfoId);
+    }
+
     private AccountInfoDTO convert (AccountInfo dbModel) {
         AccountInfoDTO jsonModel = new AccountInfoDTO(dbModel.getId(), dbModel.getFirstName(), dbModel.getLastName(), dbModel.getNick(), new DateDTO(dbModel.getBirthday()));
         return jsonModel;

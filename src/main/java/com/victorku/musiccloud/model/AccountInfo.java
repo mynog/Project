@@ -39,10 +39,16 @@ public class AccountInfo {
             joinColumns = @JoinColumn(name = "account_id"),
             inverseJoinColumns = @JoinColumn(name = "friend_id"))
     private Set<AccountInfo> friends = new HashSet<>();
+    /*
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(name = "account_info_has_track",
+    joinColumns = @JoinColumn(name = "account_info_id"),
+            inverseJoinColumns = @JoinColumn(name = "track_id"))
+    private Set<Track> tracks;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "account_info")
     private Set<Message> messages = new HashSet<>();
-
+    */
     // todo 2VK: add Account ref
     // todo 2VK: add Freinds ref
 
@@ -92,8 +98,13 @@ public class AccountInfo {
     public Set<AccountInfo> getFriends() { return friends; }
 
     public void setFriends(Set<AccountInfo> friends) { this.friends = friends; }
+    /*
+    public Set<Track> getTracks() {return tracks;}
+
+    public void setTracks(Set<Track> tracks) {this.tracks = tracks;}
 
     public Set<Message> getMessages() {return messages;}
 
     public void setMessages(Set<Message> messages) {this.messages = messages;}
+    */
 }
