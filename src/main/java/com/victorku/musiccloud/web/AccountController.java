@@ -9,8 +9,7 @@ import com.victorku.musiccloud.service.AccountService;
 import com.victorku.musiccloud.web.model.AccountDTO;
 import com.victorku.musiccloud.web.model.DateDTO;
 import com.victorku.musiccloud.web.model.ErrorResponseBody;
-import com.victorku.musiccloud.web.model.RoleDTO;
-import com.victorku.musiccloud.web.util.HeaderUtil;
+import com.victorku.musiccloud.web.model.AccountRoleDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,12 +29,8 @@ public class AccountController {
     public ResponseEntity<?> getAccount(@PathVariable("id") Long accountId) {
         Account account = accountService.getAccountById(accountId);
         if (account == null) {
-            return ResponseEntity.badRequest()
-                    .headers(HeaderUtil.createFailureAlert("accountManagement", "accountIdIsNotFound", "Account ID is not found in DB"))
-                    .body(new ErrorResponseBody(1, "Account ID is not found in DB"));
-//              todo: или просто
-//            return new ResponseEntity<>(new ErrorResponseBody(1, "Account ID is not found in DB"),
-//                    HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new ErrorResponseBody(1, "Account ID is not found in DB"),
+                    HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(convert(account), HttpStatus.OK);
     }
@@ -57,9 +52,9 @@ public class AccountController {
 
     private AccountDTO convert(Account dbModel) {
         AccountDTO jsonModel = new AccountDTO(dbModel.getId(), dbModel.getEmail(), "******",new DateDTO(dbModel.getDateCreate()),dbModel.getAccountInfo().getId());
-        Set<RoleDTO> jsonRoles = new HashSet<>();
+        Set<AccountRoleDTO> jsonRoles = new HashSet<>();
         for (AccountRole role : dbModel.getAccountRoles()) {
-            jsonRoles.add(new RoleDTO(role.getId(), role.getName()));
+            jsonRoles.add(new AccountRoleDTO(role.getId(), role.getName()));
         }
 
         jsonModel.setRoles(jsonRoles);

@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-@Table(name = "tracklist")
+@Table(name = "track")
 public class Track {
 
     @Id

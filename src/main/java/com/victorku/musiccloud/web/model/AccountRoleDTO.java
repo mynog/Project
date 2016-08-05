@@ -1,13 +1,13 @@
 package com.victorku.musiccloud.web.model;
 
-public class RoleDTO {
+public class AccountRoleDTO {
     private Long id;
     private String name;
 
-    public RoleDTO() {
+    public AccountRoleDTO() {
     }
 
-    public RoleDTO(Long id, String name) {
+    public AccountRoleDTO(Long id, String name) {
         this.id = id;
         this.name = name;
     }

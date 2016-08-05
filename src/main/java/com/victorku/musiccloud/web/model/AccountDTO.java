@@ -7,7 +7,7 @@ public class AccountDTO {
     private String email;
     private String password;
     private DateDTO dateCreate;
-    private Set<RoleDTO> roles;
+    private Set<AccountRoleDTO> roles;
     private Long accountInfoId;
 
     public AccountDTO() {
@@ -45,11 +45,11 @@ public class AccountDTO {
         this.password = password;
     }
 
-    public Set<RoleDTO> getRoles() {
+    public Set<AccountRoleDTO> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<RoleDTO> roles) {
+    public void setRoles(Set<AccountRoleDTO> roles) {
         this.roles = roles;
     }
 
