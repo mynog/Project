@@ -1,19 +1,17 @@
 package com.victorku.musiccloud.web.model;
 
-import org.joda.time.LocalDate;
-
 public class MessageDTO {
 
     private Long id;
-    private String nick;
-    private LocalDate createMessage;
+    private String text;
+    private DateDTO createMessage;
 
     public MessageDTO() {
     }
 
-    public MessageDTO(Long id, String nick, LocalDate createMessage) {
+    public MessageDTO(Long id, String nick, DateDTO createMessage) {
         this.id = id;
-        this.nick = nick;
+        this.text = nick;
         this.createMessage = createMessage;
     }
 
@@ -25,19 +23,19 @@ public class MessageDTO {
         this.id = id;
     }
 
-    public String getNick() {
-        return nick;
+    public String getText() {
+        return text;
     }
 
-    public void setNick(String nick) {
-        this.nick = nick;
+    public void setText(String text) {
+        this.text = text;
     }
 
-    public LocalDate getCreateMessage() {
+    public DateDTO getCreateMessage() {
         return createMessage;
     }
 
-    public void setCreateMessage(LocalDate createMessage) {
+    public void setCreateMessage(DateDTO createMessage) {
         this.createMessage = createMessage;
     }
 }

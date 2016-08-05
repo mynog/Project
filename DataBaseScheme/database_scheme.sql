@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS account_info (
   id INT NOT NULL,
   firstname VARCHAR(45) NULL,
   lastname VARCHAR(45) NULL,
-  nick VARCHAR(45) NULL,
+  text VARCHAR(45) NULL,
   birthday DATE NULL,
   PRIMARY KEY (id))
 ;
