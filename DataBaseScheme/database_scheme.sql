@@ -382,7 +382,33 @@ CREATE INDEX fk_account_has_account_role_account_role1_idx ON account_has_accoun
 CREATE INDEX fk_account_has_account_role_account1_idx ON account_has_account_role (account_id ASC);
 
 -- -----------------------------------------------------
--- Table Create trigger update_rating
+-- Table `account_info_has_track`
+-- -----------------------------------------------------
+
+DROP TABLE IF EXISTS account_info_has_track ;
+
+CREATE TABLE IF NOT EXISTS account_info_has_track (
+  track_id INT NOT NULL,
+  account_info_id INT NOT NULL,
+  PRIMARY KEY (track_id, account_info_id),
+  CONSTRAINT fk_account_info_has_track_track1
+    FOREIGN KEY (track_id)
+    REFERENCES track (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT fk_account_info_has_track_account_info1
+    FOREIGN KEY (account_info_id)
+    REFERENCES account_info (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+;
+
+CREATE INDEX fk_account_info_has_track_track1_idx ON account_info_has_track (track_id ASC);
+
+CREATE INDEX fk_account_info_has_track_account_info1_idx ON account_info_has_track (account_info_id ASC);
+
+-- -----------------------------------------------------
+-- Create trigger update_rating
 -- -----------------------------------------------------
 
 CREATE FUNCTION update_rating() RETURNS TRIGGER AS $update_rating$
