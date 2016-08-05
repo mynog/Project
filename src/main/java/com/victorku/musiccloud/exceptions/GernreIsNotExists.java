@@ -1,4 +1,4 @@
 package com.victorku.musiccloud.exceptions;
 
-public class GernreIsNotExists extends Throwable {
+public class GernreIsNotExists extends Exception {
 }

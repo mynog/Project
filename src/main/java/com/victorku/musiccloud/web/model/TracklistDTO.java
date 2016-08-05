@@ -1,17 +1,15 @@
 package com.victorku.musiccloud.web.model;
 
-import org.joda.time.LocalDate;
-
 public class TracklistDTO {
 
     private Long id;
     private String name;
-    private LocalDate dateCreate;
+    private DateDTO dateCreate;
 
     public TracklistDTO() {
     }
 
-    public TracklistDTO(Long id, String name, LocalDate dateCreate) {
+    public TracklistDTO(Long id, String name, DateDTO dateCreate) {
         this.id = id;
         this.name = name;
         this.dateCreate = dateCreate;
@@ -33,11 +31,11 @@ public class TracklistDTO {
         this.name = name;
     }
 
-    public LocalDate getDateCreate() {
+    public DateDTO getDateCreate() {
         return dateCreate;
     }
 
-    public void setDateCreate(LocalDate dateCreate) {
+    public void setDateCreate(DateDTO dateCreate) {
         this.dateCreate = dateCreate;
     }
 }

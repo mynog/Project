@@ -1,4 +1,4 @@
 package com.victorku.musiccloud.exceptions;
 
-public class CommentsIsNotExists extends Throwable {
+public class CommentsIsNotExists extends Exception {
 }
