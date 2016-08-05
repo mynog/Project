@@ -16,13 +16,7 @@ public class Genre {
     @Column(name = "name")
     @NotEmpty
     private String name;
-    /*
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "track_has_genre",
-            joinColumns = @JoinColumn(name = "gerne_id"),
-            inverseJoinColumns = @JoinColumn(name = "track_id"))
-    private Set<Track> tracks;
-    */
+
     public Genre() {
     }
 
@@ -45,13 +39,4 @@ public class Genre {
     public void setName(String name) {
         this.name = name;
     }
-    /*
-    public Set<Track> getTracks() {
-        return tracks;
-    }
-
-    public void setTracks(Set<Track> tracks) {
-        this.tracks = tracks;
-    }
-    */
 }
