@@ -40,6 +40,8 @@ public class AccountInfo {
             inverseJoinColumns = @JoinColumn(name = "friend_id"))
     private Set<AccountInfo> friends = new HashSet<>();
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "account_info")
+    private Set<Message> messages = new HashSet<>();
 
     // todo 2VK: add Account ref
     // todo 2VK: add Freinds ref
@@ -90,4 +92,8 @@ public class AccountInfo {
     public Set<AccountInfo> getFriends() { return friends; }
 
     public void setFriends(Set<AccountInfo> friends) { this.friends = friends; }
+
+    public Set<Message> getMessages() {return messages;}
+
+    public void setMessages(Set<Message> messages) {this.messages = messages;}
 }
