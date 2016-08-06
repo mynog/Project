@@ -27,6 +27,10 @@ public class Comments {
     @JoinColumn(name = "account_info_id")
     private AccountInfo accountInfoId;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="parent_id")
+    private AccountInfo parentComments;
+
     public Comments() {
     }
 
@@ -60,5 +64,13 @@ public class Comments {
 
     public void setAccountInfoId(AccountInfo accountInfoId) {
         this.accountInfoId = accountInfoId;
+    }
+
+    public AccountInfo getParentComments() {
+        return parentComments;
+    }
+
+    public void setParentComments(AccountInfo parentComments) {
+        this.parentComments = parentComments;
     }
 }
