@@ -26,6 +26,9 @@ public class Tracklist {
     @DateTimeFormat(pattern = "yyyy/dd/mm")
     private LocalDate dateCreate;
 
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "tracklists")
+    private Set<Track> tracks;
+
     public Tracklist() {
     }
 

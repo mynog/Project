@@ -47,6 +47,12 @@ public class Track {
             inverseJoinColumns = @JoinColumn(name = "account_info_id"))
     private Set<AccountInfo> accountInfos;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "tracklist_has_track",
+            joinColumns = @JoinColumn(name = "tracklist_id"),
+            inverseJoinColumns = @JoinColumn(name = "track_id"))
+    private Set<Tracklist> tracklists; ;
+
     public Track() {
     }
 
