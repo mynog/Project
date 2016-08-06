@@ -23,6 +23,10 @@ public class Comments {
     @NotEmpty
     private Long orderComments;
 
+    @ManyToOne
+    @JoinColumn(name = "account_info_id")
+    private AccountInfo accountInfoId;
+
     public Comments() {
     }
 
@@ -48,5 +52,13 @@ public class Comments {
 
     public void setOrderComments(Long orderComments) {
         this.orderComments = orderComments;
+    }
+
+    public AccountInfo getAccountInfoId() {
+        return accountInfoId;
+    }
+
+    public void setAccountInfoId(AccountInfo accountInfoId) {
+        this.accountInfoId = accountInfoId;
     }
 }

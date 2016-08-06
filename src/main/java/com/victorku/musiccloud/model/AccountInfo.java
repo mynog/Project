@@ -46,6 +46,9 @@ public class AccountInfo {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountInfoId")
     private Set<MoreTrackInfo> moreTrackInfos;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountInfoId")
+    private Set<Comments> comments;
+
 
     // todo 2VK: add Account ref
     // todo 2VK: add Freinds ref
@@ -111,5 +114,13 @@ public class AccountInfo {
 
     public void setMoreTrackInfos(Set<MoreTrackInfo> moreTrackInfos) {
         this.moreTrackInfos = moreTrackInfos;
+    }
+
+    public Set<Comments> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comments> comments) {
+        this.comments = comments;
     }
 }
