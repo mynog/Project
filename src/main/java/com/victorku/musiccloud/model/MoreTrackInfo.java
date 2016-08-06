@@ -16,6 +16,10 @@ public class MoreTrackInfo {
     @NotEmpty
     private String text;
 
+    @ManyToOne
+    @JoinColumn(name = "account_info_id")
+    private AccountInfo accountInfoId;
+
     public MoreTrackInfo() {
     }
 
@@ -37,5 +41,13 @@ public class MoreTrackInfo {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public AccountInfo getAccountInfoId() {
+        return accountInfoId;
+    }
+
+    public void setAccountInfoId(AccountInfo accountInfoId) {
+        this.accountInfoId = accountInfoId;
     }
 }

@@ -43,6 +43,10 @@ public class AccountInfo {
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "accountInfos")
     private Set<Track> tracks;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountInfoId")
+    private Set<MoreTrackInfo> moreTrackInfos;
+
+
     // todo 2VK: add Account ref
     // todo 2VK: add Freinds ref
 
@@ -99,5 +103,13 @@ public class AccountInfo {
 
     public void setTracks(Set<Track> tracks) {
         this.tracks = tracks;
+    }
+
+    public Set<MoreTrackInfo> getMoreTrackInfos() {
+        return moreTrackInfos;
+    }
+
+    public void setMoreTrackInfos(Set<MoreTrackInfo> moreTrackInfos) {
+        this.moreTrackInfos = moreTrackInfos;
     }
 }
