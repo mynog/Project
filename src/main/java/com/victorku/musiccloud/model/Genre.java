@@ -17,6 +17,12 @@ public class Genre {
     @NotEmpty
     private String name;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "track_has_genre",
+            joinColumns = @JoinColumn(name = "track_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id"))
+    private Set<Track> tracks;
+
     public Genre() {
     }
 
@@ -38,5 +44,13 @@ public class Genre {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<Track> getTracks() {
+        return tracks;
+    }
+
+    public void setTracks(Set<Track> tracks) {
+        this.tracks = tracks;
     }
 }

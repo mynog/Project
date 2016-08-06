@@ -59,4 +59,12 @@ public class Tracklist {
     public void setDateCreate(LocalDate dateCreate) {
         this.dateCreate = dateCreate;
     }
+
+    public Set<Track> getTracks() {
+        return tracks;
+    }
+
+    public void setTracks(Set<Track> tracks) {
+        this.tracks = tracks;
+    }
 }

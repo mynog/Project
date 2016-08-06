@@ -51,7 +51,10 @@ public class Track {
     @JoinTable(name = "tracklist_has_track",
             joinColumns = @JoinColumn(name = "tracklist_id"),
             inverseJoinColumns = @JoinColumn(name = "track_id"))
-    private Set<Tracklist> tracklists; ;
+    private Set<Tracklist> tracklists;
+
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "tracks")
+    private Set<Genre> genres;
 
     public Track() {
     }
@@ -126,6 +129,22 @@ public class Track {
 
     public void setAccountInfos(Set<AccountInfo> accountInfos) {
         this.accountInfos = accountInfos;
+    }
+
+    public Set<Tracklist> getTracklists() {
+        return tracklists;
+    }
+
+    public void setTracklists(Set<Tracklist> tracklists) {
+        this.tracklists = tracklists;
+    }
+
+    public Set<Genre> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(Set<Genre> genres) {
+        this.genres = genres;
     }
 }
 
