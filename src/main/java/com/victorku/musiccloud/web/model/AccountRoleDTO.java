@@ -7,6 +7,10 @@ public class AccountRoleDTO {
     public AccountRoleDTO() {
     }
 
+    public AccountRoleDTO(String name) {
+        this.name = name;
+    }
+
     public AccountRoleDTO(Long id, String name) {
         this.id = id;
         this.name = name;

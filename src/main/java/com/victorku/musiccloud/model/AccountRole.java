@@ -26,6 +26,10 @@ public class AccountRole {
     public AccountRole() {
     }
 
+    public AccountRole(String name) {
+        this.name = name;
+    }
+
     public Set<Account> getAccounts() {
         return accounts;
     }
