@@ -56,6 +56,9 @@ public class Track {
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "tracks")
     private Set<Genre> genres;
 
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "tracks")
+    private Set<Mood> moods;
+
     public Track() {
     }
 
@@ -145,6 +148,14 @@ public class Track {
 
     public void setGenres(Set<Genre> genres) {
         this.genres = genres;
+    }
+
+    public Set<Mood> getMoods() {
+        return moods;
+    }
+
+    public void setMoods(Set<Mood> moods) {
+        this.moods = moods;
     }
 }
 

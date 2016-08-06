@@ -3,6 +3,7 @@ package com.victorku.musiccloud.model;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "mood")
@@ -15,6 +16,12 @@ public class Mood {
     @Column(name = "name")
     @NotEmpty
     private String name;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "track_has_mood",
+            joinColumns = @JoinColumn(name = "track_id"),
+            inverseJoinColumns = @JoinColumn(name = "mood_id"))
+    private Set<Track> tracks;
 
     public Mood() {
     }
@@ -37,5 +44,13 @@ public class Mood {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<Track> getTracks() {
+        return tracks;
+    }
+
+    public void setTracks(Set<Track> tracks) {
+        this.tracks = tracks;
     }
 }
