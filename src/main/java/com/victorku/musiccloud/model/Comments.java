@@ -1,9 +1,6 @@
 package com.victorku.musiccloud.model;
 
-import org.hibernate.annotations.Type;
 import org.hibernate.validator.constraints.NotEmpty;
-import org.joda.time.LocalDate;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 
@@ -25,7 +22,7 @@ public class Comments {
 
     @ManyToOne
     @JoinColumn(name = "account_info_id")
-    private AccountInfo accountInfoId;
+    private AccountInfo accountInfo;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="parent_id")
@@ -58,12 +55,12 @@ public class Comments {
         this.orderComments = orderComments;
     }
 
-    public AccountInfo getAccountInfoId() {
-        return accountInfoId;
+    public AccountInfo getAccountInfo() {
+        return accountInfo;
     }
 
-    public void setAccountInfoId(AccountInfo accountInfoId) {
-        this.accountInfoId = accountInfoId;
+    public void setAccountInfo(AccountInfo accountInfo) {
+        this.accountInfo = accountInfo;
     }
 
     public AccountInfo getParentComments() {

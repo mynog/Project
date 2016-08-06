@@ -43,11 +43,14 @@ public class AccountInfo {
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "accountInfos")
     private Set<Track> tracks;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountInfoId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountInfo")
     private Set<MoreTrackInfo> moreTrackInfos;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountInfoId")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountInfo")
     private Set<Comments> comments;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountInfo")
+    private Set<Tracklist> tracklists;
 
 
     // todo 2VK: add Account ref
@@ -122,5 +125,13 @@ public class AccountInfo {
 
     public void setComments(Set<Comments> comments) {
         this.comments = comments;
+    }
+
+    public Set<Tracklist> getTracklists() {
+        return tracklists;
+    }
+
+    public void setTracklists(Set<Tracklist> tracklists) {
+        this.tracklists = tracklists;
     }
 }

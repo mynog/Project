@@ -29,6 +29,10 @@ public class Tracklist {
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "tracklists")
     private Set<Track> tracks;
 
+    @ManyToOne
+    @JoinColumn(name = "account_info_id")
+    private AccountInfo accountInfo;
+
     public Tracklist() {
     }
 
@@ -66,5 +70,13 @@ public class Tracklist {
 
     public void setTracks(Set<Track> tracks) {
         this.tracks = tracks;
+    }
+
+    public AccountInfo getAccountInfo() {
+        return accountInfo;
+    }
+
+    public void setAccountInfo(AccountInfo accountInfo) {
+        this.accountInfo = accountInfo;
     }
 }
