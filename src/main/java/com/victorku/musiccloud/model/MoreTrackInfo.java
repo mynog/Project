@@ -20,6 +20,10 @@ public class MoreTrackInfo {
     @JoinColumn(name = "account_info_id")
     private AccountInfo accountInfo;
 
+    @ManyToOne
+    @JoinColumn(name = "track_id")
+    private Track track;
+
     public MoreTrackInfo() {
     }
 
@@ -49,5 +53,13 @@ public class MoreTrackInfo {
 
     public void setAccountInfo(AccountInfo accountInfo) {
         this.accountInfo = accountInfo;
+    }
+
+    public Track getTrack() {
+        return track;
+    }
+
+    public void setTrack(Track track) {
+        this.track = track;
     }
 }

@@ -59,6 +59,12 @@ public class Track {
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "tracks")
     private Set<Mood> moods;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "track")
+    private Set<MoreTrackInfo> moreTrackInfos;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "track")
+    private Set<Comments> comments;
+
     public Track() {
     }
 
@@ -156,6 +162,22 @@ public class Track {
 
     public void setMoods(Set<Mood> moods) {
         this.moods = moods;
+    }
+
+    public Set<MoreTrackInfo> getMoreTrackInfos() {
+        return moreTrackInfos;
+    }
+
+    public void setMoreTrackInfos(Set<MoreTrackInfo> moreTrackInfos) {
+        this.moreTrackInfos = moreTrackInfos;
+    }
+
+    public Set<Comments> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comments> comments) {
+        this.comments = comments;
     }
 }
 
