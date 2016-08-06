@@ -23,6 +23,12 @@ public class Mood {
             inverseJoinColumns = @JoinColumn(name = "mood_id"))
     private Set<Track> tracks;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "track_has_mood",
+            joinColumns = @JoinColumn(name = "mood_id"),
+            inverseJoinColumns = @JoinColumn(name = "account_info_id"))
+    private Set<AccountInfo> accountInfos;
+
     public Mood() {
     }
 
@@ -52,5 +58,13 @@ public class Mood {
 
     public void setTracks(Set<Track> tracks) {
         this.tracks = tracks;
+    }
+
+    public Set<AccountInfo> getAccountInfos() {
+        return accountInfos;
+    }
+
+    public void setAccountInfos(Set<AccountInfo> accountInfos) {
+        this.accountInfos = accountInfos;
     }
 }
