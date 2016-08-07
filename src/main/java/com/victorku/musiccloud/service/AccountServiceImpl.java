@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
+// todo 2VK: remove to service/impl package
 
 @Service
 public class AccountServiceImpl implements AccountService {

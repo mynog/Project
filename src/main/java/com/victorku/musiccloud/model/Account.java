@@ -39,8 +39,6 @@ public class Account {
     @JoinColumn(name="account_info_id")
     private AccountInfo accountInfo;
 
-    // todo 2VK: add AccountInfo ref
-
     public Account() {
     }
 

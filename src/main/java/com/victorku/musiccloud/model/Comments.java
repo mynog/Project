@@ -26,7 +26,7 @@ public class Comments {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="parent_id")
-    private AccountInfo parentComments;
+    private AccountInfo parentComments; // todo 2VK: WTF???
 
     @ManyToOne
     @JoinColumn(name = "track_id")
