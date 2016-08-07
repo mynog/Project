@@ -1,11 +1,11 @@
-package com.victorku.musiccloud.service;
+package com.victorku.musiccloud.serviceimpl;
 
 import com.victorku.musiccloud.exceptions.CommentsIsNotExistsException;
 import com.victorku.musiccloud.model.Comments;
 import com.victorku.musiccloud.repository.CommentsRepository;
+import com.victorku.musiccloud.service.CommentsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-// todo 2VK: ну ты понял...
 
 @Service
 public class CommentsServiceImpl implements CommentsService {

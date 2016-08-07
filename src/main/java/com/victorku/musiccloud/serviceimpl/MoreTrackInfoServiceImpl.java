@@ -1,8 +1,9 @@
-package com.victorku.musiccloud.service;
+package com.victorku.musiccloud.serviceimpl;
 
 import com.victorku.musiccloud.exceptions.MoreTrackInfoIsNotExistsException;
 import com.victorku.musiccloud.model.MoreTrackInfo;
 import com.victorku.musiccloud.repository.MoreTrackInfoRepository;
+import com.victorku.musiccloud.service.MoreTrackInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

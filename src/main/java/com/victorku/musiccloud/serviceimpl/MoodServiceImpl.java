@@ -1,8 +1,9 @@
-package com.victorku.musiccloud.service;
+package com.victorku.musiccloud.serviceimpl;
 
 import com.victorku.musiccloud.exceptions.MoodIsNotExistsException;
 import com.victorku.musiccloud.model.Mood;
 import com.victorku.musiccloud.repository.MoodRepository;
+import com.victorku.musiccloud.service.MoodService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

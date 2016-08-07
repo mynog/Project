@@ -1,8 +1,9 @@
-package com.victorku.musiccloud.service;
+package com.victorku.musiccloud.serviceimpl;
 
 import com.victorku.musiccloud.exceptions.TracklistIsNotExistsException;
 import com.victorku.musiccloud.model.Tracklist;
 import com.victorku.musiccloud.repository.TracklistRepository;
+import com.victorku.musiccloud.service.TracklistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

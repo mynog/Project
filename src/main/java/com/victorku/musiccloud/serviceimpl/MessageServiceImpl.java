@@ -1,8 +1,9 @@
-package com.victorku.musiccloud.service;
+package com.victorku.musiccloud.serviceimpl;
 
 import com.victorku.musiccloud.exceptions.MessageIsNotExistsException;
 import com.victorku.musiccloud.model.Message;
 import com.victorku.musiccloud.repository.MessageRepository;
+import com.victorku.musiccloud.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
