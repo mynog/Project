@@ -1,5 +1,7 @@
 package com.victorku.musiccloud.web.model;
 
+import com.victorku.musiccloud.exceptions.ApplicationErrorTypes;
+
 public class ErrorResponseBody {
     private int code;
     private String message;
@@ -7,6 +9,11 @@ public class ErrorResponseBody {
     public ErrorResponseBody(int code, String message) {
         this.code = code;
         this.message = message;
+    }
+
+    public ErrorResponseBody(int code, ApplicationErrorTypes message) {
+        this.code = code;
+        this.message = message.toString();
     }
 
     public int getCode() {

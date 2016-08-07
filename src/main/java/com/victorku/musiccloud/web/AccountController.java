@@ -3,6 +3,7 @@ package com.victorku.musiccloud.web;
 import com.victorku.musiccloud.exceptions.AccountHasExist;
 import com.victorku.musiccloud.exceptions.AccountIsNotExists;
 import com.victorku.musiccloud.exceptions.AccountRoleIsNotExists;
+import com.victorku.musiccloud.exceptions.ApplicationErrorTypes;
 import com.victorku.musiccloud.model.Account;
 import com.victorku.musiccloud.model.AccountRole;
 import com.victorku.musiccloud.service.AccountService;
@@ -29,28 +30,49 @@ public class AccountController {
     public ResponseEntity<?> getAccount(@PathVariable("id") Long accountId) {
         Account account = accountService.getAccountById(accountId);
         if (account == null) {
-            return new ResponseEntity<>(new ErrorResponseBody(1, "Account ID is not found in DB"),
-                    HttpStatus.NOT_FOUND);
+            return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_ID_NOT_FOUND);
         }
         return new ResponseEntity<>(convert(account), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteAccount(@PathVariable("id") Long accountId) throws AccountIsNotExists {
-        accountService.deleteAccountById(accountId);
+    public ResponseEntity<?> deleteAccount(@PathVariable("id") Long accountId) {
+        try {
+            accountService.deleteAccountById(accountId);
+        } catch (AccountIsNotExists accountIsNotExists) {
+            return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_ID_NOT_FOUND);
+        }
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.PUT)
-    public AccountDTO createAccount(@RequestParam("email") String email, @RequestParam("password") String password) throws AccountHasExist {
-        return convert(accountService.createAccount(email, password));
+    public ResponseEntity<?> createAccount(@RequestParam("email") String email, @RequestParam("password") String password) {
+        Account account = null;
+        try {
+            account = accountService.createAccount(email, password);
+        } catch (AccountHasExist accountHasExist) {
+            return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_HAS_EXISTS);
+        }
+        return new ResponseEntity<>(convert(account), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public AccountDTO addAccountRole(@PathVariable("id") Long accountId, @RequestParam("roleId") Long roleId) throws AccountIsNotExists, AccountRoleIsNotExists {
-        return convert(accountService.addAccountRole(accountId, roleId));
+    public ResponseEntity<?> addAccountRole(@PathVariable("id") Long accountId, @RequestParam("roleId") Long roleId) {
+        Account account = null;
+        try {
+            account = accountService.addAccountRole(accountId, roleId);
+        } catch (AccountIsNotExists accountIsNotExists) {
+            return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_ID_NOT_FOUND);
+        } catch (AccountRoleIsNotExists accountRoleIsNotExists) {
+            return getErrorResponseBody(ApplicationErrorTypes.ROLE_ID_NOT_FOUND);
+        }
+        return new ResponseEntity<>(convert(account), HttpStatus.OK);
     }
 
     private AccountDTO convert(Account dbModel) {
+
+        if (dbModel == null) return null;
+
         AccountDTO jsonModel = new AccountDTO(dbModel.getId(), dbModel.getEmail(), "******",new DateDTO(dbModel.getDateCreate()),dbModel.getAccountInfo().getId());
         Set<AccountRoleDTO> jsonRoles = new HashSet<>();
         for (AccountRole role : dbModel.getAccountRoles()) {
@@ -59,5 +81,9 @@ public class AccountController {
 
         jsonModel.setRoles(jsonRoles);
         return jsonModel;
+    }
+
+    private ResponseEntity<ErrorResponseBody> getErrorResponseBody(ApplicationErrorTypes errorType) {
+        return new ResponseEntity<>(new ErrorResponseBody(1, errorType), HttpStatus.NOT_FOUND);
     }
 }
