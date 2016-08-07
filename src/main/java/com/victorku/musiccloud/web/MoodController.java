@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MoodController {
 
     @Autowired
-    MoodService moodService;
+    private MoodService moodService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getMood(@PathVariable("id") Long moodId){

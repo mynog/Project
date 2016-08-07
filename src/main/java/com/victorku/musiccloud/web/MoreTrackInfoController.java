@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MoreTrackInfoController {
 
     @Autowired
-    MoreTrackInfoService moreTrackInfoService;
+    private MoreTrackInfoService moreTrackInfoService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getMoreTrackInfo(@PathVariable("id") Long moreTrackInfoId){

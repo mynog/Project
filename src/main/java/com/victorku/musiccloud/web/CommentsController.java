@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CommentsController {
 
     @Autowired
-    CommentsService commentsService;
+    private CommentsService commentsService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getComments(@PathVariable("id") Long commentsId){

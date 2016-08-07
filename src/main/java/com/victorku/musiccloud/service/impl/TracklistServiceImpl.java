@@ -1,4 +1,4 @@
-package com.victorku.musiccloud.serviceimpl;
+package com.victorku.musiccloud.service.impl;
 
 import com.victorku.musiccloud.exceptions.TracklistIsNotExistsException;
 import com.victorku.musiccloud.model.Tracklist;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class TracklistServiceImpl implements TracklistService {
 
     @Autowired
-    TracklistRepository tracklistRepository;
+    private TracklistRepository tracklistRepository;
 
     @Override
     public Tracklist getTracklistById(Long id) {

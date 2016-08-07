@@ -1,4 +1,4 @@
-package com.victorku.musiccloud.serviceimpl;
+package com.victorku.musiccloud.service.impl;
 
 import com.victorku.musiccloud.exceptions.TrackIsNotExistsException;
 import com.victorku.musiccloud.model.Track;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class TrackServiceImpl implements TrackService {
 
     @Autowired
-    TrackRepository trackRepository;
+    private TrackRepository trackRepository;
 
     @Override
     public Track getTrackById(Long id) {

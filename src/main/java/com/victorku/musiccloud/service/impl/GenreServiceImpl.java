@@ -1,4 +1,4 @@
-package com.victorku.musiccloud.serviceimpl;
+package com.victorku.musiccloud.service.impl;
 
 import com.victorku.musiccloud.exceptions.GernreIsNotExistsException;
 import com.victorku.musiccloud.model.Genre;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class GenreServiceImpl implements GenreService {
 
     @Autowired
-    GenreRepository genreRepository;
+    private GenreRepository genreRepository;
 
     @Override
     public Genre getGenreById(Long id) {

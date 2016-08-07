@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class GenreController {
 
     @Autowired
-    GenreService genreService;
+    private GenreService genreService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getGenre(@PathVariable("id") Long genreId){

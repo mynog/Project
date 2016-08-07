@@ -1,4 +1,4 @@
-package com.victorku.musiccloud.serviceimpl;
+package com.victorku.musiccloud.service.impl;
 
 import com.victorku.musiccloud.exceptions.MoodIsNotExistsException;
 import com.victorku.musiccloud.model.Mood;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class MoodServiceImpl implements MoodService {
 
     @Autowired
-    MoodRepository moodRepository;
+    private MoodRepository moodRepository;
 
     @Override
     public Mood getMoodById(Long id) {

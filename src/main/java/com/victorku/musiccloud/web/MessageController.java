@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MessageController {
 
     @Autowired
-    MessageService messageService;
+    private MessageService messageService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getMessage(@PathVariable("id") Long messageId){

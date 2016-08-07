@@ -1,4 +1,4 @@
-package com.victorku.musiccloud.serviceimpl;
+package com.victorku.musiccloud.service.impl;
 
 import com.victorku.musiccloud.exceptions.MessageIsNotExistsException;
 import com.victorku.musiccloud.model.Message;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class MessageServiceImpl implements MessageService {
 
     @Autowired
-    MessageRepository messageRepository;
+    private MessageRepository messageRepository;
 
     @Override
     public Message getMessageById(Long id) {

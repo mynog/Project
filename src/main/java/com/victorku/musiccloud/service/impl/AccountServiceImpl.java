@@ -1,4 +1,4 @@
-package com.victorku.musiccloud.serviceimpl;
+package com.victorku.musiccloud.service.impl;
 
 import com.victorku.musiccloud.exceptions.AccountHasExistsException;
 import com.victorku.musiccloud.exceptions.AccountIsNotExistsException;

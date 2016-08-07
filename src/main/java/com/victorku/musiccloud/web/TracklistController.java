@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TracklistController {
 
     @Autowired
-    TracklistService tracklistService;
+    private TracklistService tracklistService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getTracklist(@PathVariable("id") Long tracklistId){

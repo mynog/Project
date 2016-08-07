@@ -1,4 +1,4 @@
-package com.victorku.musiccloud.serviceimpl;
+package com.victorku.musiccloud.service.impl;
 
 import com.victorku.musiccloud.exceptions.CommentsIsNotExistsException;
 import com.victorku.musiccloud.model.Comments;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class CommentsServiceImpl implements CommentsService {
 
     @Autowired
-    CommentsRepository commentsRepository;
+    private CommentsRepository commentsRepository;
 
     @Override
     public Comments getCommentsById(Long id) {

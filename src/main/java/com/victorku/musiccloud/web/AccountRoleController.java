@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 public class AccountRoleController {
 
     @Autowired
-    AccountRoleService accountRoleService;
+    private AccountRoleService accountRoleService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getAccountRole(@PathVariable("id") Long accountRoleId){

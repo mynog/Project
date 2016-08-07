@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TrackController {
 
     @Autowired
-    TrackService trackService;
+    private TrackService trackService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getTrack(@PathVariable("id") Long trackId){
