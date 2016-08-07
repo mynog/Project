@@ -26,7 +26,7 @@ public class Comments {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="parent_id")
-    private AccountInfo parentComments; // todo 2VK: WTF???
+    private Comments parentComments;
 
     @ManyToOne
     @JoinColumn(name = "track_id")
@@ -67,11 +67,11 @@ public class Comments {
         this.accountInfo = accountInfo;
     }
 
-    public AccountInfo getParentComments() {
+    public Comments getParentComments() {
         return parentComments;
     }
 
-    public void setParentComments(AccountInfo parentComments) {
+    public void setParentComments(Comments parentComments) {
         this.parentComments = parentComments;
     }
 
