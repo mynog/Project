@@ -2,6 +2,7 @@ package com.victorku.musiccloud.web;
 
 import com.victorku.musiccloud.exceptions.AccountRoleHasExistsException;
 import com.victorku.musiccloud.exceptions.AccountRoleIsNotExistsException;
+import com.victorku.musiccloud.exceptions.ApplicationErrorTypes;
 import com.victorku.musiccloud.model.AccountRole;
 import com.victorku.musiccloud.service.AccountRoleService;
 import com.victorku.musiccloud.web.model.AccountRoleDTO;
@@ -41,5 +42,9 @@ public class AccountRoleController {
     private AccountRoleDTO convert(AccountRole dbModel){
         AccountRoleDTO jsonModel = new AccountRoleDTO(dbModel.getId(),dbModel.getName());
         return jsonModel;
+    }
+
+    private ResponseEntity<ErrorResponseBody> getErrorResponseBody(ApplicationErrorTypes errorType) {
+        return new ResponseEntity<>(new ErrorResponseBody(errorType), HttpStatus.NOT_FOUND);
     }
 }

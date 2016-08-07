@@ -73,13 +73,13 @@ public class AccountController {
 
         if (dbModel == null) return null;
 
-        AccountDTO jsonModel = new AccountDTO(dbModel.getId(), dbModel.getEmail(), "******",new DateDTO(dbModel.getDateCreate()),dbModel.getAccountInfo().getId());
-        Set<AccountRoleDTO> jsonRoles = new HashSet<>();
-        for (AccountRole role : dbModel.getAccountRoles()) {
-            jsonRoles.add(new AccountRoleDTO(role.getId(), role.getName()));
-        }
-
-        jsonModel.setRoles(jsonRoles);
+        AccountDTO jsonModel = new AccountDTO(dbModel.getId(), dbModel.getEmail(), "******",new DateDTO(dbModel.getDateCreate()),null);
+//        Set<AccountRoleDTO> jsonRoles = new HashSet<>();
+//        for (AccountRole role : dbModel.getAccountRoles()) {
+//            jsonRoles.add(new AccountRoleDTO(role.getId(), role.getName()));
+//        }
+//
+//        jsonModel.setRoles(jsonRoles);
         return jsonModel;
     }
 

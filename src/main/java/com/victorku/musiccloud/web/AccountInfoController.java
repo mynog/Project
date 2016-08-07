@@ -1,6 +1,7 @@
 package com.victorku.musiccloud.web;
 
 import com.victorku.musiccloud.exceptions.AccountIsNotExistsException;
+import com.victorku.musiccloud.exceptions.ApplicationErrorTypes;
 import com.victorku.musiccloud.model.AccountInfo;
 import com.victorku.musiccloud.service.AccountInfoService;
 import com.victorku.musiccloud.web.model.AccountInfoDTO;
@@ -39,5 +40,9 @@ public class AccountInfoController {
     private AccountInfoDTO convert (AccountInfo dbModel) {
         AccountInfoDTO jsonModel = new AccountInfoDTO(dbModel.getId(), dbModel.getFirstName(), dbModel.getLastName(), dbModel.getNick(), new DateDTO(dbModel.getBirthday()));
         return jsonModel;
+    }
+
+    private ResponseEntity<ErrorResponseBody> getErrorResponseBody(ApplicationErrorTypes errorType) {
+        return new ResponseEntity<>(new ErrorResponseBody(errorType), HttpStatus.NOT_FOUND);
     }
 }

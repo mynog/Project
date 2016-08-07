@@ -1,5 +1,6 @@
 package com.victorku.musiccloud.web;
 
+import com.victorku.musiccloud.exceptions.ApplicationErrorTypes;
 import com.victorku.musiccloud.exceptions.TracklistIsNotExistsException;
 import com.victorku.musiccloud.model.Tracklist;
 import com.victorku.musiccloud.service.TracklistService;
@@ -38,5 +39,9 @@ public class TracklistController {
     private TracklistDTO convert(Tracklist dbModel){
         TracklistDTO jsonModel = new TracklistDTO(dbModel.getId(),dbModel.getName(),new DateDTO(dbModel.getDateCreate()));
         return jsonModel;
+    }
+
+    private ResponseEntity<ErrorResponseBody> getErrorResponseBody(ApplicationErrorTypes errorType) {
+        return new ResponseEntity<>(new ErrorResponseBody(errorType), HttpStatus.NOT_FOUND);
     }
 }

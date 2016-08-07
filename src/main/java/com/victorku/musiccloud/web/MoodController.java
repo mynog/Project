@@ -1,5 +1,6 @@
 package com.victorku.musiccloud.web;
 
+import com.victorku.musiccloud.exceptions.ApplicationErrorTypes;
 import com.victorku.musiccloud.exceptions.MoodIsNotExistsException;
 import com.victorku.musiccloud.model.Mood;
 import com.victorku.musiccloud.service.MoodService;
@@ -37,5 +38,9 @@ public class MoodController {
     private MoodDTO convert(Mood dbModel){
         MoodDTO jsonModel = new MoodDTO(dbModel.getId(),dbModel.getName());
         return jsonModel;
+    }
+
+    private ResponseEntity<ErrorResponseBody> getErrorResponseBody(ApplicationErrorTypes errorType) {
+        return new ResponseEntity<>(new ErrorResponseBody(errorType), HttpStatus.NOT_FOUND);
     }
 }

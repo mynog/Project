@@ -1,5 +1,6 @@
 package com.victorku.musiccloud.web;
 
+import com.victorku.musiccloud.exceptions.ApplicationErrorTypes;
 import com.victorku.musiccloud.exceptions.MoreTrackInfoIsNotExistsException;
 import com.victorku.musiccloud.model.MoreTrackInfo;
 import com.victorku.musiccloud.service.MoreTrackInfoService;
@@ -38,5 +39,9 @@ public class MoreTrackInfoController {
     private MoreTrackInfoDTO convert(MoreTrackInfo dbModel){
         MoreTrackInfoDTO jsonModel = new MoreTrackInfoDTO(dbModel.getId(),dbModel.getText());
         return jsonModel;
+    }
+
+    private ResponseEntity<ErrorResponseBody> getErrorResponseBody(ApplicationErrorTypes errorType) {
+        return new ResponseEntity<>(new ErrorResponseBody(errorType), HttpStatus.NOT_FOUND);
     }
 }

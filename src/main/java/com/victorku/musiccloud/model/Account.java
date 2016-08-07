@@ -13,7 +13,7 @@ import java.util.Set;
 public class Account {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(name = "email")
@@ -29,15 +29,15 @@ public class Account {
     @DateTimeFormat(pattern = "yyyy/dd/mm")
     private LocalDate dateCreate;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "account_has_account_role",
-            joinColumns = @JoinColumn(name = "account_id"),
-            inverseJoinColumns = @JoinColumn(name = "account_role_id"))
-    private Set<AccountRole> accountRoles;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="account_info_id")
-    private AccountInfo accountInfo;
+//    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinTable(name = "account_has_account_role",
+//            joinColumns = @JoinColumn(name = "account_id"),
+//            inverseJoinColumns = @JoinColumn(name = "account_role_id"))
+//    private Set<AccountRole> accountRoles;
+//
+//    @OneToOne(cascade = CascadeType.ALL,mappedBy = "account")
+//    @JoinColumn(name="account_info_id")
+//    private AccountInfo accountInfo;
 
     public Account() {
     }
@@ -47,13 +47,13 @@ public class Account {
         this.password = password;
     }
 
-    public Set<AccountRole> getAccountRoles() {
-        return accountRoles;
-    }
-
-    public void setAccountRoles(Set<AccountRole> accountRoles) {
-        this.accountRoles = accountRoles;
-    }
+//    public Set<AccountRole> getAccountRoles() {
+//        return accountRoles;
+//    }
+//
+//    public void setAccountRoles(Set<AccountRole> accountRoles) {
+//        this.accountRoles = accountRoles;
+//    }
 
     public Long getId() {
         return id;
@@ -87,11 +87,11 @@ public class Account {
         this.dateCreate = dateCreate;
     }
 
-    public AccountInfo getAccountInfo() {
-        return accountInfo;
-    }
-
-    public void setAccountInfo(AccountInfo accountInfo) {
-        this.accountInfo = accountInfo;
-    }
+//    public AccountInfo getAccountInfo() {
+//        return accountInfo;
+//    }
+//
+//    public void setAccountInfo(AccountInfo accountInfo) {
+//        this.accountInfo = accountInfo;
+//    }
 }

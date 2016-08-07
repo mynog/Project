@@ -1,5 +1,6 @@
 package com.victorku.musiccloud.web;
 
+import com.victorku.musiccloud.exceptions.ApplicationErrorTypes;
 import com.victorku.musiccloud.exceptions.GernreIsNotExistsException;
 import com.victorku.musiccloud.model.Genre;
 import com.victorku.musiccloud.service.GenreService;
@@ -37,5 +38,9 @@ public class GenreController {
     private GenreDTO convert(Genre dbModel){
         GenreDTO jsonModel = new GenreDTO(dbModel.getId(),dbModel.getName());
         return jsonModel;
+    }
+
+    private ResponseEntity<ErrorResponseBody> getErrorResponseBody(ApplicationErrorTypes errorType) {
+        return new ResponseEntity<>(new ErrorResponseBody(errorType), HttpStatus.NOT_FOUND);
     }
 }

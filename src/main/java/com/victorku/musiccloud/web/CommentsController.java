@@ -1,5 +1,6 @@
 package com.victorku.musiccloud.web;
 
+import com.victorku.musiccloud.exceptions.ApplicationErrorTypes;
 import com.victorku.musiccloud.exceptions.CommentsIsNotExistsException;
 import com.victorku.musiccloud.model.Comments;
 import com.victorku.musiccloud.service.CommentsService;
@@ -38,5 +39,9 @@ public class CommentsController {
     private CommentsDTO convert(Comments dbModel){
         CommentsDTO jsonModel = new CommentsDTO(dbModel.getId(),dbModel.getText(),dbModel.getOrderComments());
         return jsonModel;
+    }
+
+    private ResponseEntity<ErrorResponseBody> getErrorResponseBody(ApplicationErrorTypes errorType) {
+        return new ResponseEntity<>(new ErrorResponseBody(errorType), HttpStatus.NOT_FOUND);
     }
 }

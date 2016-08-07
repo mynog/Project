@@ -1,5 +1,6 @@
 package com.victorku.musiccloud.web;
 
+import com.victorku.musiccloud.exceptions.ApplicationErrorTypes;
 import com.victorku.musiccloud.exceptions.MessageIsNotExistsException;
 import com.victorku.musiccloud.model.Message;
 import com.victorku.musiccloud.service.MessageService;
@@ -38,5 +39,9 @@ public class MessageController {
     private MessageDTO convert(Message dbModel){
         MessageDTO jsonModel = new MessageDTO(dbModel.getId(),dbModel.getText(),new DateDTO(dbModel.getCreateMessage()));
         return jsonModel;
+    }
+
+    private ResponseEntity<ErrorResponseBody> getErrorResponseBody(ApplicationErrorTypes errorType) {
+        return new ResponseEntity<>(new ErrorResponseBody(errorType), HttpStatus.NOT_FOUND);
     }
 }
