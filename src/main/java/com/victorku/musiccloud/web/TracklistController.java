@@ -1,6 +1,6 @@
 package com.victorku.musiccloud.web;
 
-import com.victorku.musiccloud.exceptions.TracklistIsNotExists;
+import com.victorku.musiccloud.exceptions.TracklistIsNotExistsException;
 import com.victorku.musiccloud.model.Tracklist;
 import com.victorku.musiccloud.service.TracklistService;
 import com.victorku.musiccloud.web.model.DateDTO;
@@ -31,7 +31,7 @@ public class TracklistController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteTracklist(@PathVariable("id") Long tracklistId) throws TracklistIsNotExists {
+    public void deleteTracklist(@PathVariable("id") Long tracklistId) throws TracklistIsNotExistsException {
         tracklistService.deleteTracklistById(tracklistId);
     }
 

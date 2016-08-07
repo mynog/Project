@@ -1,6 +1,6 @@
 package com.victorku.musiccloud.service;
 
-import com.victorku.musiccloud.exceptions.AccountIsNotExists;
+import com.victorku.musiccloud.exceptions.AccountIsNotExistsException;
 import com.victorku.musiccloud.model.AccountInfo;
 import com.victorku.musiccloud.repository.AccountInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +19,9 @@ public class AccountInfoServiceImpl implements AccountInfoService{
     }
 
     @Override
-    public void deleteAccountInfoById(Long id) throws AccountIsNotExists {
+    public void deleteAccountInfoById(Long id) throws AccountIsNotExistsException {
         if(!accountInfoRepository.exists(id)){
-            throw new AccountIsNotExists();
+            throw new AccountIsNotExistsException();
         }
         accountInfoRepository.delete(id);
     }

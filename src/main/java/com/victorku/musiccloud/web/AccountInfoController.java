@@ -1,6 +1,6 @@
 package com.victorku.musiccloud.web;
 
-import com.victorku.musiccloud.exceptions.AccountIsNotExists;
+import com.victorku.musiccloud.exceptions.AccountIsNotExistsException;
 import com.victorku.musiccloud.model.AccountInfo;
 import com.victorku.musiccloud.service.AccountInfoService;
 import com.victorku.musiccloud.web.model.AccountInfoDTO;
@@ -32,7 +32,7 @@ public class AccountInfoController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteAccountInfo(@PathVariable("id") Long accountInfoId) throws AccountIsNotExists {
+    public void deleteAccountInfo(@PathVariable("id") Long accountInfoId) throws AccountIsNotExistsException {
         accountInfoService.deleteAccountInfoById(accountInfoId);
     }
 

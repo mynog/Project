@@ -1,6 +1,6 @@
 package com.victorku.musiccloud.web;
 
-import com.victorku.musiccloud.exceptions.TrackIsNotExists;
+import com.victorku.musiccloud.exceptions.TrackIsNotExistsException;
 import com.victorku.musiccloud.model.Track;
 import com.victorku.musiccloud.service.TrackService;
 import com.victorku.musiccloud.web.model.ErrorResponseBody;
@@ -30,7 +30,7 @@ public class TrackController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteTrack(@PathVariable("id") Long trackId) throws TrackIsNotExists {
+    public void deleteTrack(@PathVariable("id") Long trackId) throws TrackIsNotExistsException {
         trackService.deleteTrackById(trackId);
     }
 

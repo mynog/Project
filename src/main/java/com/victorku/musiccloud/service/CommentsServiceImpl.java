@@ -1,6 +1,6 @@
 package com.victorku.musiccloud.service;
 
-import com.victorku.musiccloud.exceptions.CommentsIsNotExists;
+import com.victorku.musiccloud.exceptions.CommentsIsNotExistsException;
 import com.victorku.musiccloud.model.Comments;
 import com.victorku.musiccloud.repository.CommentsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +19,9 @@ public class CommentsServiceImpl implements CommentsService {
     }
 
     @Override
-    public void deleteCommentsById(Long id) throws CommentsIsNotExists {
+    public void deleteCommentsById(Long id) throws CommentsIsNotExistsException {
         if(!commentsRepository.exists(id)){
-            throw new CommentsIsNotExists();
+            throw new CommentsIsNotExistsException();
         }
         commentsRepository.delete(id);
     }

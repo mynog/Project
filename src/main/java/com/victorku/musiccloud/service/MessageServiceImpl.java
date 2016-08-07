@@ -1,6 +1,6 @@
 package com.victorku.musiccloud.service;
 
-import com.victorku.musiccloud.exceptions.MessageIsNotExists;
+import com.victorku.musiccloud.exceptions.MessageIsNotExistsException;
 import com.victorku.musiccloud.model.Message;
 import com.victorku.musiccloud.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +18,9 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public void deleteMessageById(Long id) throws MessageIsNotExists {
+    public void deleteMessageById(Long id) throws MessageIsNotExistsException {
         if(!messageRepository.exists(id)){
-            throw new MessageIsNotExists();
+            throw new MessageIsNotExistsException();
         }
         messageRepository.delete(id);
     }

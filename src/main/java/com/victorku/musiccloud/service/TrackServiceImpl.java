@@ -1,6 +1,6 @@
 package com.victorku.musiccloud.service;
 
-import com.victorku.musiccloud.exceptions.TrackIsNotExists;
+import com.victorku.musiccloud.exceptions.TrackIsNotExistsException;
 import com.victorku.musiccloud.model.Track;
 import com.victorku.musiccloud.repository.TrackRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +18,9 @@ public class TrackServiceImpl implements TrackService {
     }
 
     @Override
-    public void deleteTrackById(Long id) throws TrackIsNotExists {
+    public void deleteTrackById(Long id) throws TrackIsNotExistsException {
         if(!trackRepository.exists(id)){
-            throw new TrackIsNotExists();
+            throw new TrackIsNotExistsException();
         }
         trackRepository.delete(id);
     }

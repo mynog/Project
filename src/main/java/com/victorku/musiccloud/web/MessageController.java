@@ -1,6 +1,6 @@
 package com.victorku.musiccloud.web;
 
-import com.victorku.musiccloud.exceptions.MessageIsNotExists;
+import com.victorku.musiccloud.exceptions.MessageIsNotExistsException;
 import com.victorku.musiccloud.model.Message;
 import com.victorku.musiccloud.service.MessageService;
 import com.victorku.musiccloud.web.model.DateDTO;
@@ -31,7 +31,7 @@ public class MessageController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteMessage(@PathVariable("id") Long messageId) throws MessageIsNotExists {
+    public void deleteMessage(@PathVariable("id") Long messageId) throws MessageIsNotExistsException {
         messageService.deleteMessageById(messageId);
     }
 

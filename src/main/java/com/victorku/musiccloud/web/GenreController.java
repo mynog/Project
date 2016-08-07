@@ -1,6 +1,6 @@
 package com.victorku.musiccloud.web;
 
-import com.victorku.musiccloud.exceptions.GernreIsNotExists;
+import com.victorku.musiccloud.exceptions.GernreIsNotExistsException;
 import com.victorku.musiccloud.model.Genre;
 import com.victorku.musiccloud.service.GenreService;
 import com.victorku.musiccloud.web.model.ErrorResponseBody;
@@ -30,7 +30,7 @@ public class GenreController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteGenre(@PathVariable("id") Long genreId) throws GernreIsNotExists {
+    public void deleteGenre(@PathVariable("id") Long genreId) throws GernreIsNotExistsException {
         genreService.deleteGenreById(genreId);
     }
 

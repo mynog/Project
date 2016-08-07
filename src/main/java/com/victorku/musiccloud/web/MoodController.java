@@ -1,6 +1,6 @@
 package com.victorku.musiccloud.web;
 
-import com.victorku.musiccloud.exceptions.MoodIsNotExists;
+import com.victorku.musiccloud.exceptions.MoodIsNotExistsException;
 import com.victorku.musiccloud.model.Mood;
 import com.victorku.musiccloud.service.MoodService;
 import com.victorku.musiccloud.web.model.ErrorResponseBody;
@@ -30,7 +30,7 @@ public class MoodController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteMood(@PathVariable("id") Long moodId) throws MoodIsNotExists {
+    public void deleteMood(@PathVariable("id") Long moodId) throws MoodIsNotExistsException {
         moodService.deleteMoodById(moodId);
     }
 

@@ -1,6 +1,6 @@
 package com.victorku.musiccloud.web;
 
-import com.victorku.musiccloud.exceptions.CommentsIsNotExists;
+import com.victorku.musiccloud.exceptions.CommentsIsNotExistsException;
 import com.victorku.musiccloud.model.Comments;
 import com.victorku.musiccloud.service.CommentsService;
 import com.victorku.musiccloud.web.model.CommentsDTO;
@@ -31,7 +31,7 @@ public class CommentsController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteComments(@PathVariable("id") Long commentsId) throws CommentsIsNotExists {
+    public void deleteComments(@PathVariable("id") Long commentsId) throws CommentsIsNotExistsException {
         commentsService.deleteCommentsById(commentsId);
     }
 

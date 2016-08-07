@@ -1,6 +1,6 @@
 package com.victorku.musiccloud.service;
 
-import com.victorku.musiccloud.exceptions.MoodIsNotExists;
+import com.victorku.musiccloud.exceptions.MoodIsNotExistsException;
 import com.victorku.musiccloud.model.Mood;
 import com.victorku.musiccloud.repository.MoodRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +18,9 @@ public class MoodServiceImpl implements MoodService {
     }
 
     @Override
-    public void deleteMoodById(Long id) throws MoodIsNotExists {
+    public void deleteMoodById(Long id) throws MoodIsNotExistsException {
         if(!moodRepository.exists(id)){
-            throw new MoodIsNotExists();
+            throw new MoodIsNotExistsException();
         }
         moodRepository.delete(id);
     }

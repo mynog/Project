@@ -1,8 +1,8 @@
 package com.victorku.musiccloud.service;
 
-import com.victorku.musiccloud.exceptions.AccountHasExist;
-import com.victorku.musiccloud.exceptions.AccountIsNotExists;
-import com.victorku.musiccloud.exceptions.AccountRoleIsNotExists;
+import com.victorku.musiccloud.exceptions.AccountHasExistsException;
+import com.victorku.musiccloud.exceptions.AccountIsNotExistsException;
+import com.victorku.musiccloud.exceptions.AccountRoleIsNotExistsException;
 import com.victorku.musiccloud.model.Account;
 import com.victorku.musiccloud.model.AccountRole;
 import com.victorku.musiccloud.repository.AccountRepository;
@@ -27,34 +27,34 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void deleteAccountById(Long id) throws AccountIsNotExists {
+    public void deleteAccountById(Long id) throws AccountIsNotExistsException {
 
         if(!accountRepository.exists(id)){
-            throw new AccountIsNotExists();
+            throw new AccountIsNotExistsException();
         }
         accountRepository.delete(id);
 
     }
 
     @Override
-    public Account createAccount(String email,String password) throws AccountHasExist {
+    public Account createAccount(String email,String password) throws AccountHasExistsException {
         Account account = accountRepository.findByEmail(email);
         if (account != null) {
-            throw new AccountHasExist();
+            throw new AccountHasExistsException();
         }
         account = new Account(email,password);
         return accountRepository.save(account);
     }
 
     @Override
-    public Account addAccountRole(Long accountId, Long roleId) throws AccountIsNotExists, AccountRoleIsNotExists {
+    public Account addAccountRole(Long accountId, Long roleId) throws AccountIsNotExistsException, AccountRoleIsNotExistsException {
         Account account = getAccountById(accountId);
         if (account == null) {
-            throw new AccountIsNotExists();
+            throw new AccountIsNotExistsException();
         }
         AccountRole accountRole = accountRoleService.getRoleById(roleId);
         if (accountRole == null) {
-            throw new AccountRoleIsNotExists();
+            throw new AccountRoleIsNotExistsException();
         }
         Set<AccountRole> accountRoles = account.getAccountRoles();
         if (accountRoles == null) {

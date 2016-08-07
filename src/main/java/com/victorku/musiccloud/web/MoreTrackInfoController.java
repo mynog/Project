@@ -1,6 +1,6 @@
 package com.victorku.musiccloud.web;
 
-import com.victorku.musiccloud.exceptions.MoreTrackInfoIsNotExists;
+import com.victorku.musiccloud.exceptions.MoreTrackInfoIsNotExistsException;
 import com.victorku.musiccloud.model.MoreTrackInfo;
 import com.victorku.musiccloud.service.MoreTrackInfoService;
 import com.victorku.musiccloud.web.model.ErrorResponseBody;
@@ -31,7 +31,7 @@ public class MoreTrackInfoController {
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteMoreTrackInfo(@PathVariable("id") Long moreTrackInfoId) throws MoreTrackInfoIsNotExists {
+    public void deleteMoreTrackInfo(@PathVariable("id") Long moreTrackInfoId) throws MoreTrackInfoIsNotExistsException {
         moreTrackInfoService.deleteMoreTrackInfoById(moreTrackInfoId);
     }
 

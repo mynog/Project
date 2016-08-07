@@ -1,6 +1,6 @@
 package com.victorku.musiccloud.service;
 
-import com.victorku.musiccloud.exceptions.GernreIsNotExists;
+import com.victorku.musiccloud.exceptions.GernreIsNotExistsException;
 import com.victorku.musiccloud.model.Genre;
 import com.victorku.musiccloud.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +18,9 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public void deleteGenreById(Long id) throws GernreIsNotExists {
+    public void deleteGenreById(Long id) throws GernreIsNotExistsException {
         if(!genreRepository.exists(id)){
-            throw new GernreIsNotExists();
+            throw new GernreIsNotExistsException();
         }
         genreRepository.delete(id);
     }

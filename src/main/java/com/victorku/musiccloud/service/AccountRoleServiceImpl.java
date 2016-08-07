@@ -1,7 +1,7 @@
 package com.victorku.musiccloud.service;
 
-import com.victorku.musiccloud.exceptions.AccountRoleHasExist;
-import com.victorku.musiccloud.exceptions.AccountRoleIsNotExists;
+import com.victorku.musiccloud.exceptions.AccountRoleHasExistsException;
+import com.victorku.musiccloud.exceptions.AccountRoleIsNotExistsException;
 import com.victorku.musiccloud.model.AccountRole;
 import com.victorku.musiccloud.repository.AccountRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,17 +20,17 @@ public class AccountRoleServiceImpl implements AccountRoleService {
     }
 
     @Override
-    public void deleteRoleById(Long id) throws AccountRoleIsNotExists {
+    public void deleteRoleById(Long id) throws AccountRoleIsNotExistsException {
         if(accountRoleRepository.exists(id)){
-            throw new AccountRoleIsNotExists();
+            throw new AccountRoleIsNotExistsException();
         }
     }
 
     @Override
-    public AccountRole createRole(String roleName) throws AccountRoleHasExist {
+    public AccountRole createRole(String roleName) throws AccountRoleHasExistsException {
         AccountRole accountRole = accountRoleRepository.findRoleByName(roleName);
         if (accountRole != null) {
-            throw new AccountRoleHasExist();
+            throw new AccountRoleHasExistsException();
         }
         accountRole = new AccountRole(roleName);
         return accountRoleRepository.save(accountRole);
