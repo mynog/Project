@@ -6,6 +6,7 @@ import com.victorku.musiccloud.model.AccountRole;
 import com.victorku.musiccloud.repository.AccountRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+// todo 2VK: remove to service/impl package
 
 @Service
 public class AccountRoleServiceImpl implements AccountRoleService {

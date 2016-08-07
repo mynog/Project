@@ -6,7 +6,6 @@ import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -54,10 +53,6 @@ public class AccountInfo {
 
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "accountInfos")
     private Set<Mood> accountInfomoods;
-
-
-    // todo 2VK: add Account ref
-    // todo 2VK: add Freinds ref
 
     public AccountInfo() {
     }

@@ -5,6 +5,7 @@ import com.victorku.musiccloud.model.Comments;
 import com.victorku.musiccloud.repository.CommentsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+// todo 2VK: ну ты понял...
 
 @Service
 public class CommentsServiceImpl implements CommentsService {

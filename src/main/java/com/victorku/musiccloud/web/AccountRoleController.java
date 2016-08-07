@@ -4,13 +4,13 @@ import com.victorku.musiccloud.exceptions.AccountRoleHasExist;
 import com.victorku.musiccloud.exceptions.AccountRoleIsNotExists;
 import com.victorku.musiccloud.model.AccountRole;
 import com.victorku.musiccloud.service.AccountRoleService;
-import com.victorku.musiccloud.web.model.AccountInfoDTO;
 import com.victorku.musiccloud.web.model.AccountRoleDTO;
 import com.victorku.musiccloud.web.model.ErrorResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+// todo 2VK: see AccountController changes
 
 @RestController
 @RequestMapping("/account_role")
