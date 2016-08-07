@@ -84,6 +84,6 @@ public class AccountController {
     }
 
     private ResponseEntity<ErrorResponseBody> getErrorResponseBody(ApplicationErrorTypes errorType) {
-        return new ResponseEntity<>(new ErrorResponseBody(1, errorType), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new ErrorResponseBody(errorType), HttpStatus.NOT_FOUND);
     }
 }

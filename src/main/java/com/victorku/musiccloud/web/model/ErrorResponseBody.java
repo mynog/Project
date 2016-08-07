@@ -11,9 +11,9 @@ public class ErrorResponseBody {
         this.message = message;
     }
 
-    public ErrorResponseBody(int code, ApplicationErrorTypes message) {
-        this.code = code;
-        this.message = message.toString();
+    public ErrorResponseBody(ApplicationErrorTypes message) {
+        this.code = message.getCode();
+        this.message = message.getMessage();
     }
 
     public int getCode() {
