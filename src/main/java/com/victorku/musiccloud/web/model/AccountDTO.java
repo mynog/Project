@@ -7,18 +7,23 @@ public class AccountDTO {
     private String email;
     private String password;
     private DateDTO dateCreate;
-    private Set<AccountRoleDTO> roles;
-    private Long accountInfoId;
+//    private Set<AccountRoleDTO> roles;
+//    private Long accountInfoId;
 
     public AccountDTO() {
     }
 
-    public AccountDTO(Long id, String email, String password, DateDTO dateCreate, Long accountInfoId) {
+    public AccountDTO(Long id, String email, String password, DateDTO dateCreate) {
         this.id = id;
         this.email = email;
         this.password = password;
-        this.dateCreate = dateCreate;
-        this.accountInfoId = accountInfoId;
+        if (dateCreate == null) {
+            this.dateCreate = null;
+        }
+        else {
+            this.dateCreate = dateCreate;
+        }
+
     }
 
     public Long getId() {
@@ -45,13 +50,13 @@ public class AccountDTO {
         this.password = password;
     }
 
-    public Set<AccountRoleDTO> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<AccountRoleDTO> roles) {
-        this.roles = roles;
-    }
+//    public Set<AccountRoleDTO> getRoles() {
+//        return roles;
+//    }
+//
+//    public void setRoles(Set<AccountRoleDTO> roles) {
+//        this.roles = roles;
+//    }
 
     public DateDTO getDateCreate() {
         return dateCreate;
@@ -61,11 +66,11 @@ public class AccountDTO {
         this.dateCreate = dateCreate;
     }
 
-    public Long getAccountInfoId() {
-        return accountInfoId;
-    }
-
-    public void setAccountInfoId(Long accountInfoId) {
-        this.accountInfoId = accountInfoId;
-    }
+//    public Long getAccountInfoId() {
+//        return accountInfoId;
+//    }
+//
+//    public void setAccountInfoId(Long accountInfoId) {
+//        this.accountInfoId = accountInfoId;
+//    }
 }

@@ -24,7 +24,7 @@ public class Account {
     @NotEmpty
     private String password;
 
-    @Column(name = "date_create")
+    @Column(name = "date_create", insertable = false, updatable = false)
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
     @DateTimeFormat(pattern = "yyyy/dd/mm")
     private LocalDate dateCreate;
@@ -40,9 +40,11 @@ public class Account {
 //    private AccountInfo accountInfo;
 
     public Account() {
+        this.dateCreate = new LocalDate();
     }
 
     public Account(String email, String password) {
+        this();
         this.email = email;
         this.password = password;
     }

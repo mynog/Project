@@ -5,19 +5,14 @@ import com.victorku.musiccloud.exceptions.AccountIsNotExistsException;
 import com.victorku.musiccloud.exceptions.AccountRoleIsNotExistsException;
 import com.victorku.musiccloud.exceptions.ApplicationErrorTypes;
 import com.victorku.musiccloud.model.Account;
-import com.victorku.musiccloud.model.AccountRole;
 import com.victorku.musiccloud.service.AccountService;
 import com.victorku.musiccloud.web.model.AccountDTO;
 import com.victorku.musiccloud.web.model.DateDTO;
 import com.victorku.musiccloud.web.model.ErrorResponseBody;
-import com.victorku.musiccloud.web.model.AccountRoleDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/account")
@@ -56,30 +51,24 @@ public class AccountController {
         return new ResponseEntity<>(convert(account), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<?> addAccountRole(@PathVariable("id") Long accountId, @RequestParam("roleId") Long roleId) {
-        Account account = null;
-        try {
-            account = accountService.addAccountRole(accountId, roleId);
-        } catch (AccountIsNotExistsException accountIsNotExists) {
-            return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_ID_NOT_FOUND);
-        } catch (AccountRoleIsNotExistsException accountRoleIsNotExists) {
-            return getErrorResponseBody(ApplicationErrorTypes.ROLE_ID_NOT_FOUND);
-        }
-        return new ResponseEntity<>(convert(account), HttpStatus.OK);
-    }
+//    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+//    public ResponseEntity<?> addAccountRole(@PathVariable("id") Long accountId, @RequestParam("roleId") Long roleId) {
+//        Account account = null;
+//        try {
+//            account = accountService.addAccountRole(accountId, roleId);
+//        } catch (AccountIsNotExistsException accountIsNotExists) {
+//            return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_ID_NOT_FOUND);
+//        } catch (AccountRoleIsNotExistsException accountRoleIsNotExists) {
+//            return getErrorResponseBody(ApplicationErrorTypes.ROLE_ID_NOT_FOUND);
+//        }
+//        return new ResponseEntity<>(convert(account), HttpStatus.OK);
+//    }
 
     private AccountDTO convert(Account dbModel) {
 
         if (dbModel == null) return null;
 
-        AccountDTO jsonModel = new AccountDTO(dbModel.getId(), dbModel.getEmail(), "******",new DateDTO(dbModel.getDateCreate()),null);
-//        Set<AccountRoleDTO> jsonRoles = new HashSet<>();
-//        for (AccountRole role : dbModel.getAccountRoles()) {
-//            jsonRoles.add(new AccountRoleDTO(role.getId(), role.getName()));
-//        }
-//
-//        jsonModel.setRoles(jsonRoles);
+        AccountDTO jsonModel = new AccountDTO(dbModel.getId(), dbModel.getEmail(), "******",new DateDTO(dbModel.getDateCreate()));
         return jsonModel;
     }
 
