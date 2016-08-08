@@ -1,12 +1,16 @@
 -- -----------------------------------------------------
--- Schema music_cloud
+-- Create hibernate_sequence
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS music_cloud ;
--- -----------------------------------------------------
--- Schema music_cloud
--- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS music_cloud DEFAULT CHARACTER SET utf8 ;
-USE music_cloud ;
+
+DROP SEQUENCE IF EXISTS hibernate_sequence;
+CREATE SEQUENCE hibernate_sequence
+  INCREMENT 1
+  MINVALUE 1
+  MAXVALUE 9223372036854775807
+  START 10000
+  CACHE 10000;
+ALTER TABLE hibernate_sequence
+  OWNER TO viktor_kulygin;
 
 -- -----------------------------------------------------
 -- Table `track`
@@ -14,7 +18,7 @@ USE music_cloud ;
 DROP TABLE IF EXISTS track ;
 
 CREATE TABLE IF NOT EXISTS track (
-  id INT NOT NULL,
+  id INT NOT NULL DEFAULT nextval('hibernate_sequence'),
   title VARCHAR(1024) NULL,
   artist VARCHAR(1024) NULL,
   album VARCHAR(1024) NULL,
@@ -32,7 +36,7 @@ CREATE TABLE IF NOT EXISTS track (
 DROP TABLE IF EXISTS genre ;
 
 CREATE TABLE IF NOT EXISTS genre (
-  id INT NOT NULL,
+  id INT NOT NULL DEFAULT nextval('hibernate_sequence'),
   name VARCHAR(45) NOT NULL,
   PRIMARY KEY (id))
 ;
@@ -72,10 +76,10 @@ CREATE INDEX fk_track_has_genre_track_idx ON track_has_genre (track_id ASC);
 DROP TABLE IF EXISTS account_info ;
 
 CREATE TABLE IF NOT EXISTS account_info (
-  id INT NOT NULL,
+  id INT NOT NULL DEFAULT nextval('hibernate_sequence'),
   firstname VARCHAR(45) NULL,
   lastname VARCHAR(45) NULL,
-  text VARCHAR(45) NULL,
+  nick VARCHAR(45) NULL,
   birthday DATE NULL,
   PRIMARY KEY (id))
 ;
@@ -87,7 +91,7 @@ CREATE TABLE IF NOT EXISTS account_info (
 DROP TABLE IF EXISTS account ;
 
 CREATE TABLE IF NOT EXISTS account (
-  id INT NOT NULL,
+  id INT NOT NULL DEFAULT nextval('hibernate_sequence'),
   email VARCHAR(45) NOT NULL,
   password VARCHAR(45) NOT NULL,
   account_info_id INT NOT NULL,
@@ -135,7 +139,7 @@ CREATE INDEX fk_account_info_has_account_info_account_info1_idx ON friends (acco
 DROP TABLE IF EXISTS mood ;
 
 CREATE TABLE IF NOT EXISTS mood (
-  id INT NOT NULL,
+  id INT NOT NULL DEFAULT nextval('hibernate_sequence'),
   name VARCHAR(45) NOT NULL,
   PRIMARY KEY (id))
 ;
@@ -183,7 +187,7 @@ CREATE INDEX fk_track_has_mood_account_info1_idx ON track_has_mood (account_info
 DROP TABLE IF EXISTS tracklist ;
 
 CREATE TABLE IF NOT EXISTS tracklist (
-  id INT NOT NULL,
+  id INT NOT NULL DEFAULT nextval('hibernate_sequence'),
   name VARCHAR(45) NOT NULL,
   date_create TIMESTAMP NOT NULL DEFAULT current_timestamp,
   account_info_id INT NOT NULL,
@@ -230,7 +234,7 @@ CREATE INDEX fk_tracklist_has_track_tracklist1_idx ON tracklist_has_track (track
 DROP TABLE IF EXISTS message ;
 
 CREATE TABLE IF NOT EXISTS message (
-  id INT NOT NULL,
+  id INT NOT NULL DEFAULT nextval('hibernate_sequence'),
   create_message TIMESTAMP NOT NULL DEFAULT current_timestamp,
   text VARCHAR(1024) NOT NULL,
   sender_one_id INT NULL,
@@ -280,12 +284,12 @@ CREATE INDEX fk_rating_account_info1_idx ON rating (account_info_id ASC);
 
 
 -- -----------------------------------------------------
--- Table `music_cloud`.`comments`
+-- Table `comments`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS comments ;
 
 CREATE TABLE IF NOT EXISTS comments (
-  id INT NOT NULL,
+  id INT NOT NULL DEFAULT nextval('hibernate_sequence'),
   track_id INT NOT NULL,
   text VARCHAR(45) NULL,
   parent_id INT NOT NULL,
@@ -322,7 +326,7 @@ CREATE INDEX fk_comments_account_info1_idx ON comments (account_info_id ASC);
 DROP TABLE IF EXISTS more_track_info ;
 
 CREATE TABLE IF NOT EXISTS more_track_info (
-  id INT NOT NULL,
+  id INT NOT NULL DEFAULT nextval('hibernate_sequence'),
   track_id INT NOT NULL,
   text VARCHAR(45) NULL,
   account_info_id INT NOT NULL,
@@ -350,7 +354,7 @@ CREATE INDEX fk_more_track_info_account_info1_idx ON more_track_info (account_in
 DROP TABLE IF EXISTS account_role ;
 
 CREATE TABLE IF NOT EXISTS account_role (
-  id INT NOT NULL,
+  id INT NOT NULL DEFAULT nextval('hibernate_sequence'),
   name VARCHAR(45) NOT NULL,
   PRIMARY KEY (id))
 ;

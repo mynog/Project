@@ -3,7 +3,7 @@
 -- -----------------------------------------------------
 
 INSERT INTO account_info
-  (id,firstname,lastname,text,birthday)
+  (id,firstname,lastname,nick,birthday)
     VALUES
       (1,'Виктор','Кулыгин','astonone','11.07.1994'),
       (2,'Евгений','Кираченко','sich','18.05.1994'),
