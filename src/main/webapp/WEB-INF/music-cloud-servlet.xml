@@ -48,7 +48,7 @@
         <property name="jpaProperties">
             <props>
                 <prop key="hibernate.dialect">
-                    org.hibernate.dialect.H2Dialect
+                    org.hibernate.dialect.H2Dialect.PostgreSQL9Dialect
                 </prop>
                 <prop key="hibernate.max_fetch_depth">3</prop>
                 <prop key="hibernate.jdbc.fetch_size">50</prop>
