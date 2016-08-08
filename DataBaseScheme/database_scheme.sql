@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS account (
   id INT NOT NULL DEFAULT nextval('hibernate_sequence'),
   email VARCHAR(45) NOT NULL,
   password VARCHAR(45) NOT NULL,
-  account_info_id INT NOT NULL,
+  account_info_id INT NULL,
   date_create TIMESTAMP NOT NULL DEFAULT current_timestamp,
   PRIMARY KEY (id),
   CONSTRAINT fk_account_account_info1
