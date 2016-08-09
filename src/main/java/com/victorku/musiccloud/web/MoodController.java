@@ -25,14 +25,19 @@ public class MoodController {
     public ResponseEntity<?> getMood(@PathVariable("id") Long moodId){
         Mood mood = moodService.getMoodById(moodId);
         if (mood == null) {
-            return new ResponseEntity<>(new ErrorResponseBody(1,"Mood ID is not found in DB"), HttpStatus.NOT_FOUND);
+            return getErrorResponseBody(ApplicationErrorTypes.MOOD_ID_NOT_FOUND);
         }
         return new ResponseEntity<>(convert(mood),HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteMood(@PathVariable("id") Long moodId) throws MoodIsNotExistsException {
-        moodService.deleteMoodById(moodId);
+    public ResponseEntity<?> deleteMood(@PathVariable("id") Long moodId) throws MoodIsNotExistsException {
+        try {
+            moodService.deleteMoodById(moodId);
+        }catch (MoodIsNotExistsException moodIsNotExists){
+            return getErrorResponseBody(ApplicationErrorTypes.MOOD_ID_NOT_FOUND);
+        }
+        return new ResponseEntity<>(null,HttpStatus.OK);
     }
 
     private MoodDTO convert(Mood dbModel){

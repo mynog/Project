@@ -1,10 +1,7 @@
 package com.victorku.musiccloud.web;
 
-import com.victorku.musiccloud.exceptions.AccountRoleHasExistsException;
-import com.victorku.musiccloud.exceptions.AccountRoleIsNotExistsException;
 import com.victorku.musiccloud.exceptions.ApplicationErrorTypes;
 import com.victorku.musiccloud.model.AccountRole;
-import com.victorku.musiccloud.model.UserRole;
 import com.victorku.musiccloud.service.AccountRoleService;
 import com.victorku.musiccloud.web.model.AccountRoleDTO;
 import com.victorku.musiccloud.web.model.ErrorResponseBody;

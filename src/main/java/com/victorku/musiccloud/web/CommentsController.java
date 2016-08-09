@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-// todo 2VK: и так понятно, что делать...
 
 @RestController
 @RequestMapping("/comments")
@@ -26,14 +25,19 @@ public class CommentsController {
     public ResponseEntity<?> getComments(@PathVariable("id") Long commentsId){
         Comments comments = commentsService.getCommentsById(commentsId);
         if (comments == null) {
-            return new ResponseEntity<>(new ErrorResponseBody(1,"Comments ID is not found in DB"), HttpStatus.NOT_FOUND);
+            return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_ID_NOT_FOUND);
         }
         return new ResponseEntity<>(convert(comments),HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteComments(@PathVariable("id") Long commentsId) throws CommentsIsNotExistsException {
-        commentsService.deleteCommentsById(commentsId);
+    public ResponseEntity<?> deleteComments(@PathVariable("id") Long commentsId) throws CommentsIsNotExistsException {
+        try {
+            commentsService.deleteCommentsById(commentsId);
+        }catch (CommentsIsNotExistsException commentsIsNotExists){
+            return getErrorResponseBody(ApplicationErrorTypes.COMMENT_ID_NOT_FOUND);
+        }
+        return new ResponseEntity<>(null,HttpStatus.OK);
     }
 
     private CommentsDTO convert(Comments dbModel){

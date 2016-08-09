@@ -26,14 +26,19 @@ public class MoreTrackInfoController {
     public ResponseEntity<?> getMoreTrackInfo(@PathVariable("id") Long moreTrackInfoId){
         MoreTrackInfo moreTrackInfo = moreTrackInfoService.getMoreTrackInfoById(moreTrackInfoId);
         if (moreTrackInfo == null) {
-            return new ResponseEntity<>(new ErrorResponseBody(1,"MoreTrackInfo ID is not found in DB"), HttpStatus.NOT_FOUND);
+            return getErrorResponseBody(ApplicationErrorTypes.MORE_TRACK_INFO_ID_NOT_FOUND);
         }
         return new ResponseEntity<>(convert(moreTrackInfo),HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteMoreTrackInfo(@PathVariable("id") Long moreTrackInfoId) throws MoreTrackInfoIsNotExistsException {
-        moreTrackInfoService.deleteMoreTrackInfoById(moreTrackInfoId);
+    public ResponseEntity<?> deleteMoreTrackInfo(@PathVariable("id") Long moreTrackInfoId) throws MoreTrackInfoIsNotExistsException {
+        try {
+            moreTrackInfoService.deleteMoreTrackInfoById(moreTrackInfoId);
+        }catch (MoreTrackInfoIsNotExistsException moreTrackInfoIsNotExists){
+            return getErrorResponseBody(ApplicationErrorTypes.MORE_TRACK_INFO_ID_NOT_FOUND);
+        }
+        return new ResponseEntity<>(null,HttpStatus.OK);
     }
 
     private MoreTrackInfoDTO convert(MoreTrackInfo dbModel){

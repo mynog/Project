@@ -25,14 +25,19 @@ public class TrackController {
     public ResponseEntity<?> getTrack(@PathVariable("id") Long trackId){
         Track track = trackService.getTrackById(trackId);
         if (track == null) {
-            return new ResponseEntity<>(new ErrorResponseBody(1,"Track ID is not found in DB"), HttpStatus.NOT_FOUND);
+            return getErrorResponseBody(ApplicationErrorTypes.TRACK_ID_NOT_FOUND);
         }
         return new ResponseEntity<>(convert(track),HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteTrack(@PathVariable("id") Long trackId) throws TrackIsNotExistsException {
-        trackService.deleteTrackById(trackId);
+    public ResponseEntity<?> deleteTrack(@PathVariable("id") Long trackId) throws TrackIsNotExistsException {
+        try {
+            trackService.deleteTrackById(trackId);
+        }catch (TrackIsNotExistsException trackIsNotExists){
+            return getErrorResponseBody(ApplicationErrorTypes.TRACK_ID_NOT_FOUND);
+        }
+        return new ResponseEntity<>(null,HttpStatus.OK);
     }
 
     private TrackDTO convert(Track dbModel){

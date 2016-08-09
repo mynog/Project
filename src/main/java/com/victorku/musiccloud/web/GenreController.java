@@ -25,14 +25,19 @@ public class GenreController {
     public ResponseEntity<?> getGenre(@PathVariable("id") Long genreId){
         Genre genre = genreService.getGenreById(genreId);
         if (genre == null) {
-            return new ResponseEntity<>(new ErrorResponseBody(1,"Genre ID is not found in DB"), HttpStatus.NOT_FOUND);
+            return getErrorResponseBody(ApplicationErrorTypes.GENRE_ID_NOT_FOUND);
         }
         return new ResponseEntity<>(convert(genre),HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteGenre(@PathVariable("id") Long genreId) throws GernreIsNotExistsException {
-        genreService.deleteGenreById(genreId);
+    public ResponseEntity<?> deleteGenre(@PathVariable("id") Long genreId) throws GernreIsNotExistsException {
+        try {
+            genreService.deleteGenreById(genreId);
+        }catch(GernreIsNotExistsException genreIsNotExists){
+            return getErrorResponseBody(ApplicationErrorTypes.GENRE_ID_NOT_FOUND);
+        }
+        return new ResponseEntity<>(null,HttpStatus.OK);
     }
 
     private GenreDTO convert(Genre dbModel){

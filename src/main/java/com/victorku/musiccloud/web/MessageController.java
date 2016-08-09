@@ -26,14 +26,19 @@ public class MessageController {
     public ResponseEntity<?> getMessage(@PathVariable("id") Long messageId){
         Message message = messageService.getMessageById(messageId);
         if (message == null) {
-            return new ResponseEntity<>(new ErrorResponseBody(1,"Message ID is not found in DB"), HttpStatus.NOT_FOUND);
+            return getErrorResponseBody(ApplicationErrorTypes.MESSAGE_ID_NOT_FOUND);
         }
         return new ResponseEntity<>(convert(message),HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteMessage(@PathVariable("id") Long messageId) throws MessageIsNotExistsException {
-        messageService.deleteMessageById(messageId);
+    public ResponseEntity<?> deleteMessage(@PathVariable("id") Long messageId) throws MessageIsNotExistsException {
+        try {
+            messageService.deleteMessageById(messageId);
+        }catch (MessageIsNotExistsException messageIsNotExists){
+            return getErrorResponseBody(ApplicationErrorTypes.MESSAGE_ID_NOT_FOUND);
+        }
+        return new ResponseEntity<>(null,HttpStatus.OK);
     }
 
     private MessageDTO convert(Message dbModel){

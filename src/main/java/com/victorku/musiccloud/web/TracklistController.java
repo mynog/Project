@@ -26,14 +26,19 @@ public class TracklistController {
     public ResponseEntity<?> getTracklist(@PathVariable("id") Long tracklistId){
         Tracklist tracklist = tracklistService.getTracklistById(tracklistId);
         if (tracklist == null) {
-            return new ResponseEntity<>(new ErrorResponseBody(1,"Tracklist ID is not found in DB"), HttpStatus.NOT_FOUND);
+            return getErrorResponseBody(ApplicationErrorTypes.TRACKLIST_ID_NOT_FOUND);
         }
         return new ResponseEntity<>(convert(tracklist),HttpStatus.OK);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteTracklist(@PathVariable("id") Long tracklistId) throws TracklistIsNotExistsException {
-        tracklistService.deleteTracklistById(tracklistId);
+    public ResponseEntity<?> deleteTracklist(@PathVariable("id") Long tracklistId) throws TracklistIsNotExistsException {
+        try {
+            tracklistService.deleteTracklistById(tracklistId);
+        }catch (TracklistIsNotExistsException tracklistIsNotExists){
+            return getErrorResponseBody(ApplicationErrorTypes.TRACKLIST_ID_NOT_FOUND);
+        }
+        return new ResponseEntity<>(null,HttpStatus.OK);
     }
 
     private TracklistDTO convert(Tracklist dbModel){
