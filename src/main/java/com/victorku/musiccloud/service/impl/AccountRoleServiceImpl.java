@@ -21,23 +21,6 @@ public class AccountRoleServiceImpl implements AccountRoleService {
     }
 
     @Override
-    public void deleteRoleById(Long id) throws AccountRoleIsNotExistsException {
-        if(accountRoleRepository.exists(id)){
-            throw new AccountRoleIsNotExistsException();
-        }
-    }
-
-    @Override
-    public AccountRole createRole(UserRole roleName) throws AccountRoleHasExistsException {
-        AccountRole accountRole = accountRoleRepository.findRoleByName(roleName);
-        if (accountRole != null) {
-            throw new AccountRoleHasExistsException();
-        }
-        accountRole = new AccountRole(roleName);
-        return accountRoleRepository.save(accountRole);
-    }
-
-    @Override
     public AccountRole getRoleByName(UserRole user) {
         return accountRoleRepository.findRoleByName(user);
     }

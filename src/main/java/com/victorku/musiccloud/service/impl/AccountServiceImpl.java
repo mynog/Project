@@ -51,19 +51,19 @@ public class AccountServiceImpl implements AccountService {
         return accountRepository.save(account);
     }
 
-    @Override
-    public Account addAccountRole(Long accountId, Long roleId) throws AccountIsNotExistsException, AccountRoleIsNotExistsException {
-        Account account = getAccountById(accountId);
-        if (account == null) {
-            throw new AccountIsNotExistsException();
-        }
-        AccountRole accountRole = accountRoleService.getRoleById(roleId);
-        if (accountRole == null) {
-            throw new AccountRoleIsNotExistsException();
-        }
-        Set<AccountRole> accountRoles = account.getAccountRoles();
-        accountRoles.add(accountRole);
-        account.setAccountRoles(accountRoles);
-        return accountRepository.save(account);
-    }
+//    @Override
+//    public Account addAccountRole(Long accountId, Long roleId) throws AccountIsNotExistsException, AccountRoleIsNotExistsException {
+//        Account account = getAccountById(accountId);
+//        if (account == null) {
+//            throw new AccountIsNotExistsException();
+//        }
+//        AccountRole accountRole = accountRoleService.getRoleById(roleId);
+//        if (accountRole == null) {
+//            throw new AccountRoleIsNotExistsException();
+//        }
+//        Set<AccountRole> accountRoles = account.getAccountRoles();
+//        accountRoles.add(accountRole);
+//        account.setAccountRoles(accountRoles);
+//        return accountRepository.save(account);
+//    }
 }

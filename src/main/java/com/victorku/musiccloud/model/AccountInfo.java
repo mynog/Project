@@ -61,6 +61,13 @@ public class AccountInfo {
     public AccountInfo() {
     }
 
+    public AccountInfo(String firstName, String lastName, String nick, LocalDate birthday) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.nick = nick;
+        this.birthday = birthday;
+    }
+
     public Long getId() {
         return id;
     }

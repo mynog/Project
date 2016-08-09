@@ -13,5 +13,5 @@ public interface AccountService {
 
     Account createAccount(String email, String password) throws AccountHasExistsException;
 
-    Account addAccountRole(Long accountId,Long roleId) throws AccountIsNotExistsException, AccountRoleIsNotExistsException;
+//    Account addAccountRole(Long accountId,Long roleId) throws AccountIsNotExistsException, AccountRoleIsNotExistsException;
 }

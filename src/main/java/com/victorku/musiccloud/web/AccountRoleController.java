@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-// todo 2VK: see AccountController changes
 
 @RestController
 @RequestMapping("/account_role")
@@ -25,7 +24,7 @@ public class AccountRoleController {
     public ResponseEntity<?> getAccountRole(@PathVariable("id") Long accountRoleId){
         AccountRole accountRole = accountRoleService.getRoleById(accountRoleId);
         if (accountRole == null) {
-            return new ResponseEntity<>(new ErrorResponseBody(1,"Role ID is not found in DB"), HttpStatus.NOT_FOUND);
+            return getErrorResponseBody(ApplicationErrorTypes.ROLE_ID_NOT_FOUND);
         }
         return new ResponseEntity<>(convert(accountRole),HttpStatus.OK);
     }

@@ -9,9 +9,5 @@ public interface AccountRoleService {
 
     AccountRole getRoleById(Long id);
 
-    void deleteRoleById(Long id) throws AccountRoleIsNotExistsException;
-
-    AccountRole createRole(UserRole roleName) throws AccountRoleHasExistsException;
-
     AccountRole getRoleByName(UserRole user);
 }

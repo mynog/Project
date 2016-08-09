@@ -56,18 +56,18 @@ public class AccountController {
         return new ResponseEntity<>(convert(account), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public ResponseEntity<?> addAccountRole(@PathVariable("id") Long accountId, @RequestParam("roleId") Long roleId) {
-        Account account = null;
-        try {
-            account = accountService.addAccountRole(accountId, roleId);
-        } catch (AccountIsNotExistsException accountIsNotExists) {
-            return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_ID_NOT_FOUND);
-        } catch (AccountRoleIsNotExistsException accountRoleIsNotExists) {
-            return getErrorResponseBody(ApplicationErrorTypes.ROLE_ID_NOT_FOUND);
-        }
-        return new ResponseEntity<>(convert(account), HttpStatus.OK);
-    }
+//    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+//    public ResponseEntity<?> addAccountRole(@PathVariable("id") Long accountId, @RequestParam("roleId") Long roleId) {
+//        Account account = null;
+//        try {
+//            account = accountService.addAccountRole(accountId, roleId);
+//        } catch (AccountIsNotExistsException accountIsNotExists) {
+//            return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_ID_NOT_FOUND);
+//        } catch (AccountRoleIsNotExistsException accountRoleIsNotExists) {
+//            return getErrorResponseBody(ApplicationErrorTypes.ROLE_ID_NOT_FOUND);
+//        }
+//        return new ResponseEntity<>(convert(account), HttpStatus.OK);
+//    }
 
     private AccountDTO convert(Account dbModel) {
 
