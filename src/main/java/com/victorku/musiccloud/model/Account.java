@@ -35,9 +35,9 @@ public class Account {
             inverseJoinColumns = @JoinColumn(name = "account_role_id"))
     private Set<AccountRole> accountRoles;
 
-//    @OneToOne(cascade = CascadeType.ALL,mappedBy = "account")
-//    @JoinColumn(name="account_info_id")
-//    private AccountInfo accountInfo;
+    @OneToOne(cascade = CascadeType.ALL,mappedBy = "account")
+    @JoinColumn(name="account_info_id")
+    private AccountInfo accountInfo;
 
     public Account() {this.dateCreate = new LocalDate();}
 
@@ -83,7 +83,7 @@ public class Account {
         this.dateCreate = dateCreate;
     }
 
-//    public AccountInfo getAccountInfo() {return accountInfo;}
-//
-//    public void setAccountInfo(AccountInfo accountInfo) {this.accountInfo = accountInfo;}
+    public AccountInfo getAccountInfo() {return accountInfo;}
+
+    public void setAccountInfo(AccountInfo accountInfo) {this.accountInfo = accountInfo;}
 }

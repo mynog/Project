@@ -8,7 +8,7 @@ public class AccountDTO {
     private String password;
     private DateDTO dateCreate;
     private Set<AccountRoleDTO> roles;
-    private Long accountInfoId;
+    private AccountInfoDTO accountInfo;
 
     public AccountDTO() {
     }
@@ -20,7 +20,7 @@ public class AccountDTO {
         this.email = email;
         this.password = password;
         this.dateCreate = dateCreate;
-        //this.accountInfoId = accountInfoId;
+        //this.accountInfo = accountInfo;
     }
 
     public Long getId() {
@@ -63,11 +63,11 @@ public class AccountDTO {
         this.dateCreate = dateCreate;
     }
 
-    public Long getAccountInfoId() {
-        return accountInfoId;
+    public AccountInfoDTO getAccountInfo() {
+        return accountInfo;
     }
 
-    public void setAccountInfoId(Long accountInfoId) {
-        this.accountInfoId = accountInfoId;
+    public void setAccountInfo(AccountInfoDTO accountInfo) {
+        this.accountInfo = accountInfo;
     }
 }

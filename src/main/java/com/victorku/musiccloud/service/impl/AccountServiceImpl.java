@@ -4,11 +4,16 @@ import com.victorku.musiccloud.exceptions.AccountHasExistsException;
 import com.victorku.musiccloud.exceptions.AccountIsNotExistsException;
 import com.victorku.musiccloud.exceptions.AccountRoleIsNotExistsException;
 import com.victorku.musiccloud.model.Account;
+import com.victorku.musiccloud.model.AccountInfo;
 import com.victorku.musiccloud.model.AccountRole;
 import com.victorku.musiccloud.model.UserRole;
 import com.victorku.musiccloud.repository.AccountRepository;
+import com.victorku.musiccloud.service.AccountInfoService;
 import com.victorku.musiccloud.service.AccountRoleService;
 import com.victorku.musiccloud.service.AccountService;
+import com.victorku.musiccloud.web.model.AccountInfoDTO;
+import com.victorku.musiccloud.web.model.DateDTO;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +27,8 @@ public class AccountServiceImpl implements AccountService {
     private AccountRepository accountRepository;
     @Autowired
     private AccountRoleService accountRoleService;
+    @Autowired
+    private AccountInfoService accountInfoService;
 
     @Override
     public Account getAccountById(Long id) {
@@ -48,6 +55,13 @@ public class AccountServiceImpl implements AccountService {
         Set<AccountRole> accountRoles = new HashSet<>();
         accountRoles.add(accountRoleService.getRoleByName(UserRole.USER));
         account.setAccountRoles(accountRoles);
+        return accountRepository.save(account);
+    }
+
+    @Override
+    public Account addAccountInfo(Account account, String firstName, String lastName, String nick, LocalDate birthday) {
+        AccountInfo accountInfo = new AccountInfo(firstName,lastName,nick,birthday);
+        account.setAccountInfo(accountInfo);
         return accountRepository.save(account);
     }
 

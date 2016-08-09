@@ -1,5 +1,6 @@
 package com.victorku.musiccloud.web.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.joda.time.LocalDate;
 
 public class DateDTO {
@@ -14,6 +15,12 @@ public class DateDTO {
         year = date.getYear();
         month = date.getMonthOfYear();
         day = date.getDayOfMonth();
+    }
+
+    @JsonIgnore
+    public LocalDate getLocalDateData()
+    {
+        return new LocalDate(year,month,day);
     }
 
     public Integer getYear() {

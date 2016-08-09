@@ -6,10 +6,7 @@ import com.victorku.musiccloud.exceptions.ApplicationErrorTypes;
 import com.victorku.musiccloud.model.Account;
 import com.victorku.musiccloud.model.AccountRole;
 import com.victorku.musiccloud.service.AccountService;
-import com.victorku.musiccloud.web.model.AccountDTO;
-import com.victorku.musiccloud.web.model.DateDTO;
-import com.victorku.musiccloud.web.model.ErrorResponseBody;
-import com.victorku.musiccloud.web.model.AccountRoleDTO;
+import com.victorku.musiccloud.web.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,6 +49,16 @@ public class AccountController {
         } catch (AccountHasExistsException accountHasExist) {
             return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_HAS_EXISTS);
         }
+        return new ResponseEntity<>(convert(account), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<?> addAccountInfo(@PathVariable("id") Long accountId, @RequestBody AccountInfoDTO info) {
+        Account account = accountService.getAccountById(accountId);
+        if (account == null) {
+            return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_ID_NOT_FOUND);
+        }
+        account = accountService.addAccountInfo(account,info.getFirstName(),info.getLastName(),info.getNick(),info.getBirthday().getLocalDateData());
         return new ResponseEntity<>(convert(account), HttpStatus.OK);
     }
 
