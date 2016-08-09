@@ -54,8 +54,8 @@ public class AccountInfo {
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "accountInfos")
     private Set<Mood> accountInfomoods;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    private Account account;
+//    @OneToOne(fetch = FetchType.LAZY)
+//    private Account account;
 
 
     public AccountInfo() {
@@ -145,11 +145,11 @@ public class AccountInfo {
         this.accountInfomoods = accountInfomoods;
     }
 
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
+//    public Account getAccount() {
+//        return account;
+//    }
+//
+//    public void setAccount(Account account) {
+//        this.account = account;
+//    }
 }

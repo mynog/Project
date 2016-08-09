@@ -38,7 +38,7 @@ public class AccountInfoController {
     }
 
     private AccountInfoDTO convert (AccountInfo dbModel) {
-        AccountInfoDTO jsonModel = new AccountInfoDTO(dbModel.getId(), dbModel.getFirstName(), dbModel.getLastName(), dbModel.getNick(), new DateDTO(dbModel.getBirthday()));
+        AccountInfoDTO jsonModel = new AccountInfoDTO(dbModel.getId(), dbModel.getFirstName(), dbModel.getLastName(),dbModel.getNick(), new DateDTO(dbModel.getBirthday()));
         return jsonModel;
     }
 

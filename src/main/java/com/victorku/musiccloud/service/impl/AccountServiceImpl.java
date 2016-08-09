@@ -5,6 +5,7 @@ import com.victorku.musiccloud.exceptions.AccountIsNotExistsException;
 import com.victorku.musiccloud.exceptions.AccountRoleIsNotExistsException;
 import com.victorku.musiccloud.model.Account;
 import com.victorku.musiccloud.model.AccountRole;
+import com.victorku.musiccloud.model.UserRole;
 import com.victorku.musiccloud.repository.AccountRepository;
 import com.victorku.musiccloud.service.AccountRoleService;
 import com.victorku.musiccloud.service.AccountService;
@@ -44,6 +45,9 @@ public class AccountServiceImpl implements AccountService {
             throw new AccountHasExistsException();
         }
         account = new Account(email,password);
+        Set<AccountRole> accountRoles = new HashSet<>();
+        accountRoles.add(accountRoleService.getRoleByName(UserRole.USER));
+        account.setAccountRoles(accountRoles);
         return accountRepository.save(account);
     }
 
@@ -53,16 +57,13 @@ public class AccountServiceImpl implements AccountService {
         if (account == null) {
             throw new AccountIsNotExistsException();
         }
-//        AccountRole accountRole = accountRoleService.getRoleById(roleId);
-//        if (accountRole == null) {
-//            throw new AccountRoleIsNotExistsException();
-//        }
-//        Set<AccountRole> accountRoles = account.getAccountRoles();
-//        if (accountRoles == null) {
-//            accountRoles = new HashSet<AccountRole>();
-//        }
-//        accountRoles.add(accountRole);
-//        account.setAccountRoles(accountRoles);
+        AccountRole accountRole = accountRoleService.getRoleById(roleId);
+        if (accountRole == null) {
+            throw new AccountRoleIsNotExistsException();
+        }
+        Set<AccountRole> accountRoles = account.getAccountRoles();
+        accountRoles.add(accountRole);
+        account.setAccountRoles(accountRoles);
         return accountRepository.save(account);
     }
 }

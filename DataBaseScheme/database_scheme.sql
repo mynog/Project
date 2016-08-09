@@ -1,4 +1,11 @@
 -- -----------------------------------------------------
+-- Scheme music_cloud
+-- -----------------------------------------------------
+
+DROP SCHEMA IF EXISTS music_cloud CASCADE;
+CREATE SCHEMA IF NOT EXISTS music_cloud;
+
+-- -----------------------------------------------------
 -- Create hibernate_sequence
 -- -----------------------------------------------------
 
@@ -190,7 +197,7 @@ CREATE TABLE IF NOT EXISTS tracklist (
   id INT NOT NULL DEFAULT nextval('hibernate_sequence'),
   name VARCHAR(45) NOT NULL,
   date_create TIMESTAMP NOT NULL DEFAULT current_timestamp,
-  account_info_id INT NOT NULL,
+  account_info_id INT NULL,
   PRIMARY KEY (id),
   CONSTRAINT fk_tracklist_account_info1
     FOREIGN KEY (account_info_id)
@@ -290,11 +297,11 @@ DROP TABLE IF EXISTS comments ;
 
 CREATE TABLE IF NOT EXISTS comments (
   id INT NOT NULL DEFAULT nextval('hibernate_sequence'),
-  track_id INT NOT NULL,
+  track_id INT NULL,
   text VARCHAR(45) NULL,
-  parent_id INT NOT NULL,
+  parent_id INT NULL,
   order_comments INT NULL,
-  account_info_id INT NOT NULL,
+  account_info_id INT NULL,
   PRIMARY KEY (id),
   CONSTRAINT fk_comments_track1
     FOREIGN KEY (track_id)
@@ -327,9 +334,9 @@ DROP TABLE IF EXISTS more_track_info ;
 
 CREATE TABLE IF NOT EXISTS more_track_info (
   id INT NOT NULL DEFAULT nextval('hibernate_sequence'),
-  track_id INT NOT NULL,
-  text VARCHAR(45) NULL,
-  account_info_id INT NOT NULL,
+  track_id INT NULL,
+  text VARCHAR(45) NOT NULL,
+  account_info_id INT NULL,
   PRIMARY KEY (id),
   CONSTRAINT fk_more_track_info_track1
     FOREIGN KEY (track_id)

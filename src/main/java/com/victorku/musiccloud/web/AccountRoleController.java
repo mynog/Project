@@ -4,6 +4,7 @@ import com.victorku.musiccloud.exceptions.AccountRoleHasExistsException;
 import com.victorku.musiccloud.exceptions.AccountRoleIsNotExistsException;
 import com.victorku.musiccloud.exceptions.ApplicationErrorTypes;
 import com.victorku.musiccloud.model.AccountRole;
+import com.victorku.musiccloud.model.UserRole;
 import com.victorku.musiccloud.service.AccountRoleService;
 import com.victorku.musiccloud.web.model.AccountRoleDTO;
 import com.victorku.musiccloud.web.model.ErrorResponseBody;
@@ -29,18 +30,8 @@ public class AccountRoleController {
         return new ResponseEntity<>(convert(accountRole),HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteRole(@PathVariable("id") Long accountRoleId) throws AccountRoleIsNotExistsException {
-        accountRoleService.deleteRoleById(accountRoleId);
-    }
-
-    @RequestMapping(value = "/", method = RequestMethod.PUT)
-    public AccountRoleDTO createAccountRole(@RequestParam("name") String roleName) throws AccountRoleHasExistsException {
-        return convert(accountRoleService.createRole(roleName));
-    }
-
     private AccountRoleDTO convert(AccountRole dbModel){
-        AccountRoleDTO jsonModel = new AccountRoleDTO(dbModel.getId(),dbModel.getName());
+        AccountRoleDTO jsonModel = new AccountRoleDTO(dbModel.getId(),dbModel.getName().name());
         return jsonModel;
     }
 

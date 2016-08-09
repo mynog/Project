@@ -24,36 +24,32 @@ public class Account {
     @NotEmpty
     private String password;
 
-    @Column(name = "date_create")
+    @Column(name = "date_create", insertable = false, updatable = false)
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentLocalDate")
     @DateTimeFormat(pattern = "yyyy/dd/mm")
     private LocalDate dateCreate;
 
-//    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @JoinTable(name = "account_has_account_role",
-//            joinColumns = @JoinColumn(name = "account_id"),
-//            inverseJoinColumns = @JoinColumn(name = "account_role_id"))
-//    private Set<AccountRole> accountRoles;
-//
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "account_has_account_role",
+            joinColumns = @JoinColumn(name = "account_id"),
+            inverseJoinColumns = @JoinColumn(name = "account_role_id"))
+    private Set<AccountRole> accountRoles;
+
 //    @OneToOne(cascade = CascadeType.ALL,mappedBy = "account")
 //    @JoinColumn(name="account_info_id")
 //    private AccountInfo accountInfo;
 
-    public Account() {
-    }
+    public Account() {this.dateCreate = new LocalDate();}
 
     public Account(String email, String password) {
+        this();
         this.email = email;
         this.password = password;
     }
 
-//    public Set<AccountRole> getAccountRoles() {
-//        return accountRoles;
-//    }
-//
-//    public void setAccountRoles(Set<AccountRole> accountRoles) {
-//        this.accountRoles = accountRoles;
-//    }
+    public Set<AccountRole> getAccountRoles() {return accountRoles;}
+
+    public void setAccountRoles(Set<AccountRole> accountRoles) {this.accountRoles = accountRoles;}
 
     public Long getId() {
         return id;
@@ -87,11 +83,7 @@ public class Account {
         this.dateCreate = dateCreate;
     }
 
-//    public AccountInfo getAccountInfo() {
-//        return accountInfo;
-//    }
+//    public AccountInfo getAccountInfo() {return accountInfo;}
 //
-//    public void setAccountInfo(AccountInfo accountInfo) {
-//        this.accountInfo = accountInfo;
-//    }
+//    public void setAccountInfo(AccountInfo accountInfo) {this.accountInfo = accountInfo;}
 }

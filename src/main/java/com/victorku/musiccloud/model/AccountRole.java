@@ -13,20 +13,19 @@ public class AccountRole {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(name = "name")
-    @NotEmpty
-    private String name;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "account_has_account_role",
-            joinColumns = @JoinColumn(name = "account_role_id"),
-            inverseJoinColumns = @JoinColumn(name = "account_id"))
+    @Column(name = "name")
+    @Enumerated(EnumType.STRING)
+    @NotEmpty
+    private UserRole name;
+
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "accountRoles")
     private Set<Account> accounts;
 
     public AccountRole() {
     }
 
-    public AccountRole(String name) {
+    public AccountRole(UserRole name) {
         this.name = name;
     }
 
@@ -46,11 +45,11 @@ public class AccountRole {
         this.id = id;
     }
 
-    public String getName() {
+    public UserRole getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(UserRole name) {
         this.name = name;
     }
 }
