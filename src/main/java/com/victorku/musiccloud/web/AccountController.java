@@ -7,6 +7,7 @@ import com.victorku.musiccloud.model.Account;
 import com.victorku.musiccloud.model.AccountRole;
 import com.victorku.musiccloud.service.AccountService;
 import com.victorku.musiccloud.web.model.*;
+import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -58,7 +59,8 @@ public class AccountController {
         if (account == null) {
             return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_ID_NOT_FOUND);
         }
-        account = accountService.addAccountInfo(account,info.getFirstName(),info.getLastName(),info.getNick(),info.getBirthday().getLocalDateData());
+        LocalDate birthday = info.getBirthday() == null ? null : info.getBirthday().getLocalDateData();
+        account = accountService.addAccountInfo(account,info.getFirstName(),info.getLastName(),info.getNick(),birthday);
         return new ResponseEntity<>(convert(account), HttpStatus.OK);
     }
 
@@ -79,9 +81,7 @@ public class AccountController {
 
         if (dbModel == null) return null;
 
-        AccountDTO jsonModel = new AccountDTO(dbModel.getId(), dbModel.getEmail(), "******",new DateDTO(dbModel.getDateCreate())
-        //        ,dbModel.getAccountInfo().getId()
-        );
+        AccountDTO jsonModel = new AccountDTO(dbModel.getId(), dbModel.getEmail(), "******",new DateDTO(dbModel.getDateCreate()));
         Set<AccountRoleDTO> jsonRoles = new HashSet<>();
         if (dbModel.getAccountRoles() != null) {
             for (AccountRole role : dbModel.getAccountRoles()) {
@@ -90,6 +90,8 @@ public class AccountController {
         }
 
         jsonModel.setRoles(jsonRoles);
+        AccountInfoDTO accountInfoDTO = new AccountInfoDTO(dbModel.getAccountInfo());
+        jsonModel.setAccountInfo(accountInfoDTO);
         return jsonModel;
     }
 

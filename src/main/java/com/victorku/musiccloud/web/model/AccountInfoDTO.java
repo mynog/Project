@@ -1,5 +1,7 @@
 package com.victorku.musiccloud.web.model;
 
+import com.victorku.musiccloud.model.AccountInfo;
+
 public class AccountInfoDTO {
 
     private Long id;
@@ -17,6 +19,17 @@ public class AccountInfoDTO {
         this.lastName = lastName;
         this.nick = nick;
         this.birthday = birthday;
+    }
+
+    public AccountInfoDTO(AccountInfo accountInfo) {
+        if (accountInfo == null) {
+            return;
+        }
+        this.id=accountInfo.getId();
+        this.firstName=accountInfo.getFirstName();
+        this.lastName=accountInfo.getLastName();
+        this.nick=accountInfo.getNick();
+        this.birthday=new DateDTO(accountInfo.getBirthday());
     }
 
     public Long getId() {

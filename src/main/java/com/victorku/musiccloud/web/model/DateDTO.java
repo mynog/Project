@@ -12,6 +12,9 @@ public class DateDTO {
     }
 
     public DateDTO(LocalDate date) {
+        if (date == null) {
+            return;
+        }
         year = date.getYear();
         month = date.getMonthOfYear();
         day = date.getDayOfMonth();

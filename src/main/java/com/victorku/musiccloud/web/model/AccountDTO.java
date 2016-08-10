@@ -13,14 +13,11 @@ public class AccountDTO {
     public AccountDTO() {
     }
 
-    public AccountDTO(Long id, String email, String password, DateDTO dateCreate
-    //        , Long accountInfoId
-    ) {
+    public AccountDTO(Long id, String email, String password, DateDTO dateCreate) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.dateCreate = dateCreate;
-        //this.accountInfo = accountInfo;
     }
 
     public Long getId() {

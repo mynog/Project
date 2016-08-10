@@ -35,7 +35,7 @@ public class Account {
             inverseJoinColumns = @JoinColumn(name = "account_role_id"))
     private Set<AccountRole> accountRoles;
 
-    @OneToOne(cascade = CascadeType.ALL,mappedBy = "account")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name="account_info_id")
     private AccountInfo accountInfo;
 

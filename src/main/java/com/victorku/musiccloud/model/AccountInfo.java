@@ -17,15 +17,12 @@ public class AccountInfo {
     private Long id;
 
     @Column(name = "firstname")
-    @NotEmpty
     private String firstName;
 
     @Column(name = "lastname")
-    @NotEmpty
     private String lastName;
 
     @Column(name = "nick")
-    @NotEmpty
     private String nick;
 
     @Column(name = "birthday")
@@ -54,9 +51,8 @@ public class AccountInfo {
 //    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "accountInfos")
 //    private Set<Mood> accountInfomoods;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "accountInfo", optional = false)
     private Account account;
-
 
     public AccountInfo() {
     }
