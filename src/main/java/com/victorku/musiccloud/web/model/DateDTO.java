@@ -23,7 +23,11 @@ public class DateDTO {
     @JsonIgnore
     public LocalDate getLocalDateData()
     {
-        return new LocalDate(year,month,day);
+        try {
+            return new LocalDate(year, month, day);
+        }catch (IllegalArgumentException illegalArgument) {
+            return new LocalDate(1970,1,1);
+        }
     }
 
     public Integer getYear() {
