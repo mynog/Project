@@ -14,8 +14,8 @@ CREATE SEQUENCE hibernate_sequence
   INCREMENT 1
   MINVALUE 1
   MAXVALUE 9223372036854775807
-  START 10000
-  CACHE 10000;
+  START 1
+  CACHE 1;
 ALTER TABLE hibernate_sequence
   OWNER TO viktor_kulygin;
 
@@ -234,6 +234,15 @@ CREATE INDEX fk_tracklist_has_track_track1_idx ON tracklist_has_track (track_id 
 
 CREATE INDEX fk_tracklist_has_track_tracklist1_idx ON tracklist_has_track (tracklist_id ASC);
 
+-- -----------------------------------------------------
+-- Table `chat`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS chat ;
+
+CREATE TABLE IF NOT EXISTS chat (
+  id INT NOT NULL DEFAULT nextval('hibernate_sequence'),
+  PRIMARY KEY (id))
+;
 
 -- -----------------------------------------------------
 -- Table `message`
@@ -244,24 +253,16 @@ CREATE TABLE IF NOT EXISTS message (
   id INT NOT NULL DEFAULT nextval('hibernate_sequence'),
   create_message TIMESTAMP NOT NULL DEFAULT current_timestamp,
   text VARCHAR(1024) NOT NULL,
-  sender_one_id INT NULL,
-  sender_two_id INT NULL,
-  PRIMARY KEY (id),
-  CONSTRAINT fk_message_1
-    FOREIGN KEY (sender_one_id)
-    REFERENCES account_info (id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT fk_message_2
-    FOREIGN KEY (sender_two_id)
-    REFERENCES account_info (id)
+  chat_id INT NOT NULL,
+  PRIMARY KEY (id, chat_id),
+  CONSTRAINT fk_message_chat1
+    FOREIGN KEY (chat_id)
+    REFERENCES chat (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ;
 
-CREATE INDEX fk_message_1_idx ON message (sender_one_id ASC);
-
-CREATE INDEX fk_message_2_idx ON message (sender_two_id ASC);
+CREATE INDEX fk_message_chat1_idx ON message (chat_id ASC);
 
 -- -----------------------------------------------------
 -- Table `rating`
@@ -269,10 +270,11 @@ CREATE INDEX fk_message_2_idx ON message (sender_two_id ASC);
 DROP TABLE IF EXISTS rating ;
 
 CREATE TABLE IF NOT EXISTS rating (
+  id INT NOT NULL DEFAULT nextval('hibernate_sequence'),
   track_id INT NOT NULL,
   account_info_id INT NOT NULL,
   rating_value INT NULL,
-  PRIMARY KEY (track_id, account_info_id),
+  PRIMARY KEY (id),
   CONSTRAINT fk_rating_track1
     FOREIGN KEY (track_id)
     REFERENCES track (id)
@@ -417,6 +419,32 @@ CREATE TABLE IF NOT EXISTS account_info_has_track (
 CREATE INDEX fk_account_info_has_track_track1_idx ON account_info_has_track (track_id ASC);
 
 CREATE INDEX fk_account_info_has_track_account_info1_idx ON account_info_has_track (account_info_id ASC);
+
+-- -----------------------------------------------------
+-- Table `chat_has_account_info`
+-- -----------------------------------------------------
+
+DROP TABLE IF EXISTS chat_has_account_info ;
+
+CREATE TABLE IF NOT EXISTS chat_has_account_info (
+  chat_id INT NOT NULL,
+  account_info_id INT NOT NULL,
+  PRIMARY KEY (chat_id, account_info_id),
+  CONSTRAINT fk_chat_has_account_info_chat1
+    FOREIGN KEY (chat_id)
+    REFERENCES chat (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT fk_chat_has_account_info_account_info1
+    FOREIGN KEY (account_info_id)
+    REFERENCES account_info (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+;
+
+CREATE INDEX fk_chat_has_account_info_account_info1_idx ON chat_has_account_info (account_info_id ASC);
+
+CREATE INDEX fk_chat_has_account_info_chat1_idx ON chat_has_account_info (chat_id ASC);
 
 -- -----------------------------------------------------
 -- Create trigger update_rating
