@@ -13,11 +13,9 @@ public class Comments {
     private Long id;
 
     @Column(name = "text")
-    @NotEmpty
     private String text;
 
     @Column(name = "order_comments")
-    @NotEmpty
     private Long orderComments;
 
     @ManyToOne

@@ -14,19 +14,15 @@ public class Track {
     private Long id;
 
     @Column(name = "title")
-    @NotEmpty
     private String title;
 
     @Column(name = "artist")
-    @NotEmpty
     private String artist;
 
     @Column(name = "album")
-    @NotEmpty
     private String album;
 
     @Column(name = "year")
-    @NotEmpty
     private Integer year;
 
     @Column(name = "filename")
@@ -34,11 +30,9 @@ public class Track {
     private String filename;
 
     @Column(name = "duration")
-    @NotEmpty
     private String duration;
 
     @Column(name = "rating")
-    @NotEmpty
     private Double rating;
 
     @ManyToMany(fetch = FetchType.LAZY)
