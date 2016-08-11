@@ -25,11 +25,11 @@ public class AccountInfoDTO {
         if (accountInfo == null) {
             return;
         }
-        this.id=accountInfo.getId();
-        this.firstName=accountInfo.getFirstName();
-        this.lastName=accountInfo.getLastName();
-        this.nick=accountInfo.getNick();
-        this.birthday=new DateDTO(accountInfo.getBirthday());
+        this.id = accountInfo.getId();
+        this.firstName = accountInfo.getFirstName();
+        this.lastName = accountInfo.getLastName();
+        this.nick = accountInfo.getNick();
+        this.birthday = new DateDTO(accountInfo.getBirthday());
     }
 
     public Long getId() {

@@ -1,5 +1,9 @@
 package com.victorku.musiccloud.web.model;
 
+import com.victorku.musiccloud.model.Account;
+import com.victorku.musiccloud.model.AccountRole;
+
+import java.util.HashSet;
 import java.util.Set;
 
 public class AccountDTO {
@@ -13,11 +17,27 @@ public class AccountDTO {
     public AccountDTO() {
     }
 
-    public AccountDTO(Long id, String email, String password, DateDTO dateCreate) {
-        this.id = id;
-        this.email = email;
-        this.password = password;
-        this.dateCreate = dateCreate;
+    public AccountDTO(Account dbModel) {
+
+        if (dbModel == null) {
+            return;
+        }
+
+        this.id = dbModel.getId();
+        this.email = dbModel.getEmail();
+        this.password = dbModel.getPassword();
+        this.dateCreate = new DateDTO(dbModel.getDateCreate());
+
+        Set<AccountRoleDTO> roles = new HashSet<>();
+        if (dbModel.getAccountRoles() != null) {
+            for (AccountRole role : dbModel.getAccountRoles()) {
+                roles.add(new AccountRoleDTO(role));
+            }
+        }
+        this.roles = roles;
+
+        this.accountInfo = new AccountInfoDTO(dbModel.getAccountInfo());
+
     }
 
     public Long getId() {

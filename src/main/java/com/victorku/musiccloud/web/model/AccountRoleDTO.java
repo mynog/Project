@@ -1,5 +1,7 @@
 package com.victorku.musiccloud.web.model;
 
+import com.victorku.musiccloud.model.AccountRole;
+
 public class AccountRoleDTO {
     private Long id;
     private String name;
@@ -14,6 +16,14 @@ public class AccountRoleDTO {
     public AccountRoleDTO(Long id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public AccountRoleDTO(AccountRole role) {
+        if (role == null) {
+            return;
+        }
+        this.id = role.getId();
+        this.name = role.getName().name();
     }
 
     public Long getId() {
