@@ -4,17 +4,15 @@ import com.victorku.musiccloud.exceptions.AccountHasExistsException;
 import com.victorku.musiccloud.exceptions.AccountIsNotExistsException;
 import com.victorku.musiccloud.exceptions.ApplicationErrorTypes;
 import com.victorku.musiccloud.model.Account;
-import com.victorku.musiccloud.model.AccountRole;
 import com.victorku.musiccloud.service.AccountService;
-import com.victorku.musiccloud.web.model.*;
+import com.victorku.musiccloud.web.model.AccountDTO;
+import com.victorku.musiccloud.web.model.AccountInfoDTO;
+import com.victorku.musiccloud.web.model.ErrorResponseBody;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/account")
@@ -60,7 +58,7 @@ public class AccountController {
             return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_ID_NOT_FOUND);
         }
         LocalDate birthday = info.getBirthday() == null ? null : info.getBirthday().getLocalDateData();
-        account = accountService.addAccountInfo(account,info.getFirstName(),info.getLastName(),info.getNick(),birthday);
+        account = accountService.addAccountInfo(account, info.getFirstName(), info.getLastName(), info.getNick(), birthday);
         return new ResponseEntity<>(convert(account), HttpStatus.OK);
     }
 
@@ -78,21 +76,7 @@ public class AccountController {
 //    }
 
     private AccountDTO convert(Account dbModel) {
-
-        if (dbModel == null) return null;
-
-        AccountDTO jsonModel = new AccountDTO(dbModel.getId(), dbModel.getEmail(), "******",new DateDTO(dbModel.getDateCreate()));
-        Set<AccountRoleDTO> jsonRoles = new HashSet<>();
-        if (dbModel.getAccountRoles() != null) {
-            for (AccountRole role : dbModel.getAccountRoles()) {
-                jsonRoles.add(new AccountRoleDTO(role.getId(), role.getName().name()));
-        }
-        }
-
-        jsonModel.setRoles(jsonRoles);
-        AccountInfoDTO accountInfoDTO = new AccountInfoDTO(dbModel.getAccountInfo());
-        jsonModel.setAccountInfo(accountInfoDTO);
-        return jsonModel;
+        return (dbModel == null) ? null : new AccountDTO(dbModel);
     }
 
     private ResponseEntity<ErrorResponseBody> getErrorResponseBody(ApplicationErrorTypes errorType) {
