@@ -24,8 +24,6 @@ public class AccountServiceImpl implements AccountService {
     private AccountRepository accountRepository;
     @Autowired
     private AccountRoleService accountRoleService;
-    @Autowired
-    private AccountInfoService accountInfoService;
 
     @Override
     public Account getAccountById(Long id) {
@@ -64,7 +62,13 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Account updateAccountInfo(Account account, String firstName, String lastName, String nick, LocalDate birthday) {
-        return null; // todo VK: implement it, please
+        AccountInfo accountInfo = account.getAccountInfo();
+        accountInfo.setFirstName(firstName);
+        accountInfo.setLastName(lastName);
+        accountInfo.setNick(nick);
+        accountInfo.setBirthday(birthday);
+        account.setAccountInfo(accountInfo);
+        return accountRepository.save(account);
     }
 
 //    @Override
