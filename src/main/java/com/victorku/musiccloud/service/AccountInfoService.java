@@ -5,6 +5,8 @@ import com.victorku.musiccloud.exceptions.AccountIsNotExistsException;
 import com.victorku.musiccloud.model.AccountInfo;
 import org.joda.time.LocalDate;
 
+import java.util.Set;
+
 public interface AccountInfoService {
 
     AccountInfo getAccountInfoById(Long id);
