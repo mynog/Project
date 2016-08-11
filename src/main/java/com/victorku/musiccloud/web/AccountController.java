@@ -57,8 +57,13 @@ public class AccountController {
         if (account == null) {
             return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_ID_NOT_FOUND);
         }
+
         LocalDate birthday = info.getBirthday() == null ? null : info.getBirthday().getLocalDateData();
-        account = accountService.addAccountInfo(account, info.getFirstName(), info.getLastName(), info.getNick(), birthday);
+        if (account.getAccountInfo() == null) {
+            account = accountService.addAccountInfo(account, info.getFirstName(), info.getLastName(), info.getNick(), birthday);
+        } else {
+            account = accountService.updateAccountInfo(account, info.getFirstName(), info.getLastName(), info.getNick(), birthday);
+        }
         return new ResponseEntity<>(convert(account), HttpStatus.OK);
     }
 
