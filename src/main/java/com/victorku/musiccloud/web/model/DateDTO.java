@@ -19,7 +19,7 @@ public class DateDTO {
         month = date.getMonthOfYear();
         day = date.getDayOfMonth();
     }
-
+     
     @JsonIgnore
     public LocalDate getLocalDateData()
     {
