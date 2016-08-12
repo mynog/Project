@@ -73,6 +73,15 @@
     file: src=/opt/apache-tomcat-8.5.4 dest=/opt/tomcat owner=tomcat
      state=link
     become: yes
+#  - name: Delete directory music-cloud
+#    shell: "rm -R /opt/tomcat/bin/webapps/music-cloud"
+#    become: yes
+#  - name: Delete old music_cloud.war
+#    shell: "rm /opt/tomcat/bin/webapps/music-cloud.war"
+#    become: yes
+#  - name: Deploy music-cloud.war		
+#    copy: src=/vagrant/target/music-cloud.war dest=/opt/apache-tomcat-8.5.4/webapps/#music-cloud.war owner=tomcat group=tomcat		
+#    become: yes
   - name: Start Tomcat
     shell: /opt/tomcat/bin/startup.sh
     become: yes
