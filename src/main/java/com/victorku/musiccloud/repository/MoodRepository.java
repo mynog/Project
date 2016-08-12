@@ -4,4 +4,6 @@ import com.victorku.musiccloud.model.Mood;
 import org.springframework.data.repository.CrudRepository;
 
 public interface MoodRepository extends CrudRepository<Mood,Long> {
+
+    Mood findByName(String name);
 }

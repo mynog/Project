@@ -13,8 +13,10 @@ public enum ApplicationErrorTypes {
     TRACKLIST_ID_NOT_FOUND(10,"Genre ID not found in DB"),
     CHAT_ID_NOT_FOUND(11,"Chat ID not found in DB"),
     RATING_ID_NOT_FOUND(12,"Rating ID not found in DB"),
-    TRACK_HAS_EXISTS(13,"Track has exists in DB"),
-    GENRE_HAS_EXISTS(14,"Genre has exists in DB");
+    MOOD_HAS_EXISTS(13,"Mood has exists in DB"),
+    TRACKLIST_HAS_EXISTS(14,"Tracklist has exists in DB"),
+    TRACK_HAS_EXISTS(15,"Track has exists in DB"),
+    GENRE_HAS_EXISTS(16,"Genre has exists in DB");
 
     private String message;
     private int code;

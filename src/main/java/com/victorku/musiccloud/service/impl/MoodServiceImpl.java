@@ -1,5 +1,6 @@
 package com.victorku.musiccloud.service.impl;
 
+import com.victorku.musiccloud.exceptions.MoodHasExistsException;
 import com.victorku.musiccloud.exceptions.MoodIsNotExistsException;
 import com.victorku.musiccloud.model.Mood;
 import com.victorku.musiccloud.repository.MoodRepository;
@@ -24,5 +25,15 @@ public class MoodServiceImpl implements MoodService {
             throw new MoodIsNotExistsException();
         }
         moodRepository.delete(id);
+    }
+
+    @Override
+    public Mood createMood(String name) throws MoodHasExistsException {
+        Mood mood = moodRepository.findByName(name);
+        if (mood != null) {
+            throw new MoodHasExistsException();
+        }
+        mood = new Mood(name);
+        return moodRepository.save(mood);
     }
 }

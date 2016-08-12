@@ -196,7 +196,7 @@ DROP TABLE IF EXISTS tracklist ;
 CREATE TABLE IF NOT EXISTS tracklist (
   id INT NOT NULL DEFAULT nextval('hibernate_sequence'),
   name VARCHAR(45) NOT NULL,
-  date_create TIMESTAMP NOT NULL DEFAULT current_timestamp,
+  date_create TIMESTAMP NULL DEFAULT current_timestamp,
   account_info_id INT NULL,
   PRIMARY KEY (id),
   CONSTRAINT fk_tracklist_account_info1

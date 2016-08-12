@@ -1,5 +1,6 @@
 package com.victorku.musiccloud.service.impl;
 
+import com.victorku.musiccloud.exceptions.TracklistHasExistsException;
 import com.victorku.musiccloud.exceptions.TracklistIsNotExistsException;
 import com.victorku.musiccloud.model.Tracklist;
 import com.victorku.musiccloud.repository.TracklistRepository;
@@ -24,5 +25,15 @@ public class TracklistServiceImpl implements TracklistService {
             throw new TracklistIsNotExistsException();
         }
         tracklistRepository.delete(id);
+    }
+
+    @Override
+    public Tracklist createTracklist(String name) throws TracklistHasExistsException {
+        Tracklist tracklist = tracklistRepository.findByName(name);
+        if (tracklist != null) {
+            throw new TracklistHasExistsException();
+        }
+        tracklist = new Tracklist(name);
+        return tracklistRepository.save(tracklist);
     }
 }

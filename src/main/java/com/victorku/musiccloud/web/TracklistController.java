@@ -1,6 +1,7 @@
 package com.victorku.musiccloud.web;
 
 import com.victorku.musiccloud.exceptions.ApplicationErrorTypes;
+import com.victorku.musiccloud.exceptions.TracklistHasExistsException;
 import com.victorku.musiccloud.exceptions.TracklistIsNotExistsException;
 import com.victorku.musiccloud.model.Tracklist;
 import com.victorku.musiccloud.service.TracklistService;
@@ -10,10 +11,7 @@ import com.victorku.musiccloud.web.model.TracklistDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/tracklist")
@@ -39,6 +37,17 @@ public class TracklistController {
             return getErrorResponseBody(ApplicationErrorTypes.TRACKLIST_ID_NOT_FOUND);
         }
         return new ResponseEntity<>(null,HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    public ResponseEntity<?> createTracklist(@RequestParam("name") String name) {
+        Tracklist tracklist = null;
+        try {
+            tracklist = tracklistService.createTracklist(name);
+        } catch (TracklistHasExistsException tracklistHasExists) {
+            return getErrorResponseBody(ApplicationErrorTypes.TRACKLIST_HAS_EXISTS);
+        }
+        return new ResponseEntity<>(convert(tracklist), HttpStatus.OK);
     }
 
     private TracklistDTO convert(Tracklist dbModel){
