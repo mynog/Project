@@ -2,14 +2,14 @@
 
 //
 // 1. Set default font family to sans-serif.
-// 2. Prevent iOS and IE text size adjust after device orientation change,
+// 2. Prevent iOS and IE ratingValue size adjust after device orientation change,
 //    without disabling user zoom.
 //
 
 html {
   font-family: sans-serif; // 1
-  -ms-text-size-adjust: 100%; // 2
-  -webkit-text-size-adjust: 100%; // 2
+  -ms-ratingValue-size-adjust: 100%; // 2
+  -webkit-ratingValue-size-adjust: 100%; // 2
 }
 
 //
@@ -268,15 +268,15 @@ button {
 }
 
 //
-// Address inconsistent `text-transform` inheritance for `button` and `select`.
-// All other form control elements do not inherit `text-transform` values.
+// Address inconsistent `ratingValue-transform` inheritance for `button` and `select`.
+// All other form control elements do not inherit `ratingValue-transform` values.
 // Correct `button` style inheritance in Firefox, IE 8/9/10/11, and Opera.
 // Correct `select` style inheritance in Firefox.
 //
 
 button,
 select {
-  text-transform: none;
+  ratingValue-transform: none;
 }
 
 //
@@ -340,7 +340,7 @@ input[type="radio"] {
 //
 // Fix the cursor style for Chrome's increment/decrement buttons. For certain
 // `font-size` values of the `input`, it causes the cursor style of the
-// decrement button to change from `default` to `text`.
+// decrement button to change from `default` to `ratingValue`.
 //
 
 input[type="number"]::-webkit-inner-spin-button,

@@ -10,7 +10,9 @@ public enum ApplicationErrorTypes {
     MOOD_ID_NOT_FOUND(7,"Genre ID not found in DB"),
     MORE_TRACK_INFO_ID_NOT_FOUND(8,"Genre ID not found in DB"),
     TRACK_ID_NOT_FOUND(9,"Genre ID not found in DB"),
-    TRACKLIST_ID_NOT_FOUND(10,"Genre ID not found in DB");
+    TRACKLIST_ID_NOT_FOUND(10,"Genre ID not found in DB"),
+    CHAT_ID_NOT_FOUND(11,"Chat ID not found in DB"),
+    RATING_ID_NOT_FOUND(12,"Rating ID not found in DB");
 
     private String message;
     private int code;

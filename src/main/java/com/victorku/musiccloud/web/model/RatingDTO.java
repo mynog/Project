@@ -1,19 +1,16 @@
-package com.victorku.musiccloud.model;
+package com.victorku.musiccloud.web.model;
 
-import javax.persistence.*;
+public class RatingDTO {
 
-@Entity
-@Table(name = "rating")
-public class Rating {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-
-    @Column(name = "rating_value")
     private String ratingValue;
 
-    public Rating() {
+    public RatingDTO() {
+    }
+
+    public RatingDTO(Long id, String text) {
+        this.id = id;
+        this.ratingValue = text;
     }
 
     public Long getId() {
