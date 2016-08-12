@@ -25,4 +25,10 @@ public class TrackServiceImpl implements TrackService {
         }
         trackRepository.delete(id);
     }
+
+    @Override
+    public Track createTrack(String title, String artist, String album, Integer year, String filename, String duration, Double rating) {
+        Track track = new Track(title,artist,album,year,filename,duration,rating);
+        return trackRepository.save(track);
+    }
 }

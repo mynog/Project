@@ -62,6 +62,16 @@ public class Track {
     public Track() {
     }
 
+    public Track(String title, String artist, String album, Integer year, String filename, String duration, Double rating) {
+        this.title = title;
+        this.artist = artist;
+        this.album = album;
+        this.year = year;
+        this.filename = filename;
+        this.duration = duration;
+        this.rating = rating;
+    }
+
     public Long getId() {
         return id;
     }

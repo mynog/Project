@@ -9,10 +9,7 @@ import com.victorku.musiccloud.web.model.TrackDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/track")
@@ -38,6 +35,16 @@ public class TrackController {
             return getErrorResponseBody(ApplicationErrorTypes.TRACK_ID_NOT_FOUND);
         }
         return new ResponseEntity<>(null,HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    public ResponseEntity<?> createTrack(@RequestParam("title") String title, @RequestParam("artist") String artist,
+                                         @RequestParam("album") String album, @RequestParam("year") Integer year,
+                                         @RequestParam("filename") String filename, @RequestParam("duration") String duration,
+                                         @RequestParam("rating") Double rating) {
+        Track track = null;
+        track = trackService.createTrack(title, artist, album, year, filename, duration, rating);
+        return new ResponseEntity<>(convert(track), HttpStatus.OK);
     }
 
     private TrackDTO convert(Track dbModel){

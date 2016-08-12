@@ -8,4 +8,6 @@ public interface TrackService {
     Track getTrackById(Long id);
 
     void deleteTrackById(Long id) throws TrackIsNotExistsException;
+
+    Track createTrack(String title,String artist,String album,Integer year,String filename,String duration,Double rating);
 }
