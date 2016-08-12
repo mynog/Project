@@ -1,7 +1,5 @@
 package com.victorku.musiccloud.model;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import javax.persistence.*;
 
 @Entity
@@ -16,7 +14,7 @@ public class Comments {
     private String text;
 
     @Column(name = "order_comments")
-    private Long orderComments;
+    private Integer orderComments;
 
     @ManyToOne
     @JoinColumn(name = "account_info_id")
@@ -31,6 +29,11 @@ public class Comments {
     private Track track;
 
     public Comments() {
+    }
+
+    public Comments(String text, Integer orderComments) {
+        this.text = text;
+        this.orderComments = orderComments;
     }
 
     public Long getId() {
@@ -49,11 +52,11 @@ public class Comments {
         this.text = text;
     }
 
-    public Long getOrderComments() {
+    public Integer getOrderComments() {
         return orderComments;
     }
 
-    public void setOrderComments(Long orderComments) {
+    public void setOrderComments(Integer orderComments) {
         this.orderComments = orderComments;
     }
 

@@ -8,4 +8,6 @@ public interface CommentsService {
     Comments getCommentsById(Long id);
 
     void deleteCommentsById(Long id) throws CommentsIsNotExistsException;
+
+    Comments createComments(String text,Integer orderComments);
 }

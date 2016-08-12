@@ -25,4 +25,10 @@ public class CommentsServiceImpl implements CommentsService {
         }
         commentsRepository.delete(id);
     }
+
+    @Override
+    public Comments createComments(String text,Integer orderComments) {
+        Comments comments = new Comments(text,orderComments);
+        return commentsRepository.save(comments);
+    }
 }
