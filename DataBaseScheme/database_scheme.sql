@@ -300,7 +300,7 @@ DROP TABLE IF EXISTS comments ;
 CREATE TABLE IF NOT EXISTS comments (
   id INT NOT NULL DEFAULT nextval('hibernate_sequence'),
   track_id INT NULL,
-  ratingValue VARCHAR(45) NULL,
+  text VARCHAR(45) NULL,
   parent_id INT NULL,
   order_comments INT NULL,
   account_info_id INT NULL,

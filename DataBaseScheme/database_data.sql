@@ -89,7 +89,7 @@ VALUES
 -- -----------------------------------------------------
 
 INSERT INTO message
-(id, ratingValue, chat_id)
+(id, text, chat_id)
 VALUES
   (1,'Привет,как тебе мой новый шикарный музыкальный сервис?',1),
   (2,'Привет,как тебе мой новый шикарный музыкальный сервис?',2),
@@ -248,7 +248,7 @@ INSERT INTO tracklist_has_track
 -- -----------------------------------------------------
 
 INSERT INTO comments
-(id, track_id, ratingValue,parent_id, order_comments, account_info_id)
+(id, track_id, text,parent_id, order_comments, account_info_id)
 VALUES
   (1,10,'Худший трек на альбоме',1,1,1),
   (2,8,'Лучший трек на альбоме',2,1,1);
@@ -270,7 +270,7 @@ VALUES
 -- -----------------------------------------------------
 
 INSERT INTO more_track_info
-  (id,track_id,ratingValue, account_info_id)
+  (id,track_id,text, account_info_id)
     VALUES
       (1,10,'Удали этот трек, если скачал его',1),
       (2,8,'Ставь этот трек на репит!',1);
