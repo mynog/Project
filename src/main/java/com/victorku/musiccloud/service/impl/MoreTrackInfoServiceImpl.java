@@ -1,5 +1,6 @@
 package com.victorku.musiccloud.service.impl;
 
+import com.victorku.musiccloud.exceptions.MoreTrackInfoHasExistsException;
 import com.victorku.musiccloud.exceptions.MoreTrackInfoIsNotExistsException;
 import com.victorku.musiccloud.model.MoreTrackInfo;
 import com.victorku.musiccloud.repository.MoreTrackInfoRepository;
@@ -24,5 +25,15 @@ public class MoreTrackInfoServiceImpl implements MoreTrackInfoService {
             throw new MoreTrackInfoIsNotExistsException();
         }
         moreTrackInfoRepository.delete(id);
+    }
+
+    @Override
+    public MoreTrackInfo createMoreTrackInfo(String text) throws MoreTrackInfoHasExistsException {
+        MoreTrackInfo moreTrackInfo = moreTrackInfoRepository.findByText(text);
+        if (moreTrackInfo != null) {
+            throw new MoreTrackInfoHasExistsException();
+        }
+        moreTrackInfo = new MoreTrackInfo(text);
+        return moreTrackInfoRepository.save(moreTrackInfo);
     }
 }
