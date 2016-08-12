@@ -25,4 +25,10 @@ public class ChatServiceImpl implements ChatService {
         }
         chatRepository.delete(id);
     }
+
+    @Override
+    public Chat createChat() {
+        Chat chat = new Chat();
+        return chatRepository.save(chat);
+    }
 }

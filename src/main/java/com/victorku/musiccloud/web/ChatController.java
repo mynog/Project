@@ -9,10 +9,7 @@ import com.victorku.musiccloud.web.model.ErrorResponseBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/chat")
@@ -38,6 +35,12 @@ public class ChatController {
             return getErrorResponseBody(ApplicationErrorTypes.CHAT_ID_NOT_FOUND);
         }
         return new ResponseEntity<>(null,HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    public ResponseEntity<?> createChat() {
+        Chat chat = chatService.createChat();
+        return new ResponseEntity<>(convert(chat), HttpStatus.OK);
     }
 
     private ChatDTO convert(Chat dbModel){

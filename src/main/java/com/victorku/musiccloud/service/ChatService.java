@@ -8,4 +8,6 @@ public interface ChatService {
     Chat getChatById(Long id);
 
     void deleteChatById(Long id) throws ChatIsNotExistsException;
+
+    Chat createChat();
 }
