@@ -16,7 +16,8 @@ public enum ApplicationErrorTypes {
     MOOD_HAS_EXISTS(13,"Mood has exists in DB"),
     TRACKLIST_HAS_EXISTS(14,"Tracklist has exists in DB"),
     TRACK_HAS_EXISTS(15,"Track has exists in DB"),
-    GENRE_HAS_EXISTS(16,"Genre has exists in DB");
+    GENRE_HAS_EXISTS(16,"Genre has exists in DB"),
+    MORE_TRACK_INFO_HAS_EXISTS(17,"This info has exists in DB");
 
     private String message;
     private int code;

@@ -251,9 +251,9 @@ DROP TABLE IF EXISTS message ;
 
 CREATE TABLE IF NOT EXISTS message (
   id INT NOT NULL DEFAULT nextval('hibernate_sequence'),
-  create_message TIMESTAMP NOT NULL DEFAULT current_timestamp,
-  ratingValue VARCHAR(1024) NOT NULL,
-  chat_id INT NOT NULL,
+  create_message TIMESTAMP NULL DEFAULT current_timestamp,
+  text VARCHAR(1024) NOT NULL,
+  chat_id INT NULL,
   PRIMARY KEY (id, chat_id),
   CONSTRAINT fk_message_chat1
     FOREIGN KEY (chat_id)
@@ -271,8 +271,8 @@ DROP TABLE IF EXISTS rating ;
 
 CREATE TABLE IF NOT EXISTS rating (
   id INT NOT NULL DEFAULT nextval('hibernate_sequence'),
-  track_id INT NOT NULL,
-  account_info_id INT NOT NULL,
+  track_id INT NULL,
+  account_info_id INT NULL,
   rating_value INT NULL,
   PRIMARY KEY (id),
   CONSTRAINT fk_rating_track1
@@ -337,7 +337,7 @@ DROP TABLE IF EXISTS more_track_info ;
 CREATE TABLE IF NOT EXISTS more_track_info (
   id INT NOT NULL DEFAULT nextval('hibernate_sequence'),
   track_id INT NULL,
-  ratingValue VARCHAR(45) NOT NULL,
+  text VARCHAR(45) NULL,
   account_info_id INT NULL,
   PRIMARY KEY (id),
   CONSTRAINT fk_more_track_info_track1
