@@ -8,4 +8,6 @@ public interface RatingService {
     Rating getRatingById(Long id);
 
     void deleteRatingById(Long id) throws RatingIsNotExistsException;
+
+    Rating createRating(Integer ratingValue);
 }

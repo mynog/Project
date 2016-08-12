@@ -9,10 +9,7 @@ import com.victorku.musiccloud.web.model.RatingDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/rating")
@@ -38,6 +35,12 @@ public class RatingController {
             return getErrorResponseBody(ApplicationErrorTypes.RATING_ID_NOT_FOUND);
         }
         return new ResponseEntity<>(null,HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    public ResponseEntity<?> createRating(@RequestParam("rating_value") Integer ratingValue) {
+        Rating rating = ratingService.createRating(ratingValue);
+        return new ResponseEntity<>(convert(rating), HttpStatus.OK);
     }
 
     private RatingDTO convert(Rating dbModel){

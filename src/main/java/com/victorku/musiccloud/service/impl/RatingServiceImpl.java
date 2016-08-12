@@ -25,4 +25,10 @@ public class RatingServiceImpl implements RatingService {
         }
         ratingRepository.delete(id);
     }
+
+    @Override
+    public Rating createRating(Integer ratingValue) {
+        Rating rating = new Rating(ratingValue);
+        return ratingRepository.save(rating);
+    }
 }

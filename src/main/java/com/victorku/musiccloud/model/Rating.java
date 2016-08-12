@@ -11,9 +11,13 @@ public class Rating {
     private Long id;
 
     @Column(name = "rating_value")
-    private String ratingValue;
+    private Integer ratingValue;
 
     public Rating() {
+    }
+
+    public Rating(Integer ratingValue) {
+        this.ratingValue = ratingValue;
     }
 
     public Long getId() {
@@ -24,11 +28,11 @@ public class Rating {
         this.id = id;
     }
 
-    public String getRatingValue() {
+    public Integer getRatingValue() {
         return ratingValue;
     }
 
-    public void setRatingValue(String ratingValue) {
+    public void setRatingValue(Integer ratingValue) {
         this.ratingValue = ratingValue;
     }
 }

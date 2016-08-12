@@ -3,12 +3,12 @@ package com.victorku.musiccloud.web.model;
 public class RatingDTO {
 
     private Long id;
-    private String ratingValue;
+    private Integer ratingValue;
 
     public RatingDTO() {
     }
 
-    public RatingDTO(Long id, String text) {
+    public RatingDTO(Long id, Integer text) {
         this.id = id;
         this.ratingValue = text;
     }
@@ -21,11 +21,11 @@ public class RatingDTO {
         this.id = id;
     }
 
-    public String getRatingValue() {
+    public Integer getRatingValue() {
         return ratingValue;
     }
 
-    public void setRatingValue(String ratingValue) {
+    public void setRatingValue(Integer ratingValue) {
         this.ratingValue = ratingValue;
     }
 }
