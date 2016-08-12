@@ -1,6 +1,7 @@
 package com.victorku.musiccloud.web;
 
 import com.victorku.musiccloud.exceptions.ApplicationErrorTypes;
+import com.victorku.musiccloud.exceptions.TrackHasExistsExceptions;
 import com.victorku.musiccloud.exceptions.TrackIsNotExistsException;
 import com.victorku.musiccloud.model.Track;
 import com.victorku.musiccloud.service.TrackService;
@@ -43,7 +44,12 @@ public class TrackController {
                                          @RequestParam("filename") String filename, @RequestParam("duration") String duration,
                                          @RequestParam("rating") Double rating) {
         Track track = null;
-        track = trackService.createTrack(title, artist, album, year, filename, duration, rating);
+        try {
+            track = trackService.createTrack(title, artist, album, year, filename, duration, rating);
+        }
+        catch (TrackHasExistsExceptions trackHasExists){
+            return getErrorResponseBody(ApplicationErrorTypes.TRACK_HAS_EXISTS);
+        }
         return new ResponseEntity<>(convert(track), HttpStatus.OK);
     }
 

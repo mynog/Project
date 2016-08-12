@@ -1,5 +1,6 @@
 package com.victorku.musiccloud.service.impl;
 
+import com.victorku.musiccloud.exceptions.TrackHasExistsExceptions;
 import com.victorku.musiccloud.exceptions.TrackIsNotExistsException;
 import com.victorku.musiccloud.model.Track;
 import com.victorku.musiccloud.repository.TrackRepository;
@@ -27,8 +28,12 @@ public class TrackServiceImpl implements TrackService {
     }
 
     @Override
-    public Track createTrack(String title, String artist, String album, Integer year, String filename, String duration, Double rating) {
-        Track track = new Track(title,artist,album,year,filename,duration,rating);
+    public Track createTrack(String title, String artist, String album, Integer year, String filename, String duration, Double rating) throws TrackHasExistsExceptions {
+        Track track = trackRepository.findByFilename(filename);
+        if (track != null) {
+            throw new TrackHasExistsExceptions();
+        }
+        track = new Track(title,artist,album,year,filename,duration,rating);
         return trackRepository.save(track);
     }
 }

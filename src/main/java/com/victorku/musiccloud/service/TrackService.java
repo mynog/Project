@@ -1,5 +1,6 @@
 package com.victorku.musiccloud.service;
 
+import com.victorku.musiccloud.exceptions.TrackHasExistsExceptions;
 import com.victorku.musiccloud.exceptions.TrackIsNotExistsException;
 import com.victorku.musiccloud.model.Track;
 
@@ -9,5 +10,5 @@ public interface TrackService {
 
     void deleteTrackById(Long id) throws TrackIsNotExistsException;
 
-    Track createTrack(String title,String artist,String album,Integer year,String filename,String duration,Double rating);
+    Track createTrack(String title,String artist,String album,Integer year,String filename,String duration,Double rating) throws TrackHasExistsExceptions;
 }
