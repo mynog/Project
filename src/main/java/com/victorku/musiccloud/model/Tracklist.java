@@ -33,10 +33,11 @@ public class Tracklist {
     @JoinColumn(name = "account_info_id")
     private AccountInfo accountInfo;
 
-    public Tracklist() {
+    public Tracklist() {this.dateCreate = new LocalDate();
     }
 
     public Tracklist(String name) {
+        this();
         this.name = name;
     }
 
