@@ -10,10 +10,7 @@ import com.victorku.musiccloud.web.model.MessageDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/message")
@@ -39,6 +36,12 @@ public class MessageController {
             return getErrorResponseBody(ApplicationErrorTypes.MESSAGE_ID_NOT_FOUND);
         }
         return new ResponseEntity<>(null,HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    public ResponseEntity<?> createMessage(@RequestParam("text") String text) {
+        Message message = messageService.createMessage(text);
+        return new ResponseEntity<>(convert(message), HttpStatus.OK);
     }
 
     private MessageDTO convert(Message dbModel){

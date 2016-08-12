@@ -25,4 +25,10 @@ public class MessageServiceImpl implements MessageService {
         }
         messageRepository.delete(id);
     }
+
+    @Override
+    public Message createMessage(String text) {
+        Message message = new Message(text);
+        return messageRepository.save(message);
+    }
 }

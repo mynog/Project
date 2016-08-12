@@ -24,7 +24,11 @@ public class Message {
     @DateTimeFormat(pattern = "yyyy/dd/mm")
     private LocalDate createMessage;
 
-    public Message() {
+    public Message() {this.createMessage = new LocalDate();}
+
+    public Message(String text) {
+        this();
+        this.text = text;
     }
 
     public Long getId() {

@@ -8,4 +8,6 @@ public interface MessageService {
     Message getMessageById(Long id);
 
     void deleteMessageById(Long id) throws MessageIsNotExistsException;
+
+    Message createMessage(String text);
 }

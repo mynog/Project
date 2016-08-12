@@ -254,7 +254,7 @@ CREATE TABLE IF NOT EXISTS message (
   create_message TIMESTAMP NULL DEFAULT current_timestamp,
   text VARCHAR(1024) NOT NULL,
   chat_id INT NULL,
-  PRIMARY KEY (id, chat_id),
+  PRIMARY KEY (id),
   CONSTRAINT fk_message_chat1
     FOREIGN KEY (chat_id)
     REFERENCES chat (id)
