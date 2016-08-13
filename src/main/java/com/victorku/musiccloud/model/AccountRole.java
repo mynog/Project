@@ -52,4 +52,19 @@ public class AccountRole {
         this.name = name;
     }
 
+    @Override
+    public int hashCode() {
+        return id.intValue();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if(obj instanceof AccountRole){
+            return this.id==((AccountRole) obj).getId();
+        }
+        return false;
+    }
 }

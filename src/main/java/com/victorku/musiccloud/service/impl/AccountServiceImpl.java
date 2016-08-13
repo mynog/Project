@@ -2,6 +2,7 @@ package com.victorku.musiccloud.service.impl;
 
 import com.victorku.musiccloud.exceptions.AccountHasExistsException;
 import com.victorku.musiccloud.exceptions.AccountIsNotExistsException;
+import com.victorku.musiccloud.exceptions.AccountNotHasRoleException;
 import com.victorku.musiccloud.exceptions.AccountRoleIsNotExistsException;
 import com.victorku.musiccloud.model.Account;
 import com.victorku.musiccloud.model.AccountInfo;
@@ -83,6 +84,27 @@ public class AccountServiceImpl implements AccountService {
         }
         Set<AccountRole> accountRoles = account.getAccountRoles();
         accountRoles.add(accountRole);
+        account.setAccountRoles(accountRoles);
+        return accountRepository.save(account);
+    }
+
+    @Override
+    public Account removeAccountRole(Long accountId, Long roleId) throws AccountIsNotExistsException, AccountRoleIsNotExistsException, AccountNotHasRoleException {
+        Account account = getAccountById(accountId);
+        if (account == null) {
+            throw new AccountIsNotExistsException();
+        }
+        AccountRole accountRole = accountRoleService.getRoleById(roleId);
+        if (accountRole == null) {
+            throw new AccountRoleIsNotExistsException();
+        }
+        Set<AccountRole> accountRoles = account.getAccountRoles();
+        if(accountRoles.contains(accountRole)){
+            accountRoles.remove(accountRole);
+        }
+        else{
+            throw new AccountNotHasRoleException();
+        }
         account.setAccountRoles(accountRoles);
         return accountRepository.save(account);
     }

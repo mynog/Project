@@ -1,10 +1,9 @@
 package com.victorku.musiccloud.web;
 
-import com.victorku.musiccloud.exceptions.AccountHasExistsException;
-import com.victorku.musiccloud.exceptions.AccountIsNotExistsException;
-import com.victorku.musiccloud.exceptions.AccountRoleIsNotExistsException;
-import com.victorku.musiccloud.exceptions.ApplicationErrorTypes;
+import com.victorku.musiccloud.exceptions.*;
 import com.victorku.musiccloud.model.Account;
+import com.victorku.musiccloud.model.AccountRole;
+import com.victorku.musiccloud.service.AccountRoleService;
 import com.victorku.musiccloud.service.AccountService;
 import com.victorku.musiccloud.web.model.AccountDTO;
 import com.victorku.musiccloud.web.model.AccountInfoDTO;
@@ -52,7 +51,7 @@ public class AccountController {
         return new ResponseEntity<>(convert(account), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/account_info/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}/account_info", method = RequestMethod.PUT)
     public ResponseEntity<?> addAccountInfo(@PathVariable("id") Long accountId, @RequestBody AccountInfoDTO info) {
         Account account = accountService.getAccountById(accountId);
         if (account == null) {
@@ -68,7 +67,7 @@ public class AccountController {
         return new ResponseEntity<>(convert(account), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/account_role/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}/account_role", method = RequestMethod.PUT)
     public ResponseEntity<?> addAccountRole(@PathVariable("id") Long accountId, @RequestParam("roleId") Long roleId) {
         Account account = null;
         try {
@@ -77,6 +76,21 @@ public class AccountController {
             return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_ID_NOT_FOUND);
         } catch (AccountRoleIsNotExistsException accountRoleIsNotExists) {
             return getErrorResponseBody(ApplicationErrorTypes.ROLE_ID_NOT_FOUND);
+        }
+        return new ResponseEntity<>(convert(account), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{id}/account_role", method = RequestMethod.DELETE)
+    public ResponseEntity<?> removeAccountRole(@PathVariable("id") Long accountId, @RequestParam("roleId") Long roleId) {
+        Account account = null;
+        try {
+            account = accountService.removeAccountRole(accountId, roleId);
+        } catch (AccountRoleIsNotExistsException accountRoleIsNotExists) {
+            return getErrorResponseBody(ApplicationErrorTypes.ROLE_ID_NOT_FOUND);
+        } catch (AccountIsNotExistsException e) {
+            return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_ID_NOT_FOUND);
+        } catch (AccountNotHasRoleException e) {
+            return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_IS_NOT_HAS_ROLE);
         }
         return new ResponseEntity<>(convert(account), HttpStatus.OK);
     }
