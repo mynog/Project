@@ -12,9 +12,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.annotation.MultipartConfig;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/track")
+@MultipartConfig(fileSizeThreshold = 20971520) // Max file size 20mb
 public class TrackController {
 
     @Autowired
@@ -23,6 +31,45 @@ public class TrackController {
     @Autowired
     private MoreTrackInfoService moreTrackInfoService;
 
+    @RequestMapping(value = "/upload")
+    public String uploadFile(@RequestParam("uploadedFile") MultipartFile uploadedFileRef){
+        // Получаем имя загруженного файла
+        String fileName = uploadedFileRef.getOriginalFilename();
+        // Путь, где загруженный файл будет сохранен.
+        String path = "/home/kyluginvv/Project/Download" + fileName;
+
+        // Буффер для хранения данных из uploadedFileRef
+        byte[] buffer = new byte[1000];
+        // Теперь создаем выходной файл outputFile на сервере
+        File outputFile = new File(path);
+
+        FileInputStream reader = null;
+        FileOutputStream writer = null;
+        int totalBytes = 0;
+        try {
+            outputFile.createNewFile();
+            // Создаем входной поток для чтения данных из него
+            reader = (FileInputStream) uploadedFileRef.getInputStream();
+            // Создаем выходной поток для записи данных
+            writer = new FileOutputStream(outputFile);
+            // Считываем данные uploadedFileRef и пишем их в outputFile
+            int bytesRead = 0;
+            while ((bytesRead = reader.read(buffer)) != -1) {
+                writer.write(buffer);
+                totalBytes += bytesRead;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally{
+            try {
+                reader.close();
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return "File uploaded successfully! Total Bytes Read="+totalBytes;
+    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getTrack(@PathVariable("id") Long trackId){

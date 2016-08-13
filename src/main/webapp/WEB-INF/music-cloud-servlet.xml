@@ -35,6 +35,11 @@
         <property name="entityManagerFactory" ref="emf"/>
     </bean>
 
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+    <!-- Declare explicitly, or use <context:annotation-config/> -->
+    <bean id="trackController" class="com.victorku.musiccloud.web.TrackController"/>
+
     <!-- EntityManagerFactory -->
     <bean id="emf" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource" />
