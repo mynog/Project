@@ -59,6 +59,9 @@ public class Track {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "track")
     private Set<Comments> comments;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "track")
+    private Set<Rating>  ratings;
+
     public Track() {
     }
 
@@ -183,5 +186,10 @@ public class Track {
     public void setComments(Set<Comments> comments) {
         this.comments = comments;
     }
+
+    public Set<Rating> getRatings() { return ratings; }
+
+    public void setRatings(Set<Rating> ratings) { this.ratings = ratings; }
+
 }
 

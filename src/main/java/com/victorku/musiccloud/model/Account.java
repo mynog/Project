@@ -86,4 +86,5 @@ public class Account {
     public AccountInfo getAccountInfo() {return accountInfo;}
 
     public void setAccountInfo(AccountInfo accountInfo) {this.accountInfo = accountInfo;}
+
 }

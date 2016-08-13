@@ -36,6 +36,12 @@ public class AccountInfo {
             inverseJoinColumns = @JoinColumn(name = "friend_id"))
     private Set<AccountInfo> friends;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "chat_has_account_info",
+            joinColumns = @JoinColumn(name = "chat_id"),
+            inverseJoinColumns = @JoinColumn(name = "account_info_id"))
+    private Set<Chat> chats;
+
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "accountInfos")
     private Set<Track> tracks;
 
@@ -53,6 +59,9 @@ public class AccountInfo {
 
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "accountInfo", optional = false)
     private Account account;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountInfo")
+    private Set<Rating> ratings;
 
     public AccountInfo() {
     }
@@ -155,4 +164,13 @@ public class AccountInfo {
     public void setAccount(Account account) {
         this.account = account;
     }
+
+    public Set<Rating> getRatings() { return ratings; }
+
+    public void setRatings(Set<Rating> ratings) { this.ratings = ratings; }
+
+    public Set<Chat> getChats() { return chats; }
+
+    public void setChats(Set<Chat> chats) { this.chats = chats; }
+
 }

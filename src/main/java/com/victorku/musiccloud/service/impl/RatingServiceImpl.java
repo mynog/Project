@@ -31,4 +31,5 @@ public class RatingServiceImpl implements RatingService {
         Rating rating = new Rating(ratingValue);
         return ratingRepository.save(rating);
     }
+
 }

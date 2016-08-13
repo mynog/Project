@@ -11,4 +11,5 @@ public interface MoodService {
     void deleteMoodById(Long id) throws MoodIsNotExistsException;
 
     Mood createMood(String name) throws MoodHasExistsException;
+
 }

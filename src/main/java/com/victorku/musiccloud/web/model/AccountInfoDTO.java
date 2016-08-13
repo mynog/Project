@@ -71,4 +71,5 @@ public class AccountInfoDTO {
     public void setBirthday(DateDTO birthday) {
         this.birthday = birthday;
     }
+
 }

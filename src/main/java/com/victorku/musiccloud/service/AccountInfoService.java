@@ -14,4 +14,5 @@ public interface AccountInfoService {
     void deleteAccountInfoById(Long id) throws AccountIsNotExistsException;
 
     AccountInfo createAccount(String firstname, String lastname, String nick, LocalDate birthday);
+
 }

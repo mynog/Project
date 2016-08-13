@@ -7,4 +7,5 @@ import org.springframework.data.repository.CrudRepository;
 public interface AccountRoleRepository extends CrudRepository<AccountRole,Long> {
 
     AccountRole findRoleByName(UserRole roleName);
+
 }

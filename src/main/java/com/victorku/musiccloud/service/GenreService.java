@@ -11,4 +11,5 @@ public interface GenreService {
     void deleteGenreById(Long id) throws GernreIsNotExistsException;
 
     Genre createGenre(String name) throws GenreHasExistsException;
+
 }

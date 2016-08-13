@@ -10,4 +10,5 @@ public interface AccountRoleService {
     AccountRole getRoleById(Long id);
 
     AccountRole getRoleByName(UserRole user);
+
 }

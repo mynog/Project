@@ -8,7 +8,6 @@ import com.victorku.musiccloud.model.AccountInfo;
 import com.victorku.musiccloud.model.AccountRole;
 import com.victorku.musiccloud.model.UserRole;
 import com.victorku.musiccloud.repository.AccountRepository;
-import com.victorku.musiccloud.service.AccountInfoService;
 import com.victorku.musiccloud.service.AccountRoleService;
 import com.victorku.musiccloud.service.AccountService;
 import org.joda.time.LocalDate;
@@ -87,4 +86,5 @@ public class AccountServiceImpl implements AccountService {
         account.setAccountRoles(accountRoles);
         return accountRepository.save(account);
     }
+
 }

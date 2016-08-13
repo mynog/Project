@@ -88,4 +88,5 @@ public class TrackDTO {
     public void setRating(Double rating) {
         this.rating = rating;
     }
+
 }

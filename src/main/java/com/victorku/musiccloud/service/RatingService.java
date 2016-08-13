@@ -10,4 +10,5 @@ public interface RatingService {
     void deleteRatingById(Long id) throws RatingIsNotExistsException;
 
     Rating createRating(Integer ratingValue);
+
 }

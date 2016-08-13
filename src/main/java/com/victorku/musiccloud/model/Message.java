@@ -24,6 +24,10 @@ public class Message {
     @DateTimeFormat(pattern = "yyyy/dd/mm")
     private LocalDate createMessage;
 
+    @ManyToOne
+    @JoinColumn(name = "chat_id")
+    private Chat chat;
+
     public Message() {this.createMessage = new LocalDate();}
 
     public Message(String text) {
@@ -54,4 +58,9 @@ public class Message {
     public void setCreateMessage(LocalDate createMessage) {
         this.createMessage = createMessage;
     }
+
+    public Chat getChat() { return chat; }
+
+    public void setChat(Chat chat) { this.chat = chat; }
+
 }

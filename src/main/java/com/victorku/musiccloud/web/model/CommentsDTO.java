@@ -39,4 +39,5 @@ public class CommentsDTO {
     public void setOrderComments(Integer orderComments) {
         this.orderComments = orderComments;
     }
+
 }

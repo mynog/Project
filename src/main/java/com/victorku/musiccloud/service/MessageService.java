@@ -10,4 +10,5 @@ public interface MessageService {
     void deleteMessageById(Long id) throws MessageIsNotExistsException;
 
     Message createMessage(String text);
+
 }

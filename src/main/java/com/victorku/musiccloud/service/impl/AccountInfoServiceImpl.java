@@ -1,6 +1,5 @@
 package com.victorku.musiccloud.service.impl;
 
-import com.victorku.musiccloud.exceptions.AccountHasExistsException;
 import com.victorku.musiccloud.exceptions.AccountIsNotExistsException;
 import com.victorku.musiccloud.model.AccountInfo;
 import com.victorku.musiccloud.repository.AccountInfoRepository;
@@ -35,6 +34,4 @@ public class AccountInfoServiceImpl implements AccountInfoService {
         AccountInfo accountInfo = new AccountInfo(firstname,lastname,nick,birthday);
         return accountInfoRepository.save(accountInfo);
     }
-
-
 }

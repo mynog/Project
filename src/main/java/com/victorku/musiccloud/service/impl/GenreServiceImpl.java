@@ -36,4 +36,5 @@ public class GenreServiceImpl implements GenreService {
         genre = new Genre(name);
         return genreRepository.save(genre);
     }
+
 }

@@ -31,4 +31,5 @@ public class ChatServiceImpl implements ChatService {
         Chat chat = new Chat();
         return chatRepository.save(chat);
     }
+
 }

@@ -28,4 +28,5 @@ public class RatingDTO {
     public void setRatingValue(Integer ratingValue) {
         this.ratingValue = ratingValue;
     }
+
 }

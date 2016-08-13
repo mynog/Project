@@ -13,6 +13,14 @@ public class Rating {
     @Column(name = "rating_value")
     private Integer ratingValue;
 
+    @ManyToOne
+    @JoinColumn(name = "account_info_id")
+    private AccountInfo accountInfo;
+
+    @ManyToOne
+    @JoinColumn(name = "track_id")
+    private Track track;
+
     public Rating() {
     }
 
@@ -35,4 +43,13 @@ public class Rating {
     public void setRatingValue(Integer ratingValue) {
         this.ratingValue = ratingValue;
     }
+
+    public AccountInfo getAccountInfo() { return accountInfo; }
+
+    public void setAccountInfo(AccountInfo accountInfo) { this.accountInfo = accountInfo; }
+
+    public Track getTrack() { return track; }
+
+    public void setTrack(Track track) { this.track = track; }
+
 }

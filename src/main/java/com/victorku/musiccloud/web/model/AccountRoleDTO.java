@@ -3,6 +3,7 @@ package com.victorku.musiccloud.web.model;
 import com.victorku.musiccloud.model.AccountRole;
 
 public class AccountRoleDTO {
+
     private Long id;
     private String name;
 
@@ -41,4 +42,5 @@ public class AccountRoleDTO {
     public void setName(String name) {
         this.name = name;
     }
+
 }

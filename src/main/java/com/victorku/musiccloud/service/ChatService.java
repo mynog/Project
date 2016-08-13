@@ -10,4 +10,5 @@ public interface ChatService {
     void deleteChatById(Long id) throws ChatIsNotExistsException;
 
     Chat createChat();
+
 }

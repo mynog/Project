@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.joda.time.LocalDate;
 
 public class DateDTO {
+
     private Integer year;
     private Integer month;
     private Integer day;
@@ -53,4 +54,5 @@ public class DateDTO {
     public void setDay(Integer day) {
         this.day = day;
     }
+
 }

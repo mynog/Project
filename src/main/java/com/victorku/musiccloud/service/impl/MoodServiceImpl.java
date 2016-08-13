@@ -36,4 +36,5 @@ public class MoodServiceImpl implements MoodService {
         mood = new Mood(name);
         return moodRepository.save(mood);
     }
+
 }

@@ -11,4 +11,5 @@ public interface MoreTrackInfoService {
     void deleteMoreTrackInfoById(Long id) throws MoreTrackInfoIsNotExistsException;
 
     MoreTrackInfo createMoreTrackInfo(String text) throws MoreTrackInfoHasExistsException;
+
 }

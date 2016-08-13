@@ -28,4 +28,5 @@ public class MoodDTO {
     public void setName(String name) {
         this.name = name;
     }
+
 }

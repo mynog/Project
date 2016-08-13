@@ -80,4 +80,5 @@ public class Tracklist {
     public void setAccountInfo(AccountInfo accountInfo) {
         this.accountInfo = accountInfo;
     }
+
 }

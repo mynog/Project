@@ -1,7 +1,5 @@
 package com.victorku.musiccloud.service.impl;
 
-import com.victorku.musiccloud.exceptions.AccountRoleHasExistsException;
-import com.victorku.musiccloud.exceptions.AccountRoleIsNotExistsException;
 import com.victorku.musiccloud.model.AccountRole;
 import com.victorku.musiccloud.model.UserRole;
 import com.victorku.musiccloud.repository.AccountRoleRepository;
@@ -24,4 +22,5 @@ public class AccountRoleServiceImpl implements AccountRoleService {
     public AccountRole getRoleByName(UserRole user) {
         return accountRoleRepository.findRoleByName(user);
     }
+
 }

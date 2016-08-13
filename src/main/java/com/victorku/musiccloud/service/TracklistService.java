@@ -11,4 +11,5 @@ public interface TracklistService {
     void deleteTracklistById(Long id) throws TracklistIsNotExistsException;
 
     Tracklist createTracklist(String name) throws TracklistHasExistsException;
+
 }

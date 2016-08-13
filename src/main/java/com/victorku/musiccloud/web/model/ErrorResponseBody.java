@@ -3,6 +3,7 @@ package com.victorku.musiccloud.web.model;
 import com.victorku.musiccloud.exceptions.ApplicationErrorTypes;
 
 public class ErrorResponseBody {
+
     private int code;
     private String message;
 
@@ -31,4 +32,5 @@ public class ErrorResponseBody {
     public void setMessage(String message) {
         this.message = message;
     }
+
 }

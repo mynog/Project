@@ -13,7 +13,6 @@ public class AccountRole {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-
     @Column(name = "name")
     @Enumerated(EnumType.STRING)
     @NotEmpty
@@ -52,4 +51,5 @@ public class AccountRole {
     public void setName(UserRole name) {
         this.name = name;
     }
+
 }

@@ -38,4 +38,5 @@ public class MessageDTO {
     public void setCreateMessage(DateDTO createMessage) {
         this.createMessage = createMessage;
     }
+
 }

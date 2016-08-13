@@ -67,4 +67,5 @@ public class Mood {
     public void setAccountInfos(Set<AccountInfo> accountInfos) {
         this.accountInfos = accountInfos;
     }
+
 }

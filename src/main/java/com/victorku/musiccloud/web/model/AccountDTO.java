@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class AccountDTO {
+
     private Long id;
     private String email;
     private String password;
@@ -87,4 +88,5 @@ public class AccountDTO {
     public void setAccountInfo(AccountInfoDTO accountInfo) {
         this.accountInfo = accountInfo;
     }
+
 }
