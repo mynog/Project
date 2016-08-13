@@ -44,13 +44,12 @@ public class TrackController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.PUT)
-    public ResponseEntity<?> createTrack(@RequestParam("title") String title, @RequestParam("artist") String artist,
-                                         @RequestParam("album") String album, @RequestParam("year") Integer year,
-                                         @RequestParam("filename") String filename, @RequestParam("duration") String duration,
-                                         @RequestParam("rating") Double rating) {
+    public ResponseEntity<?> createTrack(@RequestBody TrackDTO trackInfo) {
         Track track = null;
         try {
-            track = trackService.createTrack(title, artist, album, year, filename, duration, rating);
+            track = trackService.createTrack(trackInfo.getTitle(),trackInfo.getArtist(),trackInfo.getAlbum(),
+                                             trackInfo.getYear(),trackInfo.getFilename(),trackInfo.getDuration(),
+                                              trackInfo.getRating());
         }
         catch (TrackHasExistsExceptions trackHasExists){
             return getErrorResponseBody(ApplicationErrorTypes.TRACK_HAS_EXISTS);
