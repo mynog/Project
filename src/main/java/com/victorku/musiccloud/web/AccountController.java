@@ -2,6 +2,7 @@ package com.victorku.musiccloud.web;
 
 import com.victorku.musiccloud.exceptions.AccountHasExistsException;
 import com.victorku.musiccloud.exceptions.AccountIsNotExistsException;
+import com.victorku.musiccloud.exceptions.AccountRoleIsNotExistsException;
 import com.victorku.musiccloud.exceptions.ApplicationErrorTypes;
 import com.victorku.musiccloud.model.Account;
 import com.victorku.musiccloud.service.AccountService;
@@ -51,7 +52,7 @@ public class AccountController {
         return new ResponseEntity<>(convert(account), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/account_info/{id}", method = RequestMethod.PUT)
     public ResponseEntity<?> addAccountInfo(@PathVariable("id") Long accountId, @RequestBody AccountInfoDTO info) {
         Account account = accountService.getAccountById(accountId);
         if (account == null) {
@@ -67,18 +68,18 @@ public class AccountController {
         return new ResponseEntity<>(convert(account), HttpStatus.OK);
     }
 
-//    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-//    public ResponseEntity<?> addAccountRole(@PathVariable("id") Long accountId, @RequestParam("roleId") Long roleId) {
-//        Account account = null;
-//        try {
-//            account = accountService.addAccountRole(accountId, roleId);
-//        } catch (AccountIsNotExistsException accountIsNotExists) {
-//            return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_ID_NOT_FOUND);
-//        } catch (AccountRoleIsNotExistsException accountRoleIsNotExists) {
-//            return getErrorResponseBody(ApplicationErrorTypes.ROLE_ID_NOT_FOUND);
-//        }
-//        return new ResponseEntity<>(convert(account), HttpStatus.OK);
-//    }
+    @RequestMapping(value = "/account_role/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<?> addAccountRole(@PathVariable("id") Long accountId, @RequestParam("roleId") Long roleId) {
+        Account account = null;
+        try {
+            account = accountService.addAccountRole(accountId, roleId);
+        } catch (AccountIsNotExistsException accountIsNotExists) {
+            return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_ID_NOT_FOUND);
+        } catch (AccountRoleIsNotExistsException accountRoleIsNotExists) {
+            return getErrorResponseBody(ApplicationErrorTypes.ROLE_ID_NOT_FOUND);
+        }
+        return new ResponseEntity<>(convert(account), HttpStatus.OK);
+    }
 
     private AccountDTO convert(Account dbModel) {
         return (dbModel == null) ? null : new AccountDTO(dbModel);

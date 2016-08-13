@@ -30,26 +30,26 @@ public class AccountInfo {
     @DateTimeFormat(pattern = "yyyy/dd/mm")
     private LocalDate birthday;
 
-//    @ManyToMany
-//    @JoinTable(name = "friends",
-//            joinColumns = @JoinColumn(name = "account_id"),
-//            inverseJoinColumns = @JoinColumn(name = "friend_id"))
-//    private Set<AccountInfo> friends;
-//
-//    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "accountInfos")
-//    private Set<Track> tracks;
-//
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountInfo")
-//    private Set<MoreTrackInfo> moreTrackInfos;
-//
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountInfo")
-//    private Set<Comments> comments;
-//
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountInfo")
-//    private Set<Tracklist> tracklists;
-//
-//    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "accountInfos")
-//    private Set<Mood> accountInfomoods;
+    @ManyToMany
+    @JoinTable(name = "friends",
+            joinColumns = @JoinColumn(name = "account_id"),
+            inverseJoinColumns = @JoinColumn(name = "friend_id"))
+    private Set<AccountInfo> friends;
+
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "accountInfos")
+    private Set<Track> tracks;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountInfo")
+    private Set<MoreTrackInfo> moreTrackInfos;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountInfo")
+    private Set<Comments> comments;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountInfo")
+    private Set<Tracklist> tracklists;
+
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "accountInfos")
+    private Set<Mood> accountInfomoods;
 
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "accountInfo", optional = false)
     private Account account;
@@ -104,49 +104,49 @@ public class AccountInfo {
         this.birthday = birthday;
     }
 
-//    public Set<AccountInfo> getFriends() { return friends; }
-//
-//    public void setFriends(Set<AccountInfo> friends) { this.friends = friends; }
+    public Set<AccountInfo> getFriends() { return friends; }
 
-//    public Set<Track> getTracks() {
-//        return tracks;
-//    }
-//
-//    public void setTracks(Set<Track> tracks) {
-//        this.tracks = tracks;
-//    }
-//
-//    public Set<MoreTrackInfo> getMoreTrackInfos() {
-//        return moreTrackInfos;
-//    }
-//
-//    public void setMoreTrackInfos(Set<MoreTrackInfo> moreTrackInfos) {
-//        this.moreTrackInfos = moreTrackInfos;
-//    }
-//
-//    public Set<Comments> getComments() {
-//        return comments;
-//    }
-//
-//    public void setComments(Set<Comments> comments) {
-//        this.comments = comments;
-//    }
-//
-//    public Set<Tracklist> getTracklists() {
-//        return tracklists;
-//    }
-//
-//    public void setTracklists(Set<Tracklist> tracklists) {
-//        this.tracklists = tracklists;
-//    }
-//
-//    public Set<Mood> getAccountInfomoods() {
-//        return accountInfomoods;
-//    }
-//
-//    public void setAccountInfomoods(Set<Mood> accountInfomoods) {
-//        this.accountInfomoods = accountInfomoods;
-//    }
+    public void setFriends(Set<AccountInfo> friends) { this.friends = friends; }
+
+    public Set<Track> getTracks() {
+        return tracks;
+    }
+
+    public void setTracks(Set<Track> tracks) {
+        this.tracks = tracks;
+    }
+
+    public Set<MoreTrackInfo> getMoreTrackInfos() {
+        return moreTrackInfos;
+    }
+
+    public void setMoreTrackInfos(Set<MoreTrackInfo> moreTrackInfos) {
+        this.moreTrackInfos = moreTrackInfos;
+    }
+
+    public Set<Comments> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comments> comments) {
+        this.comments = comments;
+    }
+
+    public Set<Tracklist> getTracklists() {
+        return tracklists;
+    }
+
+    public void setTracklists(Set<Tracklist> tracklists) {
+        this.tracklists = tracklists;
+    }
+
+    public Set<Mood> getAccountInfomoods() {
+        return accountInfomoods;
+    }
+
+    public void setAccountInfomoods(Set<Mood> accountInfomoods) {
+        this.accountInfomoods = accountInfomoods;
+    }
 
     public Account getAccount() {
         return account;
