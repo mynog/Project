@@ -31,12 +31,12 @@ public class TrackController {
     @Autowired
     private MoreTrackInfoService moreTrackInfoService;
 
-    @RequestMapping(value = "/upload")
+    @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public String uploadFile(@RequestParam("uploadedFile") MultipartFile uploadedFileRef){
         // Получаем имя загруженного файла
         String fileName = uploadedFileRef.getOriginalFilename();
         // Путь, где загруженный файл будет сохранен.
-        String path = "/home/kyluginvv/Project/Download" + fileName;
+        String path = "/home/kyluginvv/Project/Download/" + fileName;
 
         // Буффер для хранения данных из uploadedFileRef
         byte[] buffer = new byte[1000];
