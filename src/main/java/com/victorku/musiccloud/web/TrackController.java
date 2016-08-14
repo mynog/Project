@@ -1,5 +1,7 @@
 package com.victorku.musiccloud.web;
 
+import com.mpatric.mp3agic.InvalidDataException;
+import com.mpatric.mp3agic.UnsupportedTagException;
 import com.victorku.musiccloud.exceptions.*;
 import com.victorku.musiccloud.model.MoreTrackInfo;
 import com.victorku.musiccloud.model.Track;
@@ -22,7 +24,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/track")
-@MultipartConfig(fileSizeThreshold = 20971520) // Max file size 20mb
+@MultipartConfig(fileSizeThreshold = 20971520) // Максимальный размер файла 20mb
 public class TrackController {
 
     @Autowired
@@ -91,15 +93,21 @@ public class TrackController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.PUT)
-    public ResponseEntity<?> createTrack(@RequestBody TrackDTO trackInfo) {
+    public ResponseEntity<?> createTrack(@RequestParam("filename") String filename) {
         Track track = null;
         try {
-            track = trackService.createTrack(trackInfo.getTitle(),trackInfo.getArtist(),trackInfo.getAlbum(),
-                                             trackInfo.getYear(),trackInfo.getFilename(),trackInfo.getDuration(),
-                                              trackInfo.getRating());
+            track = trackService.createTrack(filename);
         }
-        catch (TrackHasExistsExceptions trackHasExists){
+        catch (TrackHasExistsExceptions trackHasExists) {
             return getErrorResponseBody(ApplicationErrorTypes.TRACK_HAS_EXISTS);
+        } catch (FileIsNotExistsException e) {
+            return getErrorResponseBody(ApplicationErrorTypes.FILE_NOT_FOUND);
+        } catch (InvalidDataException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (UnsupportedTagException e) {
+            e.printStackTrace();
         }
         return new ResponseEntity<>(convert(track), HttpStatus.OK);
     }
