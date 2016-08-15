@@ -1,5 +1,11 @@
 package com.victorku.musiccloud.web.model;
 
+import com.victorku.musiccloud.model.Genre;
+import com.victorku.musiccloud.model.Track;
+
+import java.util.HashSet;
+import java.util.Set;
+
 public class TrackDTO {
 
     private Long id;
@@ -10,6 +16,7 @@ public class TrackDTO {
     private String filename;
     private String duration;
     private Double rating;
+    private Set<GenreDTO> genres;
 
     public TrackDTO() {
     }
@@ -23,6 +30,29 @@ public class TrackDTO {
         this.filename = filename;
         this.duration = duration;
         this.rating = rating;
+    }
+
+    public TrackDTO(Track dbModel) {
+
+        if (dbModel == null) {
+            return;
+        }
+
+        this.id = dbModel.getId();
+        this.title = dbModel.getTitle();
+        this.artist = dbModel.getArtist();
+        this.album = dbModel.getAlbum();
+        this.year = dbModel.getYear();
+        this.filename = dbModel.getFilename();
+        this.duration = dbModel.getDuration();
+        this.rating = dbModel.getRating();
+        Set<GenreDTO> genres = new HashSet<>();
+        if (dbModel.getGenres() != null) {
+            for (Genre genre : dbModel.getGenres()) {
+                genres.add(new GenreDTO(genre));
+            }
+        }
+        this.genres = genres;
     }
 
     public Long getId() {
@@ -88,5 +118,9 @@ public class TrackDTO {
     public void setRating(Double rating) {
         this.rating = rating;
     }
+
+    public Set<GenreDTO> getGenres() { return genres; }
+
+    public void setGenres(Set<GenreDTO> genres) { this.genres = genres; }
 
 }

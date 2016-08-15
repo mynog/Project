@@ -47,7 +47,10 @@ public class Track {
             inverseJoinColumns = @JoinColumn(name = "track_id"))
     private Set<Tracklist> tracklists;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "tracks")
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "track_has_genre",
+            joinColumns = @JoinColumn(name = "track_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private Set<Genre> genres;
 
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "tracks")

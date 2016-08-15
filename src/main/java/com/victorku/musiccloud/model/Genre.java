@@ -17,10 +17,7 @@ public class Genre {
     @NotEmpty
     private String name;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "track_has_genre",
-            joinColumns = @JoinColumn(name = "track_id"),
-            inverseJoinColumns = @JoinColumn(name = "genre_id"))
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "genres")
     private Set<Track> tracks;
 
     public Genre() {

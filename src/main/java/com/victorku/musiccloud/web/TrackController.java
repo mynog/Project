@@ -34,7 +34,7 @@ public class TrackController {
     private MoreTrackInfoService moreTrackInfoService;
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public String uploadFile(@RequestParam("uploadedFile") MultipartFile uploadedFileRef){
+    public ResponseEntity<?> uploadFile(@RequestParam("uploadedFile") MultipartFile uploadedFileRef){
         // Получаем имя загруженного файла
         String fileName = uploadedFileRef.getOriginalFilename();
         // Путь, где загруженный файл будет сохранен.
@@ -70,7 +70,7 @@ public class TrackController {
                 e.printStackTrace();
             }
         }
-        return "File uploaded successfully! Total Bytes Read="+totalBytes;
+        return createTrack(fileName);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -92,8 +92,7 @@ public class TrackController {
         return new ResponseEntity<>(null,HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.PUT)
-    public ResponseEntity<?> createTrack(@RequestParam("filename") String filename) {
+    private ResponseEntity<?> createTrack(String filename) {
         Track track = null;
         try {
             track = trackService.createTrack(filename);
@@ -113,15 +112,28 @@ public class TrackController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.PATCH)
-    public ResponseEntity<?> updateTrack(@RequestParam("filename") String filename, @RequestBody TrackDTO trackInfo) {
+    public ResponseEntity<?> updateTrack(@RequestParam("id") Long trackId, @RequestBody TrackDTO trackInfo) {
         Track track = null;
         try {
-            track = trackService.updateTrack(trackInfo.getTitle(), trackInfo.getArtist(), trackInfo.getAlbum(),
-                                             trackInfo.getYear(), filename, trackInfo.getDuration());
+            track = trackService.updateTrack(trackId, trackInfo.getTitle(), trackInfo.getArtist(), trackInfo.getAlbum(),
+                                             trackInfo.getYear(), trackInfo.getFilename(), trackInfo.getDuration());
         } catch (TrackIsNotExistsException trackIsNotExists) {
             return getErrorResponseBody(ApplicationErrorTypes.TRACK_ID_NOT_FOUND);
         }
         return new ResponseEntity<Object>(convert(track), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{id}/genre", method = RequestMethod.PUT)
+    public ResponseEntity<?> addTrackGenre(@PathVariable("id") Long trackId, @RequestParam("genreId") Long genreId) {
+        Track track = null;
+        try {
+            track = trackService.addTrackGenre(trackId, genreId);
+        } catch (TrackIsNotExistsException trackIsNotExists) {
+            return getErrorResponseBody(ApplicationErrorTypes.TRACK_ID_NOT_FOUND);
+        } catch (GenreIsNotExistsException genreIsNotExists) {
+            return getErrorResponseBody(ApplicationErrorTypes.GENRE_ID_NOT_FOUND);
+        }
+        return new ResponseEntity<>(convert(track), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/more_track_info/{id}", method = RequestMethod.GET)
@@ -160,8 +172,7 @@ public class TrackController {
     }
 
     private TrackDTO convert(Track dbModel){
-        TrackDTO jsonModel = new TrackDTO(dbModel.getId(),dbModel.getTitle(),dbModel.getArtist(),dbModel.getAlbum(),dbModel.getYear(),dbModel.getFilename(),dbModel.getDuration(),dbModel.getRating());
-        return jsonModel;
+        return (dbModel == null) ? null : new TrackDTO(dbModel);
     }
 
     private ResponseEntity<ErrorResponseBody> getErrorResponseBody(ApplicationErrorTypes errorType) {
