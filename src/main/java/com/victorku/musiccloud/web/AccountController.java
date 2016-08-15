@@ -2,8 +2,6 @@ package com.victorku.musiccloud.web;
 
 import com.victorku.musiccloud.exceptions.*;
 import com.victorku.musiccloud.model.Account;
-import com.victorku.musiccloud.model.AccountRole;
-import com.victorku.musiccloud.service.AccountRoleService;
 import com.victorku.musiccloud.service.AccountService;
 import com.victorku.musiccloud.web.model.AccountDTO;
 import com.victorku.musiccloud.web.model.AccountInfoDTO;
@@ -89,8 +87,8 @@ public class AccountController {
             return getErrorResponseBody(ApplicationErrorTypes.ROLE_ID_NOT_FOUND);
         } catch (AccountIsNotExistsException e) {
             return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_ID_NOT_FOUND);
-        } catch (AccountNotHasRoleException e) {
-            return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_IS_NOT_HAS_ROLE);
+        } catch (AccountHasNotRoleException e) {
+            return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_HAS_NOT_ROLE);
         }
         return new ResponseEntity<>(convert(account), HttpStatus.OK);
     }

@@ -1,10 +1,7 @@
 package com.victorku.musiccloud.service.impl;
 
 import com.mpatric.mp3agic.*;
-import com.victorku.musiccloud.exceptions.FileIsNotExistsException;
-import com.victorku.musiccloud.exceptions.GenreIsNotExistsException;
-import com.victorku.musiccloud.exceptions.TrackHasExistsExceptions;
-import com.victorku.musiccloud.exceptions.TrackIsNotExistsException;
+import com.victorku.musiccloud.exceptions.*;
 import com.victorku.musiccloud.model.Genre;
 import com.victorku.musiccloud.model.Track;
 import com.victorku.musiccloud.repository.GenreRepository;
@@ -130,6 +127,26 @@ public class TrackServiceImpl implements TrackService {
         }
         Set<Genre> genres = track.getGenres();
         genres.add(genre);
+        track.setGenres(genres);
+        return trackRepository.save(track);
+    }
+
+    @Override
+    public Track removeTrackGenre(Long trackId, Long genreId) throws TrackIsNotExistsException, GenreIsNotExistsException, TrackHasNotGenreException {
+        Track track = getTrackById(trackId);
+        if (track == null) {
+            throw new TrackIsNotExistsException();
+        }
+        Genre genre = genreService.getGenreById(genreId);
+        if (genre == null) {
+            throw new GenreIsNotExistsException();
+        }
+        Set<Genre> genres = track.getGenres();
+        if(genres.contains(genre)) {
+            genres.remove(genre);
+        } else {
+            throw new TrackHasNotGenreException();
+        }
         track.setGenres(genres);
         return trackRepository.save(track);
     }

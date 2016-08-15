@@ -136,6 +136,23 @@ public class TrackController {
         return new ResponseEntity<>(convert(track), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/{id}/genre", method = RequestMethod.DELETE)
+    public ResponseEntity<?> removeTrackGenre(@PathVariable("id") Long trackId, @RequestParam("genreId") Long genreId) {
+        Track track = null;
+        try {
+            track = trackService.removeTrackGenre(trackId, genreId);
+        } catch (TrackIsNotExistsException trackIsNotExists) {
+            return getErrorResponseBody(ApplicationErrorTypes.TRACK_ID_NOT_FOUND);
+        } catch (GenreIsNotExistsException genreIsNotExists) {
+            return getErrorResponseBody(ApplicationErrorTypes.GENRE_ID_NOT_FOUND);
+        } catch (TrackHasNotGenreException trackHasNotGenreException) {
+            return getErrorResponseBody(ApplicationErrorTypes.TRACK_HAS_NOT_GENRE);
+        }
+        return new ResponseEntity<>(convert(track), HttpStatus.OK);
+    }
+
+
+
     @RequestMapping(value = "/more_track_info/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getMoreTrackInfo(@PathVariable("id") Long moreTrackInfoId){
         MoreTrackInfo moreTrackInfo = moreTrackInfoService.getMoreTrackInfoById(moreTrackInfoId);

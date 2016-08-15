@@ -51,4 +51,17 @@ public class Genre {
         this.tracks = tracks;
     }
 
+    @Override
+    public int hashCode() { return id.intValue(); }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if(obj instanceof Genre) {
+            return this.id==((Genre) obj).getId();
+        }
+        return false;
+    }
 }
