@@ -54,8 +54,8 @@ public class AccountInfo {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountInfo")
     private Set<Tracklist> tracklists;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "accountInfos")
-    private Set<Mood> accountInfomoods;
+//    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "accountInfos")
+//    private Set<Mood> accountInfomoods;
 
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "accountInfo", optional = false)
     private Account account;
@@ -149,13 +149,13 @@ public class AccountInfo {
         this.tracklists = tracklists;
     }
 
-    public Set<Mood> getAccountInfomoods() {
-        return accountInfomoods;
-    }
-
-    public void setAccountInfomoods(Set<Mood> accountInfomoods) {
-        this.accountInfomoods = accountInfomoods;
-    }
+//    public Set<Mood> getAccountInfomoods() {
+//        return accountInfomoods;
+//    }
+//
+//    public void setAccountInfomoods(Set<Mood> accountInfomoods) {
+//        this.accountInfomoods = accountInfomoods;
+//    }
 
     public Account getAccount() {
         return account;

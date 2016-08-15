@@ -21,7 +21,8 @@ public enum ApplicationErrorTypes {
     MORE_TRACK_INFO_HAS_EXISTS(17,"This info has exists in DB"),
     ACCOUNT_HAS_NOT_ROLE(18,"This account has not role" ),
     FILE_NOT_FOUND(19,"File has not exists on server" ),
-    TRACK_HAS_NOT_GENRE(20,"This track has not genre" );
+    TRACK_HAS_NOT_GENRE(20,"This track has not genre" ),
+    TRACKLIST_HAS_NOT_TRACK(21,"This tracklist has not track" );
 
     private String message;
     private int code;

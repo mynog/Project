@@ -41,10 +41,7 @@ public class Track {
             inverseJoinColumns = @JoinColumn(name = "account_info_id"))
     private Set<AccountInfo> accountInfos;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "tracklist_has_track",
-            joinColumns = @JoinColumn(name = "tracklist_id"),
-            inverseJoinColumns = @JoinColumn(name = "track_id"))
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "tracks")
     private Set<Tracklist> tracklists;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -52,6 +49,8 @@ public class Track {
             joinColumns = @JoinColumn(name = "track_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private Set<Genre> genres;
+
+
 
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "tracks")
     private Set<Mood> moods;
@@ -194,5 +193,18 @@ public class Track {
 
     public void setRatings(Set<Rating> ratings) { this.ratings = ratings; }
 
+    @Override
+    public int hashCode() { return id.intValue(); }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if(obj instanceof Track) {
+            return this.id==((Track) obj).getId();
+        }
+        return false;
+    }
 }
 
