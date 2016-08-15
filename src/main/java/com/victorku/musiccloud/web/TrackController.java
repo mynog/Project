@@ -112,6 +112,19 @@ public class TrackController {
         return new ResponseEntity<>(convert(track), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/", method = RequestMethod.PATCH)
+    public ResponseEntity<?> updateTrack(@RequestParam("filename") String filename, @RequestBody TrackDTO trackInfo) {
+        Track track = null;
+        try {
+            track = trackService.updateTrack(trackInfo.getTitle(), trackInfo.getArtist(), trackInfo.getAlbum(),
+                                             trackInfo.getYear(), filename, trackInfo.getDuration(),
+                                              trackInfo.getRating());
+        } catch (TrackIsNotExistsException trackIsNotExists) {
+            return getErrorResponseBody(ApplicationErrorTypes.TRACK_ID_NOT_FOUND);
+        }
+        return new ResponseEntity<Object>(convert(track), HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/more_track_info/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getMoreTrackInfo(@PathVariable("id") Long moreTrackInfoId){
         MoreTrackInfo moreTrackInfo = moreTrackInfoService.getMoreTrackInfoById(moreTrackInfoId);

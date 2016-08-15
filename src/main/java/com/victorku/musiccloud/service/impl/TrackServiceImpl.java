@@ -84,4 +84,31 @@ public class TrackServiceImpl implements TrackService {
         return trackRepository.save(track);
     }
 
+    @Override
+    public Track updateTrack(String title, String album, String artist, Integer year, String filename, String duration, Double rating) throws TrackIsNotExistsException {
+        Track track = trackRepository.findByFilename(filename);
+        if (track == null) {
+            throw new TrackIsNotExistsException();
+        }
+        if (title != null) {
+            track.setTitle(title);
+        }
+        if (artist != null) {
+            track.setArtist(artist);
+        }
+        if (album != null) {
+            track.setAlbum(album);
+        }
+        if (year != null) {
+            track.setYear(year);
+        }
+        if (duration != null) {
+            track.setDuration(duration);
+        }
+        if (rating == null) {
+            track.setRating(rating);
+        }
+        return trackRepository.save(track);
+    }
+
 }
