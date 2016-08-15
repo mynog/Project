@@ -117,8 +117,7 @@ public class TrackController {
         Track track = null;
         try {
             track = trackService.updateTrack(trackInfo.getTitle(), trackInfo.getArtist(), trackInfo.getAlbum(),
-                                             trackInfo.getYear(), filename, trackInfo.getDuration(),
-                                              trackInfo.getRating());
+                                             trackInfo.getYear(), filename, trackInfo.getDuration());
         } catch (TrackIsNotExistsException trackIsNotExists) {
             return getErrorResponseBody(ApplicationErrorTypes.TRACK_ID_NOT_FOUND);
         }

@@ -17,6 +17,6 @@ public interface TrackService {
 
     Track createTrack(String filename) throws TrackHasExistsExceptions, InvalidDataException, IOException, UnsupportedTagException, FileIsNotExistsException;
 
-    Track updateTrack(String title, String artist, String album, Integer year, String filename, String duration, Double rating) throws TrackIsNotExistsException;
+    Track updateTrack(String title, String artist, String album, Integer year, String filename, String duration) throws TrackIsNotExistsException;
 
 }
