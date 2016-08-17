@@ -1,5 +1,7 @@
 package com.victorku.musiccloud.web.model;
 
+import com.victorku.musiccloud.model.Genre;
+
 public class GenreDTO {
 
     private Long id;
@@ -11,6 +13,14 @@ public class GenreDTO {
     public GenreDTO(Long id, String name) {
         this.id = id;
         this.name = name;
+    }
+
+    public GenreDTO(Genre genre) {
+        if (genre == null) {
+            return;
+        }
+        this.id = genre.getId();
+        this.name = genre.getName();
     }
 
     public Long getId() {

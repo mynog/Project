@@ -17,10 +17,7 @@ public class Genre {
     @NotEmpty
     private String name;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "track_has_genre",
-            joinColumns = @JoinColumn(name = "track_id"),
-            inverseJoinColumns = @JoinColumn(name = "genre_id"))
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "genres")
     private Set<Track> tracks;
 
     public Genre() {
@@ -54,4 +51,17 @@ public class Genre {
         this.tracks = tracks;
     }
 
+    @Override
+    public int hashCode() { return id.intValue(); }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if(obj instanceof Genre) {
+            return this.id==((Genre) obj).getId();
+        }
+        return false;
+    }
 }

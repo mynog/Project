@@ -7,11 +7,11 @@ public enum ApplicationErrorTypes {
     ACCOUNT_HAS_EXISTS(3, "Account has exists in DB"),
     COMMENT_ID_NOT_FOUND(4,"Comment ID not found in DB"),
     GENRE_ID_NOT_FOUND(5,"Genre ID not found in DB"),
-    MESSAGE_ID_NOT_FOUND(6,"Genre ID not found in DB"),
-    MOOD_ID_NOT_FOUND(7,"Genre ID not found in DB"),
-    MORE_TRACK_INFO_ID_NOT_FOUND(8,"Genre ID not found in DB"),
-    TRACK_ID_NOT_FOUND(9,"Genre ID not found in DB"),
-    TRACKLIST_ID_NOT_FOUND(10,"Genre ID not found in DB"),
+    MESSAGE_ID_NOT_FOUND(6,"Message ID not found in DB"),
+    MOOD_ID_NOT_FOUND(7,"Mood ID not found in DB"),
+    MORE_TRACK_INFO_ID_NOT_FOUND(8,"MoreTrackInfo ID not found in DB"),
+    TRACK_ID_NOT_FOUND(9,"Track ID not found in DB"),
+    TRACKLIST_ID_NOT_FOUND(10,"Tracklist ID not found in DB"),
     CHAT_ID_NOT_FOUND(11,"Chat ID not found in DB"),
     RATING_ID_NOT_FOUND(12,"Rating ID not found in DB"),
     MOOD_HAS_EXISTS(13,"Mood has exists in DB"),
@@ -19,7 +19,10 @@ public enum ApplicationErrorTypes {
     TRACK_HAS_EXISTS(15,"Track has exists in DB"),
     GENRE_HAS_EXISTS(16,"Genre has exists in DB"),
     MORE_TRACK_INFO_HAS_EXISTS(17,"This info has exists in DB"),
-    ACCOUNT_IS_NOT_HAS_ROLE(18,"This account has not role" );
+    ACCOUNT_HAS_NOT_ROLE(18,"This account has not role" ),
+    FILE_NOT_FOUND(19,"File has not exists on server" ),
+    TRACK_HAS_NOT_GENRE(20,"This track has not genre" ),
+    TRACKLIST_HAS_NOT_TRACK(21,"This tracklist has not track" );
 
     private String message;
     private int code;

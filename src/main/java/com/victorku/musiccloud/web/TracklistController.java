@@ -1,8 +1,6 @@
 package com.victorku.musiccloud.web;
 
-import com.victorku.musiccloud.exceptions.ApplicationErrorTypes;
-import com.victorku.musiccloud.exceptions.TracklistHasExistsException;
-import com.victorku.musiccloud.exceptions.TracklistIsNotExistsException;
+import com.victorku.musiccloud.exceptions.*;
 import com.victorku.musiccloud.model.Tracklist;
 import com.victorku.musiccloud.service.TracklistService;
 import com.victorku.musiccloud.web.model.DateDTO;
@@ -50,9 +48,36 @@ public class TracklistController {
         return new ResponseEntity<>(convert(tracklist), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/{id}/track", method = RequestMethod.PUT)
+    public ResponseEntity<?> addTrackIntoTracklist(@PathVariable("id") Long tracklistId, @RequestParam("trackId") Long trackId) {
+        Tracklist tracklist = null;
+        try {
+            tracklist = tracklistService.addTrackIntoTracklist(tracklistId, trackId);
+        } catch (TracklistIsNotExistsException tracklistIsNotExists) {
+            return getErrorResponseBody(ApplicationErrorTypes.TRACKLIST_ID_NOT_FOUND);
+        } catch (TrackIsNotExistsException trackIsNotExists) {
+            return getErrorResponseBody(ApplicationErrorTypes.TRACK_ID_NOT_FOUND);
+        }
+        return new ResponseEntity<>(convert(tracklist), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{id}/track", method = RequestMethod.DELETE)
+    public ResponseEntity<?> removeTrackIntoTracklist(@PathVariable("id") Long tracklistId, @RequestParam("trackId") Long trackId) {
+        Tracklist tracklist = null;
+        try {
+            tracklist = tracklistService.removeTrackFromTracklist(tracklistId, trackId);
+        } catch (TracklistIsNotExistsException tracklistIsNotExists) {
+            return getErrorResponseBody(ApplicationErrorTypes.TRACKLIST_ID_NOT_FOUND);
+        } catch (TrackIsNotExistsException trackIsNotExists) {
+            return getErrorResponseBody(ApplicationErrorTypes.TRACK_ID_NOT_FOUND);
+        } catch (TracklistHasNotTrackException tracklistHasNotTrack) {
+            return getErrorResponseBody(ApplicationErrorTypes.TRACKLIST_HAS_NOT_TRACK);
+        }
+        return new ResponseEntity<>(convert(tracklist), HttpStatus.OK);
+    }
+
     private TracklistDTO convert(Tracklist dbModel){
-        TracklistDTO jsonModel = new TracklistDTO(dbModel.getId(),dbModel.getName(),new DateDTO(dbModel.getDateCreate()));
-        return jsonModel;
+        return (dbModel == null) ? null : new TracklistDTO(dbModel);
     }
 
     private ResponseEntity<ErrorResponseBody> getErrorResponseBody(ApplicationErrorTypes errorType) {
