@@ -8,6 +8,8 @@ public interface GenreService {
 
     Genre getGenreById(Long id);
 
+    Genre getGenreByName(String name);
+
     void deleteGenreById(Long id) throws GenreIsNotExistsException;
 
     Genre createGenre(String name) throws GenreHasExistsException;

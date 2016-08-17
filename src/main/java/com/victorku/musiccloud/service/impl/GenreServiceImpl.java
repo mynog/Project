@@ -20,6 +20,9 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
+    public Genre getGenreByName(String name) { return genreRepository.findByName(name); }
+
+    @Override
     public void deleteGenreById(Long id) throws GenreIsNotExistsException {
         if(!genreRepository.exists(id)){
             throw new GenreIsNotExistsException();

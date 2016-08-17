@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Set;
 
 @Service
@@ -42,7 +43,9 @@ public class TrackServiceImpl implements TrackService {
     }
 
     @Override
-    public Track createTrack(String filename) throws TrackHasExistsExceptions, InvalidDataException, IOException, UnsupportedTagException, FileIsNotExistsException, TracklistIsNotExistsException, TrackIsNotExistsException {
+    public Track createTrack(String filename) throws TrackHasExistsExceptions, InvalidDataException, IOException,
+                                                     UnsupportedTagException, FileIsNotExistsException, TracklistIsNotExistsException,
+                                                     TrackIsNotExistsException, GenreHasExistsException, GenreIsNotExistsException {
         // Создаем mp3 файл
         Mp3File mp3File = null;
         try {
@@ -95,6 +98,24 @@ public class TrackServiceImpl implements TrackService {
         // Создаем и сохраняем готовый трэк
         track = new Track(title, artist, album, year, filename, duration, null);
         trackRepository.save(track);
+        // Автоматически добавляем жанр к треку
+        Genre trackgenre = null;
+        if (genre != null) {
+            try {
+                trackgenre = genreService.createGenre(genre);
+                Set<Genre> genres = new HashSet<>();
+                genres.add(trackgenre);
+                track.setGenres(genres);
+                trackRepository.save(track);
+
+            } catch (GenreHasExistsException genreHasExists) {
+                trackgenre = genreService.getGenreByName(genre);
+                Set<Genre> genres = new HashSet<>();
+                genres.add(trackgenre);
+                track.setGenres(genres);
+                trackRepository.save(track);
+            }
+        }
         // Создаем автоматические плеэйлисты
         Tracklist tracklist = null;
         // По жанру

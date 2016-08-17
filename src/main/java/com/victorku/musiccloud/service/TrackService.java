@@ -13,7 +13,7 @@ public interface TrackService {
 
     void deleteTrackById(Long id) throws TrackIsNotExistsException;
 
-    Track createTrack(String filename) throws TrackHasExistsExceptions, InvalidDataException, IOException, UnsupportedTagException, FileIsNotExistsException, TracklistIsNotExistsException, TrackIsNotExistsException;
+    Track createTrack(String filename) throws TrackHasExistsExceptions, InvalidDataException, IOException, UnsupportedTagException, FileIsNotExistsException, TracklistIsNotExistsException, TrackIsNotExistsException, GenreHasExistsException, GenreIsNotExistsException;
 
     Track updateTrack(Long trackId, String title, String artist, String album, Integer year, String filename, String duration) throws TrackIsNotExistsException;
 
