@@ -4,10 +4,13 @@ import com.mpatric.mp3agic.*;
 import com.victorku.musiccloud.exceptions.*;
 import com.victorku.musiccloud.model.Genre;
 import com.victorku.musiccloud.model.Track;
+import com.victorku.musiccloud.model.Tracklist;
 import com.victorku.musiccloud.repository.GenreRepository;
 import com.victorku.musiccloud.repository.TrackRepository;
+import com.victorku.musiccloud.repository.TracklistRepository;
 import com.victorku.musiccloud.service.GenreService;
 import com.victorku.musiccloud.service.TrackService;
+import com.victorku.musiccloud.service.TracklistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +25,8 @@ public class TrackServiceImpl implements TrackService {
     private TrackRepository trackRepository;
     @Autowired
     private GenreService genreService;
+    @Autowired
+    private TracklistService tracklistService;
 
     @Override
     public Track getTrackById(Long id) {
@@ -37,12 +42,12 @@ public class TrackServiceImpl implements TrackService {
     }
 
     @Override
-    public Track createTrack(String filename) throws TrackHasExistsExceptions, InvalidDataException, IOException, UnsupportedTagException, FileIsNotExistsException {
+    public Track createTrack(String filename) throws TrackHasExistsExceptions, InvalidDataException, IOException, UnsupportedTagException, FileIsNotExistsException, TracklistIsNotExistsException, TrackIsNotExistsException {
         // Создаем mp3 файл
         Mp3File mp3File = null;
         try {
             mp3File = new Mp3File("/home/kyluginvv/Project/Download/" + filename);
-        }catch (FileNotFoundException fileNotFound){
+        } catch (FileNotFoundException fileNotFound) {
             throw new FileIsNotExistsException();
         }
         // Проверяем существование файла в базе
@@ -50,12 +55,13 @@ public class TrackServiceImpl implements TrackService {
         if (track != null) {
             throw new TrackHasExistsExceptions();
         }
-        // Создаем переменные для сохранения параметров файла
+        // Создаем переменные для сохранения параметров файла и создания плейлистов "на лету"
         String title = "";
         String artist = "";
         String album = "";
         String duration;
         Integer year = 0;
+        String genre = "";
         // Парсинг mp3 файла
         // Получаем продолжительность файла в секундах
         duration = mp3File.getLengthInSeconds() + " cекунд";
@@ -66,11 +72,12 @@ public class TrackServiceImpl implements TrackService {
             title = id3v1Tag.getTitle();
             artist = id3v1Tag.getArtist();
             album = id3v1Tag.getAlbum();
-            if(id3v1Tag.getYear()==null){
+            if (id3v1Tag.getYear() == null) {
                 year = 0;
             } else {
                 year = Integer.parseInt(id3v1Tag.getYear());
             }
+            genre = id3v1Tag.getGenreDescription();
         }
         // Версия данных ID3v2
         if (mp3File.hasId3v2Tag()) {
@@ -78,15 +85,30 @@ public class TrackServiceImpl implements TrackService {
             title = id3v2Tag.getTitle();
             artist = id3v2Tag.getArtist();
             album = id3v2Tag.getAlbum();
-            if(id3v2Tag.getYear()==null){
+            if (id3v2Tag.getYear() == null) {
                 year = 0;
             } else {
-            year = Integer.parseInt(id3v2Tag.getYear());
+                year = Integer.parseInt(id3v2Tag.getYear());
+            }
+            genre = id3v2Tag.getGenreDescription();
+        }
+        // Создаем и сохраняем готовый трэк
+        track = new Track(title, artist, album, year, filename, duration, null);
+        trackRepository.save(track);
+        // Создаем автоматические плеэйлисты
+        Tracklist tracklist = null;
+        // По жанру
+        if (genre != null) {
+            try {
+                tracklist = tracklistService.createTracklist(genre);
+                tracklist = tracklistService.addTrackIntoTracklist(tracklist.getId(), track.getId());
+            } catch (TracklistHasExistsException tracklistHasExists) {
+                tracklist = tracklistService.getTracklistByName(genre);
+                tracklist = tracklistService.addTrackIntoTracklist(tracklist.getId(),track.getId());
             }
         }
-        track = new Track(title,artist,album,year,filename,duration,null);
-        return trackRepository.save(track);
-    }
+            return track;
+        }
 
     @Override
     public Track updateTrack(Long trackId, String title, String album, String artist, Integer year, String filename, String duration) throws TrackIsNotExistsException {

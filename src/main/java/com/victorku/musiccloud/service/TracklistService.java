@@ -10,6 +10,8 @@ public interface TracklistService {
 
     Tracklist getTracklistById(Long id);
 
+    Tracklist getTracklistByName(String name);
+
     void deleteTracklistById(Long id) throws TracklistIsNotExistsException;
 
     Tracklist createTracklist(String name) throws TracklistHasExistsException;
@@ -17,4 +19,5 @@ public interface TracklistService {
     Tracklist addTrackIntoTracklist(Long tracklistid,Long trackId) throws TracklistIsNotExistsException, TrackIsNotExistsException;
 
     Tracklist removeTrackFromTracklist(Long tracklistid,Long trackId) throws TracklistIsNotExistsException, TrackIsNotExistsException, TracklistHasNotTrackException;
+
 }

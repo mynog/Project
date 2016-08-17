@@ -34,7 +34,7 @@ public class TrackController {
     private MoreTrackInfoService moreTrackInfoService;
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public ResponseEntity<?> uploadFile(@RequestParam("uploadedFile") MultipartFile uploadedFileRef){
+    public ResponseEntity<?> uploadFile(@RequestParam("uploadedFile") MultipartFile uploadedFileRef) throws TracklistIsNotExistsException, TrackIsNotExistsException {
         // Получаем имя загруженного файла
         String fileName = uploadedFileRef.getOriginalFilename();
         // Путь, где загруженный файл будет сохранен.
@@ -92,7 +92,7 @@ public class TrackController {
         return new ResponseEntity<>(null,HttpStatus.OK);
     }
 
-    private ResponseEntity<?> createTrack(String filename) {
+    private ResponseEntity<?> createTrack(String filename) throws TracklistIsNotExistsException, TrackIsNotExistsException {
         Track track = null;
         try {
             track = trackService.createTrack(filename);

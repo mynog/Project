@@ -28,6 +28,9 @@ public class TracklistServiceImpl implements TracklistService {
     }
 
     @Override
+    public Tracklist getTracklistByName(String name) { return tracklistRepository.findByName(name); }
+
+    @Override
     public void deleteTracklistById(Long id) throws TracklistIsNotExistsException {
         if(!tracklistRepository.exists(id)){
             throw new TracklistIsNotExistsException();
