@@ -107,6 +107,16 @@ public class TrackServiceImpl implements TrackService {
                 tracklist = tracklistService.addTrackIntoTracklist(tracklist.getId(),track.getId());
             }
         }
+        // По альбому
+        if (album != null) {
+            try {
+                tracklist = tracklistService.createTracklist(album);
+                tracklist = tracklistService.addTrackIntoTracklist(tracklist.getId(), track.getId());
+            } catch (TracklistHasExistsException tracklistHasExists) {
+                tracklist = tracklistService.getTracklistByName(album);
+                tracklist = tracklistService.addTrackIntoTracklist(tracklist.getId(),track.getId());
+            }
+        }
             return track;
         }
 
