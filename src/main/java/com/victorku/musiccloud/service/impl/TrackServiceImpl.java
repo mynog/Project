@@ -46,6 +46,73 @@ public class TrackServiceImpl implements TrackService {
     public Track createTrack(String filename) throws TrackHasExistsExceptions, InvalidDataException, IOException,
                                                      UnsupportedTagException, FileIsNotExistsException, TracklistIsNotExistsException,
                                                      TrackIsNotExistsException, GenreHasExistsException, GenreIsNotExistsException {
+            return parsingMp3File(filename);
+        }
+
+    @Override
+    public Track updateTrack(Long trackId, String title, String album, String artist, Integer year, String filename, String duration) throws TrackIsNotExistsException {
+        Track track = trackRepository.findOne(trackId);
+        if (track == null) {
+            throw new TrackIsNotExistsException();
+        }
+        if (title != null) {
+            track.setTitle(title);
+        }
+        if (artist != null) {
+            track.setArtist(artist);
+        }
+        if (album != null) {
+            track.setAlbum(album);
+        }
+        if (year != null) {
+            track.setYear(year);
+        }
+        if (filename != null) {
+            track.setFilename(filename);
+        }
+        if (duration != null) {
+            track.setDuration(duration);
+        }
+        return trackRepository.save(track);
+    }
+
+    @Override
+    public Track addTrackGenre(Long trackId, Long genreId) throws TrackIsNotExistsException, GenreIsNotExistsException {
+        Track track = getTrackById(trackId);
+        if (track == null) {
+            throw new TrackIsNotExistsException();
+        }
+        Genre genre = genreService.getGenreById(genreId);
+        if (genre == null) {
+            throw new GenreIsNotExistsException();
+        }
+        Set<Genre> genres = track.getGenres();
+        genres.add(genre);
+        track.setGenres(genres);
+        return trackRepository.save(track);
+    }
+
+    @Override
+    public Track removeTrackGenre(Long trackId, Long genreId) throws TrackIsNotExistsException, GenreIsNotExistsException, TrackHasNotGenreException {
+        Track track = getTrackById(trackId);
+        if (track == null) {
+            throw new TrackIsNotExistsException();
+        }
+        Genre genre = genreService.getGenreById(genreId);
+        if (genre == null) {
+            throw new GenreIsNotExistsException();
+        }
+        Set<Genre> genres = track.getGenres();
+        if(genres.contains(genre)) {
+            genres.remove(genre);
+        } else {
+            throw new TrackHasNotGenreException();
+        }
+        track.setGenres(genres);
+        return trackRepository.save(track);
+    }
+
+    private Track parsingMp3File(String filename) throws InvalidDataException, IOException, UnsupportedTagException, FileIsNotExistsException, TrackHasExistsExceptions, TracklistIsNotExistsException, TrackIsNotExistsException {
         // Создаем mp3 файл
         Mp3File mp3File = null;
         try {
@@ -138,70 +205,8 @@ public class TrackServiceImpl implements TrackService {
                 tracklist = tracklistService.addTrackIntoTracklist(tracklist.getId(),track.getId());
             }
         }
-            return track;
-        }
-
-    @Override
-    public Track updateTrack(Long trackId, String title, String album, String artist, Integer year, String filename, String duration) throws TrackIsNotExistsException {
-        Track track = trackRepository.findOne(trackId);
-        if (track == null) {
-            throw new TrackIsNotExistsException();
-        }
-        if (title != null) {
-            track.setTitle(title);
-        }
-        if (artist != null) {
-            track.setArtist(artist);
-        }
-        if (album != null) {
-            track.setAlbum(album);
-        }
-        if (year != null) {
-            track.setYear(year);
-        }
-        if (filename != null) {
-            track.setFilename(filename);
-        }
-        if (duration != null) {
-            track.setDuration(duration);
-        }
-        return trackRepository.save(track);
-    }
-
-    @Override
-    public Track addTrackGenre(Long trackId, Long genreId) throws TrackIsNotExistsException, GenreIsNotExistsException {
-        Track track = getTrackById(trackId);
-        if (track == null) {
-            throw new TrackIsNotExistsException();
-        }
-        Genre genre = genreService.getGenreById(genreId);
-        if (genre == null) {
-            throw new GenreIsNotExistsException();
-        }
-        Set<Genre> genres = track.getGenres();
-        genres.add(genre);
-        track.setGenres(genres);
-        return trackRepository.save(track);
-    }
-
-    @Override
-    public Track removeTrackGenre(Long trackId, Long genreId) throws TrackIsNotExistsException, GenreIsNotExistsException, TrackHasNotGenreException {
-        Track track = getTrackById(trackId);
-        if (track == null) {
-            throw new TrackIsNotExistsException();
-        }
-        Genre genre = genreService.getGenreById(genreId);
-        if (genre == null) {
-            throw new GenreIsNotExistsException();
-        }
-        Set<Genre> genres = track.getGenres();
-        if(genres.contains(genre)) {
-            genres.remove(genre);
-        } else {
-            throw new TrackHasNotGenreException();
-        }
-        track.setGenres(genres);
-        return trackRepository.save(track);
+        return track;
     }
 
 }
+

@@ -39,7 +39,6 @@ public class TrackController {
         String fileName = uploadedFileRef.getOriginalFilename();
         // Путь, где загруженный файл будет сохранен.
         String path = "/home/kyluginvv/Project/Download/" + fileName;
-
         // Буффер для хранения данных из uploadedFileRef
         byte[] buffer = new byte[1000];
         // Теперь создаем выходной файл outputFile на сервере
