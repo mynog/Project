@@ -63,7 +63,7 @@ public class Track {
     @MapKeyJoinColumn(name = "account_info_id")
     private Map<AccountInfo, Rating> ratings;
 
-    @OneToMany(mappedBy = "track")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "track")
     @MapKeyJoinColumn(name = "account_info_id")
     private Map<AccountInfo, MoreTrackInfo> moreTrackInfos;
 

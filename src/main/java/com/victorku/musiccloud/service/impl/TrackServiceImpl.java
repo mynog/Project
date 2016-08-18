@@ -29,6 +29,8 @@ public class TrackServiceImpl implements TrackService {
     private TracklistService tracklistService;
     @Autowired
     private AccountInfoService accountInfoService;
+    @Autowired
+    private MoreTrackInfoService moreTrackInfoService;
 
     @Override
     public Track getTrackById(Long id) {
@@ -130,6 +132,19 @@ public class TrackServiceImpl implements TrackService {
         Map<AccountInfo, Mood> moods = track.getMoods();
         moods.put(accountInfo,mood);
         track.setMoods(moods);
+        return trackRepository.save(track);
+    }
+
+    @Override
+    public Track addMoreTrackInfo(Track track, String text, Long accountInfoId) throws AccountIsNotExistsException, MoreTrackInfoHasExistsException {
+        MoreTrackInfo moreTrackInfo = moreTrackInfoService.createMoreTrackInfo(text);
+        AccountInfo accountInfo = accountInfoService.getAccountInfoById(accountInfoId);
+        if (accountInfo == null) {
+            throw new AccountIsNotExistsException();
+        }
+        Map<AccountInfo, MoreTrackInfo> moreTrackInfos = track.getMoreTrackInfos();
+        moreTrackInfos.put(accountInfo,moreTrackInfo);
+        track.setMoreTrackInfos(moreTrackInfos);
         return trackRepository.save(track);
     }
 
