@@ -21,7 +21,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-     
+
 @RestController
 @RequestMapping("/track")
 @MultipartConfig(fileSizeThreshold = 20971520) // Максимальный размер файла 20mb
@@ -150,7 +150,20 @@ public class TrackController {
         return new ResponseEntity<>(convert(track), HttpStatus.OK);
     }
 
-
+    @RequestMapping(value = "/{id}/mood", method = RequestMethod.PUT)
+    public ResponseEntity<?> addTrackMood(@PathVariable("id") Long trackId, @RequestParam("moodId") Long moodId, @RequestParam("accountInfoId") Long accountInfoId) {
+        Track track = null;
+        try {
+            track = trackService.addTrackMood(trackId, moodId, accountInfoId);
+        } catch (TrackIsNotExistsException trackIsNotExists) {
+            return getErrorResponseBody(ApplicationErrorTypes.TRACK_ID_NOT_FOUND);
+        } catch (MoodIsNotExistsException moodIsNotExists) {
+            return getErrorResponseBody(ApplicationErrorTypes.MOOD_ID_NOT_FOUND);
+        } catch (AccountIsNotExistsException e) {
+            return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_ID_NOT_FOUND);
+        }
+        return new ResponseEntity<>(convert(track), HttpStatus.OK);
+    }
 
     @RequestMapping(value = "/more_track_info/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getMoreTrackInfo(@PathVariable("id") Long moreTrackInfoId){

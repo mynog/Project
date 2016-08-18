@@ -17,12 +17,11 @@ public class MoreTrackInfo {
     private String text;
 
     @ManyToOne
-    @JoinColumn(name = "account_info_id")
-    private AccountInfo accountInfo;
+    private Track track;
 
     @ManyToOne
-    @JoinColumn(name = "track_id")
-    private Track track;
+    @JoinColumn(name = "account_info_id")
+    private AccountInfo accountInfo;
 
     public MoreTrackInfo() {
     }

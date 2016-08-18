@@ -2,21 +2,18 @@ package com.victorku.musiccloud.service.impl;
 
 import com.mpatric.mp3agic.*;
 import com.victorku.musiccloud.exceptions.*;
-import com.victorku.musiccloud.model.Genre;
-import com.victorku.musiccloud.model.Track;
-import com.victorku.musiccloud.model.Tracklist;
+import com.victorku.musiccloud.model.*;
 import com.victorku.musiccloud.repository.GenreRepository;
 import com.victorku.musiccloud.repository.TrackRepository;
 import com.victorku.musiccloud.repository.TracklistRepository;
-import com.victorku.musiccloud.service.GenreService;
-import com.victorku.musiccloud.service.TrackService;
-import com.victorku.musiccloud.service.TracklistService;
+import com.victorku.musiccloud.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 @Service
@@ -27,7 +24,11 @@ public class TrackServiceImpl implements TrackService {
     @Autowired
     private GenreService genreService;
     @Autowired
+    private MoodService moodService;
+    @Autowired
     private TracklistService tracklistService;
+    @Autowired
+    private AccountInfoService accountInfoService;
 
     @Override
     public Track getTrackById(Long id) {
@@ -109,6 +110,26 @@ public class TrackServiceImpl implements TrackService {
             throw new TrackHasNotGenreException();
         }
         track.setGenres(genres);
+        return trackRepository.save(track);
+    }
+
+    @Override
+    public Track addTrackMood(Long trackId, Long moodId, Long accountInfoId) throws TrackIsNotExistsException, MoodIsNotExistsException, AccountIsNotExistsException {
+        Track track = getTrackById(trackId);
+        if (track == null) {
+            throw new TrackIsNotExistsException();
+        }
+        Mood mood = moodService.getMoodById(moodId);
+        if (mood == null) {
+            throw new MoodIsNotExistsException();
+        }
+        AccountInfo accountInfo = accountInfoService.getAccountInfoById(accountInfoId);
+        if (accountInfo == null) {
+            throw new AccountIsNotExistsException();
+        }
+        Map<AccountInfo, Mood> moods = track.getMoods();
+        moods.put(accountInfo,mood);
+        track.setMoods(moods);
         return trackRepository.save(track);
     }
 

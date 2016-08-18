@@ -3,6 +3,7 @@ package com.victorku.musiccloud.model;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import java.util.Map;
 import java.util.Set;
 
 @Entity
@@ -35,34 +36,36 @@ public class Track {
     @Column(name = "rating")
     private Double rating;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "account_info_has_track",
-            joinColumns = @JoinColumn(name = "track_id"),
-            inverseJoinColumns = @JoinColumn(name = "account_info_id"))
-    private Set<AccountInfo> accountInfos;
-
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "tracks")
-    private Set<Tracklist> tracklists;
-
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "track_has_genre",
             joinColumns = @JoinColumn(name = "track_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private Set<Genre> genres;
 
-
+    @ManyToMany(fetch = FetchType.EAGER)
+    @MapKeyJoinColumn(name = "account_info_id")
+    @JoinTable(name = "track_has_mood",
+            joinColumns = @JoinColumn(name = "track_id"),
+            inverseJoinColumns = @JoinColumn(name = "mood_id"))
+    private Map<AccountInfo, Mood> moods;
 
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "tracks")
-    private Set<Mood> moods;
+    private Set<Tracklist> tracklists;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "track")
-    private Set<MoreTrackInfo> moreTrackInfos;
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "tracks")
+    private Set<AccountInfo> accountInfos;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "track")
-    private Set<Comments> comments;
+    @OneToMany(mappedBy = "track")
+    @MapKeyJoinColumn(name = "account_info_id")
+    private Map<AccountInfo, Comments> comments;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "track")
-    private Set<Rating>  ratings;
+    @OneToMany(mappedBy = "track")
+    @MapKeyJoinColumn(name = "account_info_id")
+    private Map<AccountInfo, Rating> ratings;
+
+    @OneToMany(mappedBy = "track")
+    @MapKeyJoinColumn(name = "account_info_id")
+    private Map<AccountInfo, MoreTrackInfo> moreTrackInfos;
 
     public Track() {
     }
@@ -165,33 +168,21 @@ public class Track {
         this.genres = genres;
     }
 
-    public Set<Mood> getMoods() {
-        return moods;
-    }
+    public Map<AccountInfo, Mood> getMoods() { return moods; }
 
-    public void setMoods(Set<Mood> moods) {
-        this.moods = moods;
-    }
+    public void setMoods(Map<AccountInfo, Mood> moods) { this.moods = moods; }
 
-    public Set<MoreTrackInfo> getMoreTrackInfos() {
-        return moreTrackInfos;
-    }
+    public Map<AccountInfo, Comments> getComments() { return comments; }
 
-    public void setMoreTrackInfos(Set<MoreTrackInfo> moreTrackInfos) {
-        this.moreTrackInfos = moreTrackInfos;
-    }
+    public void setComments(Map<AccountInfo, Comments> comments) { this.comments = comments; }
 
-    public Set<Comments> getComments() {
-        return comments;
-    }
+    public Map<AccountInfo, Rating> getRatings() { return ratings; }
 
-    public void setComments(Set<Comments> comments) {
-        this.comments = comments;
-    }
+    public void setRatings(Map<AccountInfo, Rating> ratings) { this.ratings = ratings; }
 
-    public Set<Rating> getRatings() { return ratings; }
+    public Map<AccountInfo, MoreTrackInfo> getMoreTrackInfos() { return moreTrackInfos; }
 
-    public void setRatings(Set<Rating> ratings) { this.ratings = ratings; }
+    public void setMoreTrackInfos(Map<AccountInfo, MoreTrackInfo> moreTrackInfos) { this.moreTrackInfos = moreTrackInfos; }
 
     @Override
     public int hashCode() { return id.intValue(); }

@@ -16,17 +16,16 @@ public class Comments {
     @Column(name = "order_comments")
     private Integer orderComments;
 
-    @ManyToOne
-    @JoinColumn(name = "account_info_id")
-    private AccountInfo accountInfo;
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="parent_id")
     private Comments parentComments;
 
     @ManyToOne
-    @JoinColumn(name = "track_id")
     private Track track;
+
+    @ManyToOne
+    @JoinColumn(name = "account_info_id")
+    private AccountInfo accountInfo;
 
     public Comments() {
     }
