@@ -21,7 +21,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-     
+
 @RestController
 @RequestMapping("/track")
 @MultipartConfig(fileSizeThreshold = 20971520) // Максимальный размер файла 20mb
@@ -149,9 +149,7 @@ public class TrackController {
         }
         return new ResponseEntity<>(convert(track), HttpStatus.OK);
     }
-
-
-
+    
     @RequestMapping(value = "/more_track_info/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getMoreTrackInfo(@PathVariable("id") Long moreTrackInfoId){
         MoreTrackInfo moreTrackInfo = moreTrackInfoService.getMoreTrackInfoById(moreTrackInfoId);

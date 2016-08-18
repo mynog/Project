@@ -14,8 +14,11 @@ public class Chat {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "chat")
     private Set<Message> messages;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "chats")
-    private Set<AccountInfo> accountInfos ;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "chat_has_account_info",
+            joinColumns = @JoinColumn(name = "chat_id"),
+            inverseJoinColumns = @JoinColumn(name = "account_info_id"))
+    private Set<AccountInfo> accountInfos;
 
     public Chat() {
     }

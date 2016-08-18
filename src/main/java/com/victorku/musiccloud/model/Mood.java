@@ -17,17 +17,12 @@ public class Mood {
     @NotEmpty
     private String name;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "track_has_mood",
-            joinColumns = @JoinColumn(name = "track_id"),
-            inverseJoinColumns = @JoinColumn(name = "mood_id"))
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "moods")
     private Set<Track> tracks;
 
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(name = "track_has_mood",
-//            joinColumns = @JoinColumn(name = "mood_id"),
-//            inverseJoinColumns = @JoinColumn(name = "account_info_id"))
-//    private Set<AccountInfo> accountInfos;
+    @ManyToMany
+    @JoinColumn(name = "account_info id")
+    private Set<AccountInfo> accountInfos;
 
     public Mood() {
     }
@@ -60,12 +55,8 @@ public class Mood {
         this.tracks = tracks;
     }
 
-//    public Set<AccountInfo> getAccountInfos() {
-//        return accountInfos;
-//    }
-//
-//    public void setAccountInfos(Set<AccountInfo> accountInfos) {
-//        this.accountInfos = accountInfos;
-//    }
+    public Set<AccountInfo> getAccountInfos() { return accountInfos; }
+
+    public void setAccountInfos(Set<AccountInfo> accountInfos) { this.accountInfos = accountInfos; }
 
 }

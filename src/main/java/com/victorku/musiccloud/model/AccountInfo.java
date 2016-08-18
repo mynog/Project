@@ -30,38 +30,23 @@ public class AccountInfo {
     @DateTimeFormat(pattern = "yyyy/dd/mm")
     private LocalDate birthday;
 
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "accountInfo", optional = false)
+    private Account account;
+
     @ManyToMany
     @JoinTable(name = "friends",
             joinColumns = @JoinColumn(name = "account_id"),
             inverseJoinColumns = @JoinColumn(name = "friend_id"))
     private Set<AccountInfo> friends;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "chat_has_account_info",
-            joinColumns = @JoinColumn(name = "chat_id"),
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "account_info_has_track",
+            joinColumns = @JoinColumn(name = "track_id"),
             inverseJoinColumns = @JoinColumn(name = "account_info_id"))
-    private Set<Chat> chats;
-
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "accountInfos")
     private Set<Track> tracks;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountInfo")
-    private Set<MoreTrackInfo> moreTrackInfos;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountInfo")
-    private Set<Comments> comments;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountInfo")
-    private Set<Tracklist> tracklists;
-
-//    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "accountInfos")
-//    private Set<Mood> accountInfomoods;
-
-    @OneToOne(fetch = FetchType.EAGER, mappedBy = "accountInfo", optional = false)
-    private Account account;
-
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "accountInfo")
-    private Set<Rating> ratings;
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "accountInfos")
+    private Set<Chat> chats;
 
     public AccountInfo() {
     }
@@ -125,38 +110,6 @@ public class AccountInfo {
         this.tracks = tracks;
     }
 
-    public Set<MoreTrackInfo> getMoreTrackInfos() {
-        return moreTrackInfos;
-    }
-
-    public void setMoreTrackInfos(Set<MoreTrackInfo> moreTrackInfos) {
-        this.moreTrackInfos = moreTrackInfos;
-    }
-
-    public Set<Comments> getComments() {
-        return comments;
-    }
-
-    public void setComments(Set<Comments> comments) {
-        this.comments = comments;
-    }
-
-    public Set<Tracklist> getTracklists() {
-        return tracklists;
-    }
-
-    public void setTracklists(Set<Tracklist> tracklists) {
-        this.tracklists = tracklists;
-    }
-
-//    public Set<Mood> getAccountInfomoods() {
-//        return accountInfomoods;
-//    }
-//
-//    public void setAccountInfomoods(Set<Mood> accountInfomoods) {
-//        this.accountInfomoods = accountInfomoods;
-//    }
-
     public Account getAccount() {
         return account;
     }
@@ -164,10 +117,6 @@ public class AccountInfo {
     public void setAccount(Account account) {
         this.account = account;
     }
-
-    public Set<Rating> getRatings() { return ratings; }
-
-    public void setRatings(Set<Rating> ratings) { this.ratings = ratings; }
 
     public Set<Chat> getChats() { return chats; }
 
