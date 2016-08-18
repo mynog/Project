@@ -178,6 +178,41 @@ public class TrackController {
         return new ResponseEntity<>(convert(track), HttpStatus.OK);
     }
 
+    //    @RequestMapping(value = "/more_track_info/{id}", method = RequestMethod.GET)
+//    public ResponseEntity<?> getMoreTrackInfo(@PathVariable("id") Long moreTrackInfoId){
+//        MoreTrackInfo moreTrackInfo = moreTrackInfoService.getMoreTrackInfoById(moreTrackInfoId);
+//        if (moreTrackInfo == null) {
+//            return getErrorResponseBody(ApplicationErrorTypes.MORE_TRACK_INFO_ID_NOT_FOUND);
+//        }
+//        return new ResponseEntity<>(convert(moreTrackInfo),HttpStatus.OK);
+//    }
+//
+//    @RequestMapping(value = "/more_track_info/{id}", method = RequestMethod.DELETE)
+//    public ResponseEntity<?> deleteMoreTrackInfo(@PathVariable("id") Long moreTrackInfoId) throws MoreTrackInfoIsNotExistsException {
+//        try {
+//            moreTrackInfoService.deleteMoreTrackInfoById(moreTrackInfoId);
+//        }catch (MoreTrackInfoIsNotExistsException moreTrackInfoIsNotExists){
+//            return getErrorResponseBody(ApplicationErrorTypes.MORE_TRACK_INFO_ID_NOT_FOUND);
+//        }
+//        return new ResponseEntity<>(null,HttpStatus.OK);
+//    }
+//
+//    @RequestMapping(value = "/more_track_info/", method = RequestMethod.PUT)
+//    public ResponseEntity<?> createMoreTrackInfo(@RequestParam("text") String text) {
+//        MoreTrackInfo moreTrackInfo = null;
+//        try {
+//            moreTrackInfo = moreTrackInfoService.createMoreTrackInfo(text);
+//        } catch (MoreTrackInfoHasExistsException moreTrackInfoHasExists) {
+//            return getErrorResponseBody(ApplicationErrorTypes.MORE_TRACK_INFO_HAS_EXISTS);
+//        }
+//        return new ResponseEntity<>(convert(moreTrackInfo), HttpStatus.OK);
+//    }
+//
+//    private MoreTrackInfoDTO convert(MoreTrackInfo dbModel){
+//        MoreTrackInfoDTO jsonModel = new MoreTrackInfoDTO(dbModel.getId(),dbModel.getText());
+//        return jsonModel;
+//    }
+    
     private TrackDTO convert(Track dbModel){
         return (dbModel == null) ? null : new TrackDTO(dbModel);
     }
