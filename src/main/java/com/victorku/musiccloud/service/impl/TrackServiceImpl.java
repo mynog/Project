@@ -24,6 +24,8 @@ public class TrackServiceImpl implements TrackService {
     @Autowired
     private RatingRepository ratingRepository;
     @Autowired
+    private CommentsRepository commentsRepository;
+    @Autowired
     private GenreService genreService;
     @Autowired
     private MoodService moodService;
@@ -35,6 +37,8 @@ public class TrackServiceImpl implements TrackService {
     private MoreTrackInfoService moreTrackInfoService;
     @Autowired
     private RatingService ratingService;
+    @Autowired
+    private CommentsService commentsService;
 
     @Override
     public Track getTrackById(Long id) {
@@ -162,11 +166,28 @@ public class TrackServiceImpl implements TrackService {
             throw new AccountIsNotExistsException();
         }
         rating.setTrack(track);
-        rating.setAccountInfo(accountInfo);
+        //rating.setAccountInfo(accountInfo);
         ratingRepository.save(rating);
         Map<AccountInfo, Rating> ratings = track.getRatings();
         ratings.put(accountInfo,rating);
         track.setRatings(ratings);
+        return trackRepository.save(track);
+    }
+
+    @Override
+    public Track addComments(Track track, String text, Integer orderComments, Long accountInfoId) throws AccountIsNotExistsException {
+        Comments comments = commentsService.createComments(text, orderComments);
+        AccountInfo accountInfo = accountInfoService.getAccountInfoById(accountInfoId);
+        if (accountInfo == null) {
+            throw new AccountIsNotExistsException();
+        }
+        comments.setTrack(track);
+        //comments.setAccountInfo(accountInfo);
+        //comments.setParentComments(comments);
+        commentsRepository.save(comments);
+        Map<AccountInfo, Comments> commentsMap = track.getComments();
+        commentsMap.put(accountInfo,comments);
+        track.setComments(commentsMap);
         return trackRepository.save(track);
     }
 

@@ -22,7 +22,10 @@ public enum ApplicationErrorTypes {
     ACCOUNT_HAS_NOT_ROLE(18,"This account has not role" ),
     FILE_NOT_FOUND(19,"File has not exists on server" ),
     TRACK_HAS_NOT_GENRE(20,"This track has not genre" ),
-    TRACKLIST_HAS_NOT_TRACK(21,"This tracklist has not track" );
+    TRACKLIST_HAS_NOT_TRACK(21,"This tracklist has not track" ),
+    INVALID_DATA(22,"Data file has error" ),
+    IO_ERROR(23,"I/O error" ),
+    UNSOPPORTED_TAG(24,"This mp3 tag unsupported" );
 
     private String message;
     private int code;

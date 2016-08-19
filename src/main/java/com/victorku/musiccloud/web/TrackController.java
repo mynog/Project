@@ -39,7 +39,7 @@ public class TrackController {
     private CommentsService commentsService;*/
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public ResponseEntity<?> uploadFile(@RequestParam("uploadedFile") MultipartFile uploadedFileRef) throws TracklistIsNotExistsException, TrackIsNotExistsException, GenreHasExistsException, GenreIsNotExistsException {
+    public ResponseEntity<?> uploadFile(@RequestParam("uploadedFile") MultipartFile uploadedFileRef) throws TracklistIsNotExistsException, TrackIsNotExistsException, GenreHasExistsException, GenreIsNotExistsException, FileIOException {
         // Получаем имя загруженного файла
         String fileName = uploadedFileRef.getOriginalFilename();
         // Путь, где загруженный файл будет сохранен.
@@ -64,14 +64,14 @@ public class TrackController {
                 writer.write(buffer);
                 totalBytes += bytesRead;
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException iO) {
+            throw new FileIOException();
         }finally{
             try {
                 reader.close();
                 writer.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (IOException iO) {
+                throw new FileIOException();
             }
         }
         return createTrack(fileName);
@@ -103,14 +103,14 @@ public class TrackController {
         }
         catch (TrackHasExistsExceptions trackHasExists) {
             return getErrorResponseBody(ApplicationErrorTypes.TRACK_HAS_EXISTS);
-        } catch (FileIsNotExistsException e) {
+        } catch (FileIsNotExistsException FileIsNotExists) {
             return getErrorResponseBody(ApplicationErrorTypes.FILE_NOT_FOUND);
-        } catch (InvalidDataException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (UnsupportedTagException e) {
-            e.printStackTrace();
+        } catch (InvalidDataException invalidData) {
+            return getErrorResponseBody(ApplicationErrorTypes.INVALID_DATA);
+        } catch (IOException iO) {
+            getErrorResponseBody(ApplicationErrorTypes.IO_ERROR);
+        } catch (UnsupportedTagException unsupportedTag) {
+            getErrorResponseBody(ApplicationErrorTypes.UNSOPPORTED_TAG);
         }
         return new ResponseEntity<>(convert(track), HttpStatus.OK);
     }
@@ -188,6 +188,18 @@ public class TrackController {
         Track track = trackService.getTrackById(trackId);
         try {
             track = trackService.addTrackRating(track,ratingValue,accountInfoId);
+        } catch (AccountIsNotExistsException accountIsNotExists) {
+            return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_ID_NOT_FOUND);
+        }
+        return new ResponseEntity<>(convert(track), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{id}/comments", method = RequestMethod.PUT)
+    public ResponseEntity<?> addTrackComments(@PathVariable("id") Long trackId,@RequestParam("text") String text,
+                                              @RequestParam("orderComments") Integer orderComments ,@RequestParam("accountInfoId") Long accountInfoId) {
+        Track track = trackService.getTrackById(trackId);
+        try {
+            track = trackService.addComments(track,text,orderComments,accountInfoId);
         } catch (AccountIsNotExistsException accountIsNotExists) {
             return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_ID_NOT_FOUND);
         }

@@ -27,7 +27,7 @@ public interface TrackService {
 
     Track addTrackRating(Track track,Integer ratingValue, Long accountInfoId) throws AccountIsNotExistsException;
 
-    Track addComments(Track track)
+    Track addComments(Track track,String text,Integer orderComments, Long accountInfoId) throws AccountIsNotExistsException;
 }
 
 
