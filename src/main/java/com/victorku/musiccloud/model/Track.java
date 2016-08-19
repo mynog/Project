@@ -55,11 +55,11 @@ public class Track {
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "tracks")
     private Set<AccountInfo> accountInfos;
 
-    @OneToMany(mappedBy = "track")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "track")
     @MapKeyJoinColumn(name = "account_info_id")
     private Map<AccountInfo, Comments> comments;
 
-    @OneToMany(mappedBy = "track")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "track")
     @MapKeyJoinColumn(name = "account_info_id")
     private Map<AccountInfo, Rating> ratings;
 

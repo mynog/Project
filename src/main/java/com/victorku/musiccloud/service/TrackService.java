@@ -24,5 +24,10 @@ public interface TrackService {
     Track addTrackMood(Long trackId, Long moodId, Long accountInfoId) throws TrackIsNotExistsException, MoodIsNotExistsException, AccountIsNotExistsException;
 
     Track addMoreTrackInfo(Track track,String text,Long accountInfoId) throws AccountIsNotExistsException, MoreTrackInfoHasExistsException;
+
+    Track addTrackRating(Track track,Integer ratingValue, Long accountInfoId) throws AccountIsNotExistsException;
+
+    Track addComments(Track track)
 }
+
 

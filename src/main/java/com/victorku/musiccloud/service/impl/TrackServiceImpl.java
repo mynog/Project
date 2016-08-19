@@ -3,10 +3,7 @@ package com.victorku.musiccloud.service.impl;
 import com.mpatric.mp3agic.*;
 import com.victorku.musiccloud.exceptions.*;
 import com.victorku.musiccloud.model.*;
-import com.victorku.musiccloud.repository.GenreRepository;
-import com.victorku.musiccloud.repository.MoreTrackInfoRepository;
-import com.victorku.musiccloud.repository.TrackRepository;
-import com.victorku.musiccloud.repository.TracklistRepository;
+import com.victorku.musiccloud.repository.*;
 import com.victorku.musiccloud.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +22,8 @@ public class TrackServiceImpl implements TrackService {
     @Autowired
     private MoreTrackInfoRepository moreTrackInfoRepository;
     @Autowired
+    private RatingRepository ratingRepository;
+    @Autowired
     private GenreService genreService;
     @Autowired
     private MoodService moodService;
@@ -34,6 +33,8 @@ public class TrackServiceImpl implements TrackService {
     private AccountInfoService accountInfoService;
     @Autowired
     private MoreTrackInfoService moreTrackInfoService;
+    @Autowired
+    private RatingService ratingService;
 
     @Override
     public Track getTrackById(Long id) {
@@ -150,6 +151,22 @@ public class TrackServiceImpl implements TrackService {
         Map<AccountInfo, MoreTrackInfo> moreTrackInfos = track.getMoreTrackInfos();
         moreTrackInfos.put(accountInfo,moreTrackInfo);
         track.setMoreTrackInfos(moreTrackInfos);
+        return trackRepository.save(track);
+    }
+
+    @Override
+    public Track addTrackRating(Track track, Integer ratingValue, Long accountInfoId) throws AccountIsNotExistsException {
+        Rating rating = ratingService.createRating(ratingValue);
+        AccountInfo accountInfo = accountInfoService.getAccountInfoById(accountInfoId);
+        if (accountInfo == null) {
+            throw new AccountIsNotExistsException();
+        }
+        rating.setTrack(track);
+        rating.setAccountInfo(accountInfo);
+        ratingRepository.save(rating);
+        Map<AccountInfo, Rating> ratings = track.getRatings();
+        ratings.put(accountInfo,rating);
+        track.setRatings(ratings);
         return trackRepository.save(track);
     }
 

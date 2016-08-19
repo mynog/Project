@@ -175,10 +175,21 @@ public class TrackController {
         Track track = trackService.getTrackById(trackId);
         try {
             track = trackService.addMoreTrackInfo(track,text,accountInfoId);
-        } catch (AccountIsNotExistsException e) {
+        } catch (AccountIsNotExistsException accountIsNotExists) {
             return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_ID_NOT_FOUND);
         } catch (MoreTrackInfoHasExistsException moreTrackInfoHasExists) {
             return getErrorResponseBody(ApplicationErrorTypes.MORE_TRACK_INFO_HAS_EXISTS);
+        }
+        return new ResponseEntity<>(convert(track), HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/{id}/rating", method = RequestMethod.PUT)
+    public ResponseEntity<?> addTrackRating(@PathVariable("id") Long trackId,@RequestParam("ratingValue") Integer ratingValue, @RequestParam("accountInfoId") Long accountInfoId) {
+        Track track = trackService.getTrackById(trackId);
+        try {
+            track = trackService.addTrackRating(track,ratingValue,accountInfoId);
+        } catch (AccountIsNotExistsException accountIsNotExists) {
+            return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_ID_NOT_FOUND);
         }
         return new ResponseEntity<>(convert(track), HttpStatus.OK);
     }
