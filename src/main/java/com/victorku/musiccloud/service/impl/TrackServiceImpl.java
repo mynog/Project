@@ -4,6 +4,7 @@ import com.mpatric.mp3agic.*;
 import com.victorku.musiccloud.exceptions.*;
 import com.victorku.musiccloud.model.*;
 import com.victorku.musiccloud.repository.GenreRepository;
+import com.victorku.musiccloud.repository.MoreTrackInfoRepository;
 import com.victorku.musiccloud.repository.TrackRepository;
 import com.victorku.musiccloud.repository.TracklistRepository;
 import com.victorku.musiccloud.service.*;
@@ -21,6 +22,8 @@ public class TrackServiceImpl implements TrackService {
 
     @Autowired
     private TrackRepository trackRepository;
+    @Autowired
+    private MoreTrackInfoRepository moreTrackInfoRepository;
     @Autowired
     private GenreService genreService;
     @Autowired
@@ -142,6 +145,8 @@ public class TrackServiceImpl implements TrackService {
         if (accountInfo == null) {
             throw new AccountIsNotExistsException();
         }
+        moreTrackInfo.setTrack(track);
+        moreTrackInfoRepository.save(moreTrackInfo);
         Map<AccountInfo, MoreTrackInfo> moreTrackInfos = track.getMoreTrackInfos();
         moreTrackInfos.put(accountInfo,moreTrackInfo);
         track.setMoreTrackInfos(moreTrackInfos);
