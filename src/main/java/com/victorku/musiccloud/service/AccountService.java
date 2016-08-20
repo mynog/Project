@@ -22,4 +22,6 @@ public interface AccountService {
     Account addAccountRole(Long accountId,Long roleId) throws AccountIsNotExistsException, AccountRoleIsNotExistsException;
 
     Account removeAccountRole(Long accountId,Long roleId) throws AccountIsNotExistsException, AccountRoleIsNotExistsException, AccountHasNotRoleException;
+
+    void addFriend(Long inviterId,Long friendId) throws AccountIsNotExistsException;
 }

@@ -93,6 +93,16 @@ public class AccountController {
         return new ResponseEntity<>(convert(account), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/{id}/friend", method = RequestMethod.PUT)
+    public ResponseEntity<?> addFriend(@PathVariable("id") Long inviterId, @RequestParam("friendId") Long friendId) {
+        try {
+            accountService.addFriend(inviterId, friendId);
+        } catch (AccountIsNotExistsException accountIsNotExists) {
+            return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_ID_NOT_FOUND);
+        }
+        return new ResponseEntity<>(convert(null), HttpStatus.OK);
+    }
+
     private AccountDTO convert(Account dbModel) {
         return (dbModel == null) ? null : new AccountDTO(dbModel);
     }

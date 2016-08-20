@@ -8,7 +8,9 @@ import com.victorku.musiccloud.model.Account;
 import com.victorku.musiccloud.model.AccountInfo;
 import com.victorku.musiccloud.model.AccountRole;
 import com.victorku.musiccloud.model.UserRole;
+import com.victorku.musiccloud.repository.AccountInfoRepository;
 import com.victorku.musiccloud.repository.AccountRepository;
+import com.victorku.musiccloud.service.AccountInfoService;
 import com.victorku.musiccloud.service.AccountRoleService;
 import com.victorku.musiccloud.service.AccountService;
 import org.joda.time.LocalDate;
@@ -24,7 +26,11 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private AccountRepository accountRepository;
     @Autowired
+    private AccountInfoRepository accountInfoRepository;
+    @Autowired
     private AccountRoleService accountRoleService;
+    @Autowired
+    private AccountInfoService accountInfoService;
 
     @Override
     public Account getAccountById(Long id) {
@@ -107,6 +113,26 @@ public class AccountServiceImpl implements AccountService {
         }
         account.setAccountRoles(accountRoles);
         return accountRepository.save(account);
+    }
+
+    @Override
+    public void addFriend(Long inviterId, Long friendId) throws AccountIsNotExistsException {
+        AccountInfo inviter = accountInfoService.getAccountInfoById(inviterId);
+        if (inviter == null) {
+            throw new AccountIsNotExistsException();
+        }
+        AccountInfo friend = accountInfoService.getAccountInfoById(friendId);
+        if (friend == null) {
+            throw new AccountIsNotExistsException();
+        }
+        Set<AccountInfo> inviterFriends = inviter.getFriends();
+        inviterFriends.add(friend);
+        inviter.setFriends(inviterFriends);
+        Set<AccountInfo> friendFriends = friend.getFriends();
+        friendFriends.add(inviter);
+        friend.setFriends(friendFriends);
+        accountInfoRepository.save(inviter);
+        accountInfoRepository.save(friend);
     }
 
 }

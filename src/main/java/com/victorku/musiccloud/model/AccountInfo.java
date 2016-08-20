@@ -33,7 +33,7 @@ public class AccountInfo {
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "accountInfo", optional = false)
     private Account account;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "friends",
             joinColumns = @JoinColumn(name = "account_id"),
             inverseJoinColumns = @JoinColumn(name = "friend_id"))
