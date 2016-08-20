@@ -2,10 +2,15 @@ package com.victorku.musiccloud.web;
 
 import com.victorku.musiccloud.exceptions.ApplicationErrorTypes;
 import com.victorku.musiccloud.exceptions.ChatIsNotExistsException;
+import com.victorku.musiccloud.exceptions.MessageIsNotExistsException;
 import com.victorku.musiccloud.model.Chat;
+import com.victorku.musiccloud.model.Message;
 import com.victorku.musiccloud.service.ChatService;
+import com.victorku.musiccloud.service.MessageService;
 import com.victorku.musiccloud.web.model.ChatDTO;
+import com.victorku.musiccloud.web.model.DateDTO;
 import com.victorku.musiccloud.web.model.ErrorResponseBody;
+import com.victorku.musiccloud.web.model.MessageDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +22,8 @@ public class ChatController {
 
     @Autowired
     private ChatService chatService;
+    @Autowired
+    private MessageService messageService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getChat(@PathVariable("id") Long chatId){
@@ -45,6 +52,36 @@ public class ChatController {
 
     private ChatDTO convert(Chat dbModel){
         ChatDTO jsonModel = new ChatDTO(dbModel.getId());
+        return jsonModel;
+    }
+
+    @RequestMapping(value = "/message{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> getMessage(@PathVariable("id") Long messageId){
+        Message message = messageService.getMessageById(messageId);
+        if (message == null) {
+            return getErrorResponseBody(ApplicationErrorTypes.MESSAGE_ID_NOT_FOUND);
+        }
+        return new ResponseEntity<>(convert(message),HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/message{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteMessage(@PathVariable("id") Long messageId) throws MessageIsNotExistsException {
+        try {
+            messageService.deleteMessageById(messageId);
+        }catch (MessageIsNotExistsException messageIsNotExists){
+            return getErrorResponseBody(ApplicationErrorTypes.MESSAGE_ID_NOT_FOUND);
+        }
+        return new ResponseEntity<>(null,HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/message", method = RequestMethod.PUT)
+    public ResponseEntity<?> createMessage(@RequestParam("text") String text) {
+        Message message = messageService.createMessage(text);
+        return new ResponseEntity<>(convert(message), HttpStatus.OK);
+    }
+
+    private MessageDTO convert(Message dbModel){
+        MessageDTO jsonModel = new MessageDTO(dbModel.getId(),dbModel.getText(),new DateDTO(dbModel.getCreateMessage()));
         return jsonModel;
     }
 
