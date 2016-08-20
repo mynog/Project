@@ -166,7 +166,7 @@ public class TrackServiceImpl implements TrackService {
             throw new AccountIsNotExistsException();
         }
         rating.setTrack(track);
-        //rating.setAccountInfo(accountInfo);
+        rating.setAccountInfo(accountInfo);
         ratingRepository.save(rating);
         Map<AccountInfo, Rating> ratings = track.getRatings();
         ratings.put(accountInfo,rating);
@@ -182,8 +182,8 @@ public class TrackServiceImpl implements TrackService {
             throw new AccountIsNotExistsException();
         }
         comments.setTrack(track);
-        //comments.setAccountInfo(accountInfo);
-        //comments.setParentComments(comments);
+        comments.setAccountInfo(accountInfo);
+        comments.setParentComments(comments);
         commentsRepository.save(comments);
         Map<AccountInfo, Comments> commentsMap = track.getComments();
         commentsMap.put(accountInfo,comments);
