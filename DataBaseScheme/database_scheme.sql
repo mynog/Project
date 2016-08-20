@@ -15,7 +15,7 @@ CREATE SEQUENCE hibernate_sequence
   MINVALUE 1
   MAXVALUE 9223372036854775807
   START 20
-  CACHE 10000;
+  CACHE 1;
 ALTER TABLE hibernate_sequence
   OWNER TO viktor_kulygin;
 
@@ -241,6 +241,7 @@ DROP TABLE IF EXISTS chat ;
 
 CREATE TABLE IF NOT EXISTS chat (
   id INT NOT NULL DEFAULT nextval('hibernate_sequence'),
+  name VARCHAR(45) NULL,
   PRIMARY KEY (id))
 ;
 
@@ -421,30 +422,31 @@ CREATE INDEX fk_account_info_has_track_track1_idx ON account_info_has_track (tra
 CREATE INDEX fk_account_info_has_track_account_info1_idx ON account_info_has_track (account_info_id ASC);
 
 -- -----------------------------------------------------
--- Table `chat_has_account_info`
+-- Table `account_info_has_chat`
 -- -----------------------------------------------------
 
 DROP TABLE IF EXISTS chat_has_account_info ;
 
-CREATE TABLE IF NOT EXISTS chat_has_account_info (
-  chat_id INT NOT NULL,
+CREATE TABLE IF NOT EXISTS account_info_has_chat (
   account_info_id INT NOT NULL,
-  PRIMARY KEY (chat_id, account_info_id),
-  CONSTRAINT fk_chat_has_account_info_chat1
-    FOREIGN KEY (chat_id)
-    REFERENCES chat (id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT fk_chat_has_account_info_account_info1
+  chat_id INT NOT NULL,
+  PRIMARY KEY (account_info_id, chat_id),
+  CONSTRAINT fk_account_info_has_chat_account_info1
     FOREIGN KEY (account_info_id)
     REFERENCES account_info (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT fk_account_info_has_chat_chat1
+    FOREIGN KEY (chat_id)
+    REFERENCES chat (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ;
 
-CREATE INDEX fk_chat_has_account_info_account_info1_idx ON chat_has_account_info (account_info_id ASC);
+CREATE INDEX fk_account_info_has_chat_chat1_idx ON account_info_has_chat (chat_id ASC);
 
-CREATE INDEX fk_chat_has_account_info_chat1_idx ON chat_has_account_info (chat_id ASC);
+CREATE INDEX fk_account_info_has_chat_account_info1_idx ON account_info_has_chat (account_info_id ASC);
+
 
 -- -----------------------------------------------------
 -- Create trigger update_rating

@@ -45,7 +45,10 @@ public class AccountInfo {
             inverseJoinColumns = @JoinColumn(name = "account_info_id"))
     private Set<Track> tracks;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "accountInfos")
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "account_info_has_chat",
+            joinColumns = @JoinColumn(name = "account_info_id"),
+            inverseJoinColumns = @JoinColumn(name = "chat_id"))
     private Set<Chat> chats;
 
     public AccountInfo() {

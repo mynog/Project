@@ -11,16 +11,20 @@ public class Chat {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "chat")
+    @Column(name = "name")
+    private String name;
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "chat")
     private Set<Message> messages;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "chat_has_account_info",
-            joinColumns = @JoinColumn(name = "chat_id"),
-            inverseJoinColumns = @JoinColumn(name = "account_info_id"))
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "chats")
     private Set<AccountInfo> accountInfos;
 
     public Chat() {
+    }
+
+    public Chat(String name) {
+        this.name = name;
     }
 
     public Long getId() {
@@ -30,6 +34,10 @@ public class Chat {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public String getName() { return name; }
+
+    public void setName(String name) { this.name = name; }
 
     public Set<Message> getMessages() { return messages; }
 
