@@ -1,5 +1,6 @@
 package com.victorku.musiccloud.web;
 
+import com.victorku.musiccloud.exceptions.AccountIsNotExistsException;
 import com.victorku.musiccloud.exceptions.ApplicationErrorTypes;
 import com.victorku.musiccloud.exceptions.ChatIsNotExistsException;
 import com.victorku.musiccloud.exceptions.MessageIsNotExistsException;
@@ -45,17 +46,23 @@ public class ChatController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.PUT)
-    public ResponseEntity<?> createChat() {
-        Chat chat = chatService.createChat();
+    public ResponseEntity<?> createChat(@RequestParam("name") String name, @RequestParam("accountInfoIdFirst") Long accountInfoIdFirst,
+                                        @RequestParam("accountInfoIdSecond") Long accountInfoIdSecond) {
+        Chat chat = null;
+        try {
+            chat = chatService.createChat(name, accountInfoIdFirst, accountInfoIdSecond);
+        } catch (AccountIsNotExistsException accountIsNotExists) {
+            return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_ID_NOT_FOUND);
+        }
         return new ResponseEntity<>(convert(chat), HttpStatus.OK);
     }
 
     private ChatDTO convert(Chat dbModel){
-        ChatDTO jsonModel = new ChatDTO(dbModel.getId());
+        ChatDTO jsonModel = new ChatDTO(dbModel.getId(),dbModel.getName());
         return jsonModel;
     }
 
-    @RequestMapping(value = "/message{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/message/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getMessage(@PathVariable("id") Long messageId){
         Message message = messageService.getMessageById(messageId);
         if (message == null) {
@@ -64,7 +71,7 @@ public class ChatController {
         return new ResponseEntity<>(convert(message),HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/message{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/message/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteMessage(@PathVariable("id") Long messageId) throws MessageIsNotExistsException {
         try {
             messageService.deleteMessageById(messageId);
