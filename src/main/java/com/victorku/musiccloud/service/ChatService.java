@@ -12,4 +12,6 @@ public interface ChatService {
 
     Chat createChat(String name, Long accountInfoIdFirst,Long accountInfoIdSecond) throws AccountIsNotExistsException;
 
+    Chat addMessageIntoChat(Chat chat,String text);
+
 }

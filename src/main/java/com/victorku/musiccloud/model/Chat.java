@@ -14,7 +14,7 @@ public class Chat {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "chat")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "chat")
     private Set<Message> messages;
 
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "chats")

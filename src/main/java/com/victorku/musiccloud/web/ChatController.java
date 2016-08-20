@@ -57,9 +57,11 @@ public class ChatController {
         return new ResponseEntity<>(convert(chat), HttpStatus.OK);
     }
 
-    private ChatDTO convert(Chat dbModel){
-        ChatDTO jsonModel = new ChatDTO(dbModel.getId(),dbModel.getName());
-        return jsonModel;
+    @RequestMapping(value = "/{id}/message", method = RequestMethod.PUT)
+    public ResponseEntity<?> addMessageIntoChat(@PathVariable("id") Long chatId,@RequestParam("text") String text) {
+        Chat chat = chatService.getChatById(chatId);
+        chat = chatService.addMessageIntoChat(chat,text);
+        return new ResponseEntity<>(convert(chat), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/message/{id}", method = RequestMethod.GET)
@@ -71,20 +73,9 @@ public class ChatController {
         return new ResponseEntity<>(convert(message),HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/message/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteMessage(@PathVariable("id") Long messageId) throws MessageIsNotExistsException {
-        try {
-            messageService.deleteMessageById(messageId);
-        }catch (MessageIsNotExistsException messageIsNotExists){
-            return getErrorResponseBody(ApplicationErrorTypes.MESSAGE_ID_NOT_FOUND);
-        }
-        return new ResponseEntity<>(null,HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/message", method = RequestMethod.PUT)
-    public ResponseEntity<?> createMessage(@RequestParam("text") String text) {
-        Message message = messageService.createMessage(text);
-        return new ResponseEntity<>(convert(message), HttpStatus.OK);
+    private ChatDTO convert(Chat dbModel){
+        ChatDTO jsonModel = new ChatDTO(dbModel.getId(),dbModel.getName());
+        return jsonModel;
     }
 
     private MessageDTO convert(Message dbModel){
