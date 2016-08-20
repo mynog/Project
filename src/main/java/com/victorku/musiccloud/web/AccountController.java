@@ -103,6 +103,18 @@ public class AccountController {
         return new ResponseEntity<>(convert(null), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/{id}/friend", method = RequestMethod.DELETE)
+    public ResponseEntity<?> removeFriend(@PathVariable("id") Long removerId, @RequestParam("friendId") Long friendId) {
+        try {
+            accountService.removeFriend(removerId, friendId);
+        } catch (AccountIsNotExistsException accountIsNotExists) {
+            return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_ID_NOT_FOUND);
+        } catch (AccountHasNotFriendException e) {
+            return getErrorResponseBody(ApplicationErrorTypes.FRIEND_ID_NOT_FOUND);
+        }
+        return new ResponseEntity<>(convert(null), HttpStatus.OK);
+    }
+
     private AccountDTO convert(Account dbModel) {
         return (dbModel == null) ? null : new AccountDTO(dbModel);
     }

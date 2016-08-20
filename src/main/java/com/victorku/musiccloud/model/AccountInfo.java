@@ -122,4 +122,19 @@ public class AccountInfo {
 
     public void setChats(Set<Chat> chats) { this.chats = chats; }
 
+    @Override
+    public int hashCode() {
+        return id.intValue();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if(obj instanceof AccountInfo){
+            return this.id==((AccountInfo) obj).getId();
+        }
+        return false;
+    }
 }

@@ -1,9 +1,6 @@
 package com.victorku.musiccloud.service.impl;
 
-import com.victorku.musiccloud.exceptions.AccountHasExistsException;
-import com.victorku.musiccloud.exceptions.AccountIsNotExistsException;
-import com.victorku.musiccloud.exceptions.AccountHasNotRoleException;
-import com.victorku.musiccloud.exceptions.AccountRoleIsNotExistsException;
+import com.victorku.musiccloud.exceptions.*;
 import com.victorku.musiccloud.model.Account;
 import com.victorku.musiccloud.model.AccountInfo;
 import com.victorku.musiccloud.model.AccountRole;
@@ -132,6 +129,34 @@ public class AccountServiceImpl implements AccountService {
         friendFriends.add(inviter);
         friend.setFriends(friendFriends);
         accountInfoRepository.save(inviter);
+        accountInfoRepository.save(friend);
+    }
+
+    @Override
+    public void removeFriend(Long removerId, Long friendId) throws AccountIsNotExistsException, AccountHasNotFriendException {
+        AccountInfo remover = accountInfoService.getAccountInfoById(removerId);
+        if (remover == null) {
+            throw new AccountIsNotExistsException();
+        }
+        AccountInfo friend = accountInfoService.getAccountInfoById(friendId);
+        if (friend == null) {
+            throw new AccountIsNotExistsException();
+        }
+        Set<AccountInfo> removerFriends = remover.getFriends();
+        if(removerFriends.contains(friend)) {
+            removerFriends.remove(friend);
+        } else {
+            throw new AccountHasNotFriendException();
+        }
+        Set<AccountInfo> friendFriends = friend.getFriends();
+        if(friendFriends.contains(remover)) {
+            friendFriends.remove(remover);
+        } else {
+            throw new AccountHasNotFriendException();
+        }
+        remover.setFriends(removerFriends);
+        friend.setFriends(friendFriends);
+        accountInfoRepository.save(remover);
         accountInfoRepository.save(friend);
     }
 
