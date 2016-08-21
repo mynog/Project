@@ -79,6 +79,9 @@
   - name: Delete old music_cloud.war
     shell: "rm -f /opt/tomcat/webapps/music-cloud.war"
     become: yes
+#  - name: Application packaging
+#    shell: /vagrant/mvn package
+#    become: yes
   - name: Deploy music-cloud.war		
     copy: src=/vagrant/target/music-cloud.war dest=/opt/apache-tomcat-8.5.4/webapps/music-cloud.war owner=tomcat group=tomcat		
     become: yes

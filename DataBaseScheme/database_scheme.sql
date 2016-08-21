@@ -2,8 +2,8 @@
 -- Scheme music_cloud
 -- -----------------------------------------------------
 
-DROP SCHEMA IF EXISTS music_cloud CASCADE;
-CREATE SCHEMA IF NOT EXISTS music_cloud;
+DROP SCHEMA IF EXISTS public CASCADE;
+CREATE SCHEMA IF NOT EXISTS public;
 
 -- -----------------------------------------------------
 -- Create hibernate_sequence
@@ -160,32 +160,33 @@ CREATE UNIQUE INDEX name_UNIQUE2 ON mood (name ASC);
 DROP TABLE IF EXISTS track_has_mood ;
 
 CREATE TABLE IF NOT EXISTS track_has_mood (
+  id INT NOT NULL,
   track_id INT NOT NULL,
   mood_id INT NOT NULL,
   account_info_id INT NOT NULL,
-  PRIMARY KEY (track_id, mood_id, account_info_id),
+  PRIMARY KEY (id),
   CONSTRAINT fk_track_has_mood_track1
-    FOREIGN KEY (track_id)
-    REFERENCES track (id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+  FOREIGN KEY (track_id)
+  REFERENCES track (id)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION,
   CONSTRAINT fk_track_has_mood_mood1
-    FOREIGN KEY (mood_id)
-    REFERENCES mood (id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+  FOREIGN KEY (mood_id)
+  REFERENCES mood (id)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION,
   CONSTRAINT fk_track_has_mood_account_info1
-    FOREIGN KEY (account_info_id)
-    REFERENCES account_info (id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  FOREIGN KEY (account_info_id)
+  REFERENCES account_info (id)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION)
 ;
 
 CREATE INDEX fk_track_has_mood_mood1_idx ON track_has_mood (mood_id ASC);
 
 CREATE INDEX fk_track_has_mood_track1_idx ON track_has_mood (track_id ASC);
 
-CREATE INDEX fk_track_has_mood_account_info1_idx ON track_has_mood (account_info_id ASC);
+CREATE INDEX fk_track_has_mood_account_info1_idx1 ON track_has_mood (account_info_id ASC);
 
 
 -- -----------------------------------------------------

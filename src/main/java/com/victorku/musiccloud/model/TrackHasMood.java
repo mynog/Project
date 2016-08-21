@@ -6,20 +6,20 @@ import java.util.Set;
 
 @Entity
 @Table(name = "track_has_mood")
-@IdClass(TrackHasMood.class)
-public class TrackHasMood implements Serializable{
+public class TrackHasMood {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
+
     @JoinColumn(name = "track_id")
     @ManyToOne
     private Track track;
 
-    @Id
     @JoinColumn(name = "mood_id")
     @ManyToOne
     private Mood mood;
 
-    @Id
     @JoinColumn(name = "account_info_id")
     @ManyToOne
     private AccountInfo accountInfo;
@@ -31,6 +31,14 @@ public class TrackHasMood implements Serializable{
         this.track = track;
         this.mood = mood;
         this.accountInfo = accountInfo;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Track getTrack() {

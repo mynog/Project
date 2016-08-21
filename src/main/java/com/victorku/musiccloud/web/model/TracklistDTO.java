@@ -11,7 +11,6 @@ public class TracklistDTO {
     private Long id;
     private String name;
     private DateDTO dateCreate;
-    private Set<TrackDTO> tracks;
 
     public TracklistDTO() {
     }
@@ -31,14 +30,6 @@ public class TracklistDTO {
         this.id = dbModel.getId();
         this.name = dbModel.getName();
         this.dateCreate = new DateDTO(dbModel.getDateCreate());
-
-        Set<TrackDTO> tracks = new HashSet<>();
-        if (dbModel.getTracks() != null) {
-            for (Track track : dbModel.getTracks()) {
-                tracks.add(new TrackDTO(track));
-            }
-        }
-        this.tracks = tracks;
     }
 
     public Long getId() {
@@ -64,8 +55,4 @@ public class TracklistDTO {
     public void setDateCreate(DateDTO dateCreate) {
         this.dateCreate = dateCreate;
     }
-
-    public Set<TrackDTO> getTracks() { return tracks; }
-
-    public void setTracks(Set<TrackDTO> tracks) { this.tracks = tracks; }
 }

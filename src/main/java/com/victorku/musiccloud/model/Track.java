@@ -46,9 +46,6 @@ public class Track {
     private Set<TrackHasMood> trackHasMoods;
 
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "tracks")
-    private Set<Tracklist> tracklists;
-
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "tracks")
     private Set<AccountInfo> accountInfos;
 
     public Track() {
@@ -134,14 +131,6 @@ public class Track {
 
     public void setAccountInfos(Set<AccountInfo> accountInfos) {
         this.accountInfos = accountInfos;
-    }
-
-    public Set<Tracklist> getTracklists() {
-        return tracklists;
-    }
-
-    public void setTracklists(Set<Tracklist> tracklists) {
-        this.tracklists = tracklists;
     }
 
     public Set<Genre> getGenres() {

@@ -190,27 +190,8 @@ public class TrackServiceImpl implements TrackService {
         // Создаем автоматические плеэйлисты
         Tracklist tracklist = null;
         // По жанру
-        if (genre != null) {
-            try {
-                tracklist = tracklistService.createTracklist(genre);
-                tracklist = tracklistService.addTrackIntoTracklist(tracklist.getId(), track.getId());
-            } catch (TracklistHasExistsException tracklistHasExists) {
-                tracklist = tracklistService.getTracklistByName(genre);
-                tracklist = tracklistService.addTrackIntoTracklist(tracklist.getId(),track.getId());
-            }
-        }
         // По альбому
-        if (album != null) {
-            try {
-                tracklist = tracklistService.createTracklist(album);
-                tracklist = tracklistService.addTrackIntoTracklist(tracklist.getId(), track.getId());
-            } catch (TracklistHasExistsException tracklistHasExists) {
-                tracklist = tracklistService.getTracklistByName(album);
-                tracklist = tracklistService.addTrackIntoTracklist(tracklist.getId(),track.getId());
-            }
-        }
         return track;
     }
-
 }
 

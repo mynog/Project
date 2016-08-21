@@ -26,16 +26,6 @@ public class Tracklist {
     @DateTimeFormat(pattern = "yyyy/dd/mm")
     private LocalDate dateCreate;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "tracklist_has_track",
-            joinColumns = @JoinColumn(name = "tracklist_id"),
-            inverseJoinColumns = @JoinColumn(name = "track_id"))
-    private Set<Track> tracks;
-
-    @ManyToOne
-    @JoinColumn(name = "account_info_id")
-    private AccountInfo accountInfo;
-
     public Tracklist() {this.dateCreate = new LocalDate();
     }
 
@@ -66,22 +56,6 @@ public class Tracklist {
 
     public void setDateCreate(LocalDate dateCreate) {
         this.dateCreate = dateCreate;
-    }
-
-    public Set<Track> getTracks() {
-        return tracks;
-    }
-
-    public void setTracks(Set<Track> tracks) {
-        this.tracks = tracks;
-    }
-
-    public AccountInfo getAccountInfo() {
-        return accountInfo;
-    }
-
-    public void setAccountInfo(AccountInfo accountInfo) {
-        this.accountInfo = accountInfo;
     }
 
 }
