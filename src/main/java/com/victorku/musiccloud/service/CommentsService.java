@@ -6,6 +6,4 @@ public interface CommentsService {
 
     Comments getCommentsById(Long id);
 
-    Comments createComments(String text,Integer orderComments);
-
 }

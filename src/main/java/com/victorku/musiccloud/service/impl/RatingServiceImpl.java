@@ -16,11 +16,4 @@ public class RatingServiceImpl implements RatingService {
     public Rating getRatingById(Long id) {
         return ratingRepository.findOne(id);
     }
-
-    @Override
-    public Rating createRating(Integer ratingValue) {
-        Rating rating = new Rating(ratingValue);
-        return ratingRepository.save(rating);
-    }
-
 }

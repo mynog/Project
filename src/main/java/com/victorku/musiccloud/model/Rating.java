@@ -24,8 +24,10 @@ public class Rating {
     public Rating() {
     }
 
-    public Rating(Integer ratingValue) {
+    public Rating(Track track,Integer ratingValue, AccountInfo accountInfo) {
         this.ratingValue = ratingValue;
+        this.accountInfo = accountInfo;
+        this.track = track;
     }
 
     public Long getId() {

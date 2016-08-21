@@ -187,6 +187,47 @@ public class TrackController {
         return new ResponseEntity<>(convert(track),HttpStatus.OK);
     }
 
+    @RequestMapping(value = "{id}/rating", method = RequestMethod.PUT)
+    public ResponseEntity<?> addTrackRating(@PathVariable("id") Long trackId, @RequestParam("ratingValue") Integer ratingValue, @RequestParam("accountInfoId") Long accountInfoId) {
+
+        Track track = trackService.getTrackById(trackId);
+        if (track == null) {
+            return getErrorResponseBody(ApplicationErrorTypes.TRACK_ID_NOT_FOUND);
+        }
+        AccountInfo accountInfo = accountInfoService.getAccountInfoById(accountInfoId);
+        if (accountInfo == null) {
+            return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_ID_NOT_FOUND);
+        }
+        track = trackService.addRating(track,ratingValue,accountInfo);
+        return new ResponseEntity<>(convert(track),HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "{id}/comments", method = RequestMethod.PUT)
+    public ResponseEntity<?> addComment(@PathVariable("id") Long trackId, @RequestParam("text") String text,
+                                         @RequestParam("orderComments") Integer orderComments, @RequestParam("parentId") Long parentId,
+                                         @RequestParam("accountInfoId") Long accountInfoId) {
+
+        Track track = trackService.getTrackById(trackId);
+        if (track == null) {
+            return getErrorResponseBody(ApplicationErrorTypes.TRACK_ID_NOT_FOUND);
+        }
+        AccountInfo accountInfo = accountInfoService.getAccountInfoById(accountInfoId);
+        if (accountInfo == null) {
+            return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_ID_NOT_FOUND);
+        }
+        Comments parentCommnent;
+        if (parentId == null) {
+            parentCommnent = null;
+        } else {
+            parentCommnent = commentsService.getCommentsById(parentId);
+            if (parentCommnent == null) {
+                return getErrorResponseBody(ApplicationErrorTypes.COMMENT_ID_NOT_FOUND);
+            }
+        }
+        track = trackService.addComment(track,text,orderComments,parentCommnent,accountInfo);
+        return new ResponseEntity<>(convert(track),HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/more_track_info/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getMoreTrackInfo(@PathVariable("id") Long moreTrackInfoId){
         MoreTrackInfo moreTrackInfo = moreTrackInfoService.getMoreTrackInfoById(moreTrackInfoId);

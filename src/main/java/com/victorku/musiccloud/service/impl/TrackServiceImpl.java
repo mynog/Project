@@ -24,6 +24,10 @@ public class TrackServiceImpl implements TrackService {
     @Autowired
     private MoreTrackInfoRepository moreTrackInfoRepository;
     @Autowired
+    private RatingRepository ratingRepository;
+    @Autowired
+    private CommentsRepository commentsRepository;
+    @Autowired
     private GenreService genreService;
 
 
@@ -121,6 +125,20 @@ public class TrackServiceImpl implements TrackService {
     public Track addMoreTrackInfo(Track track, String text, AccountInfo accountInfo) {
         MoreTrackInfo moreTrackInfo = new MoreTrackInfo(track,text,accountInfo);
         moreTrackInfoRepository.save(moreTrackInfo);
+        return track;
+    }
+
+    @Override
+    public Track addRating(Track track, Integer ratingValue, AccountInfo accountInfo) {
+        Rating rating = new Rating(track,ratingValue,accountInfo);
+        ratingRepository.save(rating);
+        return track;
+    }
+
+    @Override
+    public Track addComment(Track track, String text, Integer orderComments, Comments parentCommnent, AccountInfo accountInfo) {
+        Comments comment = new Comments(track,text,orderComments,parentCommnent,accountInfo);
+        commentsRepository.save(comment);
         return track;
     }
 

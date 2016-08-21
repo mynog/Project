@@ -16,7 +16,7 @@ public class Comments {
     @Column(name = "order_comments")
     private Integer orderComments;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name="parent_id")
     private Comments parentComments;
 
@@ -31,9 +31,12 @@ public class Comments {
     public Comments() {
     }
 
-    public Comments(String text, Integer orderComments) {
+    public Comments(Track track,String text, Integer orderComments, Comments parentComments, AccountInfo accountInfo) {
         this.text = text;
         this.orderComments = orderComments;
+        this.parentComments = parentComments;
+        this.accountInfo = accountInfo;
+        this.track = track;
     }
 
     public Long getId() {

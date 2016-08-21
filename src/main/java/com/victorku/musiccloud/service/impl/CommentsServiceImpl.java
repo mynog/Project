@@ -17,10 +17,4 @@ public class CommentsServiceImpl implements CommentsService {
         return commentsRepository.findOne(id);
     }
 
-    @Override
-    public Comments createComments(String text,Integer orderComments) {
-        Comments comments = new Comments(text,orderComments);
-        return commentsRepository.save(comments);
-    }
-
 }

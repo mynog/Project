@@ -4,6 +4,7 @@ import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.UnsupportedTagException;
 import com.victorku.musiccloud.exceptions.*;
 import com.victorku.musiccloud.model.AccountInfo;
+import com.victorku.musiccloud.model.Comments;
 import com.victorku.musiccloud.model.Mood;
 import com.victorku.musiccloud.model.Track;
 
@@ -26,6 +27,10 @@ public interface TrackService {
     Track addTrackMood(Track track, Mood mood, AccountInfo accountInfo);
 
     Track addMoreTrackInfo(Track track, String text, AccountInfo accountInfo);
+
+    Track addRating(Track track, Integer ratingValue, AccountInfo accountInfo);
+
+    Track addComment(Track track, String text, Integer orderComments, Comments parentCommnent, AccountInfo accountInfo);
 }
 
 
