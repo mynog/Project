@@ -16,13 +16,6 @@ public class MoreTrackInfo {
     @NotEmpty
     private String text;
 
-    @ManyToOne
-    private Track track;
-
-    @ManyToOne
-    @JoinColumn(name = "account_info_id")
-    private AccountInfo accountInfo;
-
     public MoreTrackInfo() {
     }
 
@@ -44,22 +37,6 @@ public class MoreTrackInfo {
 
     public void setText(String text) {
         this.text = text;
-    }
-
-    public AccountInfo getAccountInfo() {
-        return accountInfo;
-    }
-
-    public void setAccountInfo(AccountInfo accountInfo) {
-        this.accountInfo = accountInfo;
-    }
-
-    public Track getTrack() {
-        return track;
-    }
-
-    public void setTrack(Track track) {
-        this.track = track;
     }
 
 }

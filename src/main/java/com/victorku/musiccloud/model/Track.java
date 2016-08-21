@@ -42,30 +42,11 @@ public class Track {
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private Set<Genre> genres;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @MapKeyJoinColumn(name = "account_info_id")
-    @JoinTable(name = "track_has_mood",
-            joinColumns = @JoinColumn(name = "track_id"),
-            inverseJoinColumns = @JoinColumn(name = "mood_id"))
-    private Map<AccountInfo, Mood> moods;
-
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "tracks")
-    private Set<Tracklist> tracklists;
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "track")
+    private Set<TrackHasMood> trackHasMoods;
 
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "tracks")
     private Set<AccountInfo> accountInfos;
-
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "track")
-    @MapKeyJoinColumn(name = "account_info_id")
-    private Map<AccountInfo, Comments> comments;
-
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "track")
-    @MapKeyJoinColumn(name = "account_info_id")
-    private Map<AccountInfo, Rating> ratings;
-
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "track")
-    @MapKeyJoinColumn(name = "account_info_id")
-    private Map<AccountInfo, MoreTrackInfo> moreTrackInfos;
 
     public Track() {
     }
@@ -152,14 +133,6 @@ public class Track {
         this.accountInfos = accountInfos;
     }
 
-    public Set<Tracklist> getTracklists() {
-        return tracklists;
-    }
-
-    public void setTracklists(Set<Tracklist> tracklists) {
-        this.tracklists = tracklists;
-    }
-
     public Set<Genre> getGenres() {
         return genres;
     }
@@ -168,21 +141,13 @@ public class Track {
         this.genres = genres;
     }
 
-    public Map<AccountInfo, Mood> getMoods() { return moods; }
+    public Set<TrackHasMood> getTrackHasMoods() {
+        return trackHasMoods;
+    }
 
-    public void setMoods(Map<AccountInfo, Mood> moods) { this.moods = moods; }
-
-    public Map<AccountInfo, Comments> getComments() { return comments; }
-
-    public void setComments(Map<AccountInfo, Comments> comments) { this.comments = comments; }
-
-    public Map<AccountInfo, Rating> getRatings() { return ratings; }
-
-    public void setRatings(Map<AccountInfo, Rating> ratings) { this.ratings = ratings; }
-
-    public Map<AccountInfo, MoreTrackInfo> getMoreTrackInfos() { return moreTrackInfos; }
-
-    public void setMoreTrackInfos(Map<AccountInfo, MoreTrackInfo> moreTrackInfos) { this.moreTrackInfos = moreTrackInfos; }
+    public void setTrackHasMoods(Set<TrackHasMood> trackHasMoods) {
+        this.trackHasMoods = trackHasMoods;
+    }
 
     @Override
     public int hashCode() { return id.intValue(); }

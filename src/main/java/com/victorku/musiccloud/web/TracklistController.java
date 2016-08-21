@@ -27,55 +27,6 @@ public class TracklistController {
         return new ResponseEntity<>(convert(tracklist),HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteTracklist(@PathVariable("id") Long tracklistId) throws TracklistIsNotExistsException {
-        try {
-            tracklistService.deleteTracklistById(tracklistId);
-        }catch (TracklistIsNotExistsException tracklistIsNotExists){
-            return getErrorResponseBody(ApplicationErrorTypes.TRACKLIST_ID_NOT_FOUND);
-        }
-        return new ResponseEntity<>(null,HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/", method = RequestMethod.PUT)
-    public ResponseEntity<?> createTracklist(@RequestParam("name") String name) {
-        Tracklist tracklist = null;
-        try {
-            tracklist = tracklistService.createTracklist(name);
-        } catch (TracklistHasExistsException tracklistHasExists) {
-            return getErrorResponseBody(ApplicationErrorTypes.TRACKLIST_HAS_EXISTS);
-        }
-        return new ResponseEntity<>(convert(tracklist), HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/{id}/track", method = RequestMethod.PUT)
-    public ResponseEntity<?> addTrackIntoTracklist(@PathVariable("id") Long tracklistId, @RequestParam("trackId") Long trackId) {
-        Tracklist tracklist = null;
-        try {
-            tracklist = tracklistService.addTrackIntoTracklist(tracklistId, trackId);
-        } catch (TracklistIsNotExistsException tracklistIsNotExists) {
-            return getErrorResponseBody(ApplicationErrorTypes.TRACKLIST_ID_NOT_FOUND);
-        } catch (TrackIsNotExistsException trackIsNotExists) {
-            return getErrorResponseBody(ApplicationErrorTypes.TRACK_ID_NOT_FOUND);
-        }
-        return new ResponseEntity<>(convert(tracklist), HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/{id}/track", method = RequestMethod.DELETE)
-    public ResponseEntity<?> removeTrackIntoTracklist(@PathVariable("id") Long tracklistId, @RequestParam("trackId") Long trackId) {
-        Tracklist tracklist = null;
-        try {
-            tracklist = tracklistService.removeTrackFromTracklist(tracklistId, trackId);
-        } catch (TracklistIsNotExistsException tracklistIsNotExists) {
-            return getErrorResponseBody(ApplicationErrorTypes.TRACKLIST_ID_NOT_FOUND);
-        } catch (TrackIsNotExistsException trackIsNotExists) {
-            return getErrorResponseBody(ApplicationErrorTypes.TRACK_ID_NOT_FOUND);
-        } catch (TracklistHasNotTrackException tracklistHasNotTrack) {
-            return getErrorResponseBody(ApplicationErrorTypes.TRACKLIST_HAS_NOT_TRACK);
-        }
-        return new ResponseEntity<>(convert(tracklist), HttpStatus.OK);
-    }
-
     private TracklistDTO convert(Tracklist dbModel){
         return (dbModel == null) ? null : new TracklistDTO(dbModel);
     }

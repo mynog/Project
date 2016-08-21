@@ -51,6 +51,9 @@ public class AccountInfo {
             inverseJoinColumns = @JoinColumn(name = "chat_id"))
     private Set<Chat> chats;
 
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "accountInfo")
+    private Set<TrackHasMood> trackHasMoods;
+
     public AccountInfo() {
     }
 
@@ -124,6 +127,14 @@ public class AccountInfo {
     public Set<Chat> getChats() { return chats; }
 
     public void setChats(Set<Chat> chats) { this.chats = chats; }
+
+    public Set<TrackHasMood> getTrackHasMoods() {
+        return trackHasMoods;
+    }
+
+    public void setTrackHasMoods(Set<TrackHasMood> trackHasMoods) {
+        this.trackHasMoods = trackHasMoods;
+    }
 
     @Override
     public int hashCode() {

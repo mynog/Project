@@ -20,25 +20,11 @@ public class TrackServiceImpl implements TrackService {
     @Autowired
     private TrackRepository trackRepository;
     @Autowired
-    private MoreTrackInfoRepository moreTrackInfoRepository;
-    @Autowired
-    private RatingRepository ratingRepository;
-    @Autowired
-    private CommentsRepository commentsRepository;
-    @Autowired
     private GenreService genreService;
-    @Autowired
-    private MoodService moodService;
     @Autowired
     private TracklistService tracklistService;
     @Autowired
-    private AccountInfoService accountInfoService;
-    @Autowired
-    private MoreTrackInfoService moreTrackInfoService;
-    @Autowired
-    private RatingService ratingService;
-    @Autowired
-    private CommentsService commentsService;
+    private TrackHasMoodRepository trackHasMoodRepository;
 
     @Override
     public Track getTrackById(Long id) {
@@ -124,71 +110,10 @@ public class TrackServiceImpl implements TrackService {
     }
 
     @Override
-    public Track addTrackMood(Long trackId, Long moodId, Long accountInfoId) throws TrackIsNotExistsException, MoodIsNotExistsException, AccountIsNotExistsException {
-        Track track = getTrackById(trackId);
-        if (track == null) {
-            throw new TrackIsNotExistsException();
-        }
-        Mood mood = moodService.getMoodById(moodId);
-        if (mood == null) {
-            throw new MoodIsNotExistsException();
-        }
-        AccountInfo accountInfo = accountInfoService.getAccountInfoById(accountInfoId);
-        if (accountInfo == null) {
-            throw new AccountIsNotExistsException();
-        }
-        Map<AccountInfo, Mood> moods = track.getMoods();
-        moods.put(accountInfo,mood);
-        track.setMoods(moods);
-        return trackRepository.save(track);
-    }
-
-    @Override
-    public Track addMoreTrackInfo(Track track, String text, Long accountInfoId) throws AccountIsNotExistsException, MoreTrackInfoHasExistsException {
-        MoreTrackInfo moreTrackInfo = moreTrackInfoService.createMoreTrackInfo(text);
-        AccountInfo accountInfo = accountInfoService.getAccountInfoById(accountInfoId);
-        if (accountInfo == null) {
-            throw new AccountIsNotExistsException();
-        }
-        moreTrackInfo.setTrack(track);
-        moreTrackInfoRepository.save(moreTrackInfo);
-        Map<AccountInfo, MoreTrackInfo> moreTrackInfos = track.getMoreTrackInfos();
-        moreTrackInfos.put(accountInfo,moreTrackInfo);
-        track.setMoreTrackInfos(moreTrackInfos);
-        return trackRepository.save(track);
-    }
-
-    @Override
-    public Track addTrackRating(Track track, Integer ratingValue, Long accountInfoId) throws AccountIsNotExistsException {
-        Rating rating = ratingService.createRating(ratingValue);
-        AccountInfo accountInfo = accountInfoService.getAccountInfoById(accountInfoId);
-        if (accountInfo == null) {
-            throw new AccountIsNotExistsException();
-        }
-        rating.setTrack(track);
-        rating.setAccountInfo(accountInfo);
-        ratingRepository.save(rating);
-        Map<AccountInfo, Rating> ratings = track.getRatings();
-        ratings.put(accountInfo,rating);
-        track.setRatings(ratings);
-        return trackRepository.save(track);
-    }
-
-    @Override
-    public Track addComments(Track track, String text, Integer orderComments, Long accountInfoId) throws AccountIsNotExistsException {
-        Comments comments = commentsService.createComments(text, orderComments);
-        AccountInfo accountInfo = accountInfoService.getAccountInfoById(accountInfoId);
-        if (accountInfo == null) {
-            throw new AccountIsNotExistsException();
-        }
-        comments.setTrack(track);
-        comments.setAccountInfo(accountInfo);
-        comments.setParentComments(comments);
-        commentsRepository.save(comments);
-        Map<AccountInfo, Comments> commentsMap = track.getComments();
-        commentsMap.put(accountInfo,comments);
-        track.setComments(commentsMap);
-        return trackRepository.save(track);
+    public Track addTrackMood(Track track, Mood mood, AccountInfo accountInfo) {
+        TrackHasMood trackHasMood = new TrackHasMood(track,mood,accountInfo);
+        trackHasMoodRepository.save(trackHasMood);
+        return track;
     }
 
     private Track parsingMp3File(String filename) throws InvalidDataException, IOException, UnsupportedTagException, FileIsNotExistsException, TrackHasExistsExceptions, TracklistIsNotExistsException, TrackIsNotExistsException {
@@ -265,27 +190,8 @@ public class TrackServiceImpl implements TrackService {
         // Создаем автоматические плеэйлисты
         Tracklist tracklist = null;
         // По жанру
-        if (genre != null) {
-            try {
-                tracklist = tracklistService.createTracklist(genre);
-                tracklist = tracklistService.addTrackIntoTracklist(tracklist.getId(), track.getId());
-            } catch (TracklistHasExistsException tracklistHasExists) {
-                tracklist = tracklistService.getTracklistByName(genre);
-                tracklist = tracklistService.addTrackIntoTracklist(tracklist.getId(),track.getId());
-            }
-        }
         // По альбому
-        if (album != null) {
-            try {
-                tracklist = tracklistService.createTracklist(album);
-                tracklist = tracklistService.addTrackIntoTracklist(tracklist.getId(), track.getId());
-            } catch (TracklistHasExistsException tracklistHasExists) {
-                tracklist = tracklistService.getTracklistByName(album);
-                tracklist = tracklistService.addTrackIntoTracklist(tracklist.getId(),track.getId());
-            }
-        }
         return track;
     }
-
 }
 

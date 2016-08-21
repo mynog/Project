@@ -17,12 +17,8 @@ public class Mood {
     @NotEmpty
     private String name;
 
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "moods")
-    private Set<Track> tracks;
-
-    @ManyToMany
-    @JoinColumn(name = "account_info id")
-    private Set<AccountInfo> accountInfos;
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "mood")
+    private Set<TrackHasMood> trackHasMoods;
 
     public Mood() {
     }
@@ -47,16 +43,11 @@ public class Mood {
         this.name = name;
     }
 
-    public Set<Track> getTracks() {
-        return tracks;
+    public Set<TrackHasMood> getTrackHasMoods() {
+        return trackHasMoods;
     }
 
-    public void setTracks(Set<Track> tracks) {
-        this.tracks = tracks;
+    public void setTrackHasMoods(Set<TrackHasMood> trackHasMoods) {
+        this.trackHasMoods = trackHasMoods;
     }
-
-    public Set<AccountInfo> getAccountInfos() { return accountInfos; }
-
-    public void setAccountInfos(Set<AccountInfo> accountInfos) { this.accountInfos = accountInfos; }
-
 }

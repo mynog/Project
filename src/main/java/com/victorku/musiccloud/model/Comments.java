@@ -20,13 +20,6 @@ public class Comments {
     @JoinColumn(name="parent_id")
     private Comments parentComments;
 
-    @ManyToOne
-    private Track track;
-
-    @ManyToOne
-    @JoinColumn(name = "account_info_id")
-    private AccountInfo accountInfo;
-
     public Comments() {
     }
 
@@ -59,28 +52,12 @@ public class Comments {
         this.orderComments = orderComments;
     }
 
-    public AccountInfo getAccountInfo() {
-        return accountInfo;
-    }
-
-    public void setAccountInfo(AccountInfo accountInfo) {
-        this.accountInfo = accountInfo;
-    }
-
     public Comments getParentComments() {
         return parentComments;
     }
 
     public void setParentComments(Comments parentComments) {
         this.parentComments = parentComments;
-    }
-
-    public Track getTrack() {
-        return track;
-    }
-
-    public void setTrack(Track track) {
-        this.track = track;
     }
 
 }
