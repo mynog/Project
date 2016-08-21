@@ -31,12 +31,12 @@ public class TrackController {
 
     @Autowired
     private TrackService trackService;
-/*    @Autowired
+    @Autowired
     private MoreTrackInfoService moreTrackInfoService;
     @Autowired
     private RatingService ratingService;
     @Autowired
-    private CommentsService commentsService;*/
+    private CommentsService commentsService;
 
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public ResponseEntity<?> uploadFile(@RequestParam("uploadedFile") MultipartFile uploadedFileRef) throws TracklistIsNotExistsException, TrackIsNotExistsException, GenreHasExistsException, GenreIsNotExistsException, FileIOException {
@@ -206,9 +206,7 @@ public class TrackController {
         return new ResponseEntity<>(convert(track), HttpStatus.OK);
     }
 
-    // Контроллеры для получения и удаления доп.ины, переделать
-
-/*        @RequestMapping(value = "/more_track_info/{id}", method = RequestMethod.GET)
+        @RequestMapping(value = "/more_track_info/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getMoreTrackInfo(@PathVariable("id") Long moreTrackInfoId){
         MoreTrackInfo moreTrackInfo = moreTrackInfoService.getMoreTrackInfoById(moreTrackInfoId);
         if (moreTrackInfo == null) {
@@ -217,25 +215,7 @@ public class TrackController {
         return new ResponseEntity<>(convert(moreTrackInfo),HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/more_track_info/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteMoreTrackInfo(@PathVariable("id") Long moreTrackInfoId) throws MoreTrackInfoIsNotExistsException {
-        try {
-            moreTrackInfoService.deleteMoreTrackInfoById(moreTrackInfoId);
-        }catch (MoreTrackInfoIsNotExistsException moreTrackInfoIsNotExists){
-            return getErrorResponseBody(ApplicationErrorTypes.MORE_TRACK_INFO_ID_NOT_FOUND);
-        }
-        return new ResponseEntity<>(null,HttpStatus.OK);
-    }
-
-
-    private MoreTrackInfoDTO convert(MoreTrackInfo dbModel){
-        MoreTrackInfoDTO jsonModel = new MoreTrackInfoDTO(dbModel.getId(),dbModel.getText());
-        return jsonModel;
-    }*/
-
-    // Контроллеры для получения и удаления рейтинга, переделать
-
-/*    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getRating(@PathVariable("id") Long ratingId){
         Rating rating = ratingService.getRatingById(ratingId);
         if (rating == null) {
@@ -244,24 +224,7 @@ public class TrackController {
         return new ResponseEntity<>(convert(rating), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteRating(@PathVariable("id") Long ratingId) {
-        try {
-            ratingService.deleteRatingById(ratingId);
-        }catch (RatingIsNotExistsException ratingIsNotExists) {
-            return getErrorResponseBody(ApplicationErrorTypes.RATING_ID_NOT_FOUND);
-        }
-        return new ResponseEntity<>(null,HttpStatus.OK);
-    }
-
-    private RatingDTO convert(Rating dbModel){
-        RatingDTO jsonModel = new RatingDTO(dbModel.getId(),dbModel.getRatingValue());
-        return jsonModel;
-    } */
-
-    // Контроллеры для получения и удаления комментариев к треку, переделать
-
-/*    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getComments(@PathVariable("id") Long commentsId){
         Comments comments = commentsService.getCommentsById(commentsId);
         if (comments == null) {
@@ -270,20 +233,20 @@ public class TrackController {
         return new ResponseEntity<>(convert(comments),HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteComments(@PathVariable("id") Long commentsId) throws CommentsIsNotExistsException {
-        try {
-            commentsService.deleteCommentsById(commentsId);
-        }catch (CommentsIsNotExistsException commentsIsNotExists){
-            return getErrorResponseBody(ApplicationErrorTypes.COMMENT_ID_NOT_FOUND);
-        }
-        return new ResponseEntity<>(null,HttpStatus.OK);
+    private MoreTrackInfoDTO convert(MoreTrackInfo dbModel){
+        MoreTrackInfoDTO jsonModel = new MoreTrackInfoDTO(dbModel.getId(),dbModel.getText());
+        return jsonModel;
+    }
+
+    private RatingDTO convert(Rating dbModel){
+        RatingDTO jsonModel = new RatingDTO(dbModel.getId(),dbModel.getRatingValue());
+        return jsonModel;
     }
 
     private CommentsDTO convert(Comments dbModel){
         CommentsDTO jsonModel = new CommentsDTO(dbModel.getId(),dbModel.getText(),dbModel.getOrderComments());
         return jsonModel;
-    }*/
+    }
     
     private TrackDTO convert(Track dbModel){
         return (dbModel == null) ? null : new TrackDTO(dbModel);

@@ -1,6 +1,5 @@
 package com.victorku.musiccloud.service.impl;
 
-import com.victorku.musiccloud.exceptions.RatingIsNotExistsException;
 import com.victorku.musiccloud.model.Rating;
 import com.victorku.musiccloud.repository.RatingRepository;
 import com.victorku.musiccloud.service.RatingService;
@@ -16,14 +15,6 @@ public class RatingServiceImpl implements RatingService {
     @Override
     public Rating getRatingById(Long id) {
         return ratingRepository.findOne(id);
-    }
-
-    @Override
-    public void deleteRatingById(Long id) throws RatingIsNotExistsException {
-        if(!ratingRepository.exists(id)){
-            throw new RatingIsNotExistsException();
-        }
-        ratingRepository.delete(id);
     }
 
     @Override

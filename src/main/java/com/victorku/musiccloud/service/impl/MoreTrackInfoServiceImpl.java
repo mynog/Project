@@ -1,9 +1,7 @@
 package com.victorku.musiccloud.service.impl;
 
 import com.victorku.musiccloud.exceptions.MoreTrackInfoHasExistsException;
-import com.victorku.musiccloud.exceptions.MoreTrackInfoIsNotExistsException;
 import com.victorku.musiccloud.model.MoreTrackInfo;
-import com.victorku.musiccloud.model.Track;
 import com.victorku.musiccloud.repository.MoreTrackInfoRepository;
 import com.victorku.musiccloud.service.MoreTrackInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +16,6 @@ public class MoreTrackInfoServiceImpl implements MoreTrackInfoService {
     @Override
     public MoreTrackInfo getMoreTrackInfoById(Long id) {
         return moreTrackInfoRepository.findOne(id);
-    }
-
-    @Override
-    public void deleteMoreTrackInfoById(Long id) throws MoreTrackInfoIsNotExistsException {
-        if(!moreTrackInfoRepository.exists(id)){
-            throw new MoreTrackInfoIsNotExistsException();
-        }
-        moreTrackInfoRepository.delete(id);
     }
 
     @Override
