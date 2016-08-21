@@ -26,6 +26,12 @@ public class Tracklist {
     @DateTimeFormat(pattern = "yyyy/dd/mm")
     private LocalDate dateCreate;
 
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "tracklist")
+    private Set<TracklistHasTrack> tracklistHasTracks;
+
+    @ManyToOne
+    private AccountInfo accountInfo;
+
     public Tracklist() {this.dateCreate = new LocalDate();
     }
 
@@ -58,4 +64,19 @@ public class Tracklist {
         this.dateCreate = dateCreate;
     }
 
+    public Set<TracklistHasTrack> getTracklistHasTracks() {
+        return tracklistHasTracks;
+    }
+
+    public void setTracklistHasTracks(Set<TracklistHasTrack> tracklistHasTracks) {
+        this.tracklistHasTracks = tracklistHasTracks;
+    }
+
+    public AccountInfo getAccountInfo() {
+        return accountInfo;
+    }
+
+    public void setAccountInfo(AccountInfo accountInfo) {
+        this.accountInfo = accountInfo;
+    }
 }

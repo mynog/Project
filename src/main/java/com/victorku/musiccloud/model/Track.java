@@ -43,6 +43,9 @@ public class Track {
     private Set<Genre> genres;
 
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "track")
+    private Set<TracklistHasTrack> tracklistHasTracks;
+
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "track")
     private Set<TrackHasMood> trackHasMoods;
 
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "tracks")
@@ -147,6 +150,14 @@ public class Track {
 
     public void setTrackHasMoods(Set<TrackHasMood> trackHasMoods) {
         this.trackHasMoods = trackHasMoods;
+    }
+
+    public Set<TracklistHasTrack> getTracklistHasTracks() {
+        return tracklistHasTracks;
+    }
+
+    public void setTracklistHasTracks(Set<TracklistHasTrack> tracklistHasTracks) {
+        this.tracklistHasTracks = tracklistHasTracks;
     }
 
     @Override

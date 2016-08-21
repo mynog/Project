@@ -54,6 +54,9 @@ public class AccountInfo {
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "accountInfo")
     private Set<TrackHasMood> trackHasMoods;
 
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "accountInfo")
+    private Set<Tracklist> tracklists;
+
     public AccountInfo() {
     }
 
@@ -134,6 +137,14 @@ public class AccountInfo {
 
     public void setTrackHasMoods(Set<TrackHasMood> trackHasMoods) {
         this.trackHasMoods = trackHasMoods;
+    }
+
+    public Set<Tracklist> getTracklists() {
+        return tracklists;
+    }
+
+    public void setTracklists(Set<Tracklist> tracklists) {
+        this.tracklists = tracklists;
     }
 
     @Override
