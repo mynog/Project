@@ -3,14 +3,8 @@ package com.victorku.musiccloud.web;
 import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.UnsupportedTagException;
 import com.victorku.musiccloud.exceptions.*;
-import com.victorku.musiccloud.model.Comments;
-import com.victorku.musiccloud.model.MoreTrackInfo;
-import com.victorku.musiccloud.model.Rating;
-import com.victorku.musiccloud.model.Track;
-import com.victorku.musiccloud.service.CommentsService;
-import com.victorku.musiccloud.service.MoreTrackInfoService;
-import com.victorku.musiccloud.service.RatingService;
-import com.victorku.musiccloud.service.TrackService;
+import com.victorku.musiccloud.model.*;
+import com.victorku.musiccloud.service.*;
 import com.victorku.musiccloud.web.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,6 +25,10 @@ public class TrackController {
 
     @Autowired
     private TrackService trackService;
+    @Autowired
+    private MoodService moodService;
+    @Autowired
+    private AccountInfoService accountInfoService;
     @Autowired
     private MoreTrackInfoService moreTrackInfoService;
     @Autowired
@@ -155,55 +153,23 @@ public class TrackController {
         return new ResponseEntity<>(convert(track), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}/mood", method = RequestMethod.PUT)
-    public ResponseEntity<?> addTrackMood(@PathVariable("id") Long trackId, @RequestParam("moodId") Long moodId, @RequestParam("accountInfoId") Long accountInfoId) {
-        Track track = null;
-        try {
-            track = trackService.addTrackMood(trackId, moodId, accountInfoId);
-        } catch (TrackIsNotExistsException trackIsNotExists) {
+    @RequestMapping(value = "{id}/mood", method = RequestMethod.PUT)
+    public ResponseEntity<?> addTrackMood(@PathVariable("id") Long trackId, @RequestParam("moodId") Long moodId, @RequestParam("accountInfoId") Long acccountInfoId) {
+
+        Track track = trackService.getTrackById(trackId);
+        if (track == null) {
             return getErrorResponseBody(ApplicationErrorTypes.TRACK_ID_NOT_FOUND);
-        } catch (MoodIsNotExistsException moodIsNotExists) {
+        }
+        Mood mood = moodService.getMoodById(moodId);
+        if (mood == null) {
             return getErrorResponseBody(ApplicationErrorTypes.MOOD_ID_NOT_FOUND);
-        } catch (AccountIsNotExistsException e) {
+        }
+        AccountInfo accountInfo = accountInfoService.getAccountInfoById(acccountInfoId);
+        if (accountInfo == null) {
             return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_ID_NOT_FOUND);
         }
-        return new ResponseEntity<>(convert(track), HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/{id}/more_track_info", method = RequestMethod.PUT)
-    public ResponseEntity<?> addMoreTrackInfo(@PathVariable("id") Long trackId,@RequestParam("text") String text, @RequestParam("accountInfoId") Long accountInfoId) {
-        Track track = trackService.getTrackById(trackId);
-        try {
-            track = trackService.addMoreTrackInfo(track,text,accountInfoId);
-        } catch (AccountIsNotExistsException accountIsNotExists) {
-            return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_ID_NOT_FOUND);
-        } catch (MoreTrackInfoHasExistsException moreTrackInfoHasExists) {
-            return getErrorResponseBody(ApplicationErrorTypes.MORE_TRACK_INFO_HAS_EXISTS);
-        }
-        return new ResponseEntity<>(convert(track), HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/{id}/rating", method = RequestMethod.PUT)
-    public ResponseEntity<?> addTrackRating(@PathVariable("id") Long trackId,@RequestParam("ratingValue") Integer ratingValue, @RequestParam("accountInfoId") Long accountInfoId) {
-        Track track = trackService.getTrackById(trackId);
-        try {
-            track = trackService.addTrackRating(track,ratingValue,accountInfoId);
-        } catch (AccountIsNotExistsException accountIsNotExists) {
-            return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_ID_NOT_FOUND);
-        }
-        return new ResponseEntity<>(convert(track), HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/{id}/comments", method = RequestMethod.PUT)
-    public ResponseEntity<?> addTrackComments(@PathVariable("id") Long trackId,@RequestParam("text") String text,
-                                              @RequestParam("orderComments") Integer orderComments ,@RequestParam("accountInfoId") Long accountInfoId) {
-        Track track = trackService.getTrackById(trackId);
-        try {
-            track = trackService.addComments(track,text,orderComments,accountInfoId);
-        } catch (AccountIsNotExistsException accountIsNotExists) {
-            return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_ID_NOT_FOUND);
-        }
-        return new ResponseEntity<>(convert(track), HttpStatus.OK);
+        track = trackService.addTrackMood(track,mood,accountInfo);
+        return new ResponseEntity<>(convert(track),HttpStatus.OK);
     }
 
         @RequestMapping(value = "/more_track_info/{id}", method = RequestMethod.GET)
@@ -215,7 +181,7 @@ public class TrackController {
         return new ResponseEntity<>(convert(moreTrackInfo),HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}/rating", method = RequestMethod.GET)
     public ResponseEntity<?> getRating(@PathVariable("id") Long ratingId){
         Rating rating = ratingService.getRatingById(ratingId);
         if (rating == null) {
@@ -224,7 +190,7 @@ public class TrackController {
         return new ResponseEntity<>(convert(rating), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}/comments", method = RequestMethod.GET)
     public ResponseEntity<?> getComments(@PathVariable("id") Long commentsId){
         Comments comments = commentsService.getCommentsById(commentsId);
         if (comments == null) {

@@ -3,6 +3,8 @@ package com.victorku.musiccloud.service;
 import com.mpatric.mp3agic.InvalidDataException;
 import com.mpatric.mp3agic.UnsupportedTagException;
 import com.victorku.musiccloud.exceptions.*;
+import com.victorku.musiccloud.model.AccountInfo;
+import com.victorku.musiccloud.model.Mood;
 import com.victorku.musiccloud.model.Track;
 
 import java.io.IOException;
@@ -21,13 +23,7 @@ public interface TrackService {
 
     Track removeTrackGenre(Long trackId, Long genreId) throws TrackIsNotExistsException, GenreIsNotExistsException, TrackHasNotGenreException;
 
-    Track addTrackMood(Long trackId, Long moodId, Long accountInfoId) throws TrackIsNotExistsException, MoodIsNotExistsException, AccountIsNotExistsException;
-
-    Track addMoreTrackInfo(Track track,String text,Long accountInfoId) throws AccountIsNotExistsException, MoreTrackInfoHasExistsException;
-
-    Track addTrackRating(Track track,Integer ratingValue, Long accountInfoId) throws AccountIsNotExistsException;
-
-    Track addComments(Track track,String text,Integer orderComments, Long accountInfoId) throws AccountIsNotExistsException;
+    Track addTrackMood(Track track, Mood mood, AccountInfo accountInfo);
 }
 
 
