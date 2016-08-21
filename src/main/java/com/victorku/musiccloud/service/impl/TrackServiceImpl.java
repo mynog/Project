@@ -29,6 +29,8 @@ public class TrackServiceImpl implements TrackService {
     private CommentsRepository commentsRepository;
     @Autowired
     private GenreService genreService;
+    @Autowired
+    private TracklistService tracklistService;
 
 
     @Override
@@ -216,7 +218,25 @@ public class TrackServiceImpl implements TrackService {
         // Создаем автоматические плеэйлисты
         Tracklist tracklist = null;
         // По жанру
+        if (genre != null) {
+            try {
+                tracklist = tracklistService.createTracklist(genre,null);
+                tracklist = tracklistService.addTrackIntoTracklist(tracklist,track);
+            } catch (TracklistHasExistsException tracklistHasExists) {
+                tracklist = tracklistService.getTracklistByName(genre);
+                tracklist = tracklistService.addTrackIntoTracklist(tracklist,track);
+            }
+        }
         // По альбому
+        if (album != null) {
+            try {
+                tracklist = tracklistService.createTracklist(album,null);
+                tracklist = tracklistService.addTrackIntoTracklist(tracklist, track);
+            } catch (TracklistHasExistsException tracklistHasExists) {
+                tracklist = tracklistService.getTracklistByName(album);
+                tracklist = tracklistService.addTrackIntoTracklist(tracklist,track);
+            }
+        }
         return track;
     }
 }

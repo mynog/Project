@@ -7,6 +7,8 @@ import com.victorku.musiccloud.exceptions.TracklistIsNotExistsException;
 import com.victorku.musiccloud.model.AccountInfo;
 import com.victorku.musiccloud.model.Track;
 import com.victorku.musiccloud.model.Tracklist;
+import com.victorku.musiccloud.model.TracklistHasTrack;
+import com.victorku.musiccloud.repository.TracklistHasTrackRepository;
 import com.victorku.musiccloud.repository.TracklistRepository;
 import com.victorku.musiccloud.service.TrackService;
 import com.victorku.musiccloud.service.TracklistService;
@@ -20,6 +22,8 @@ public class TracklistServiceImpl implements TracklistService {
 
     @Autowired
     private TracklistRepository tracklistRepository;
+    @Autowired
+    private TracklistHasTrackRepository tracklistHasTrackRepository;
 
     @Override
     public Tracklist getTracklistById(Long id) {
@@ -37,6 +41,13 @@ public class TracklistServiceImpl implements TracklistService {
         }
         tracklist = new Tracklist(name,accountInfo);
         return tracklistRepository.save(tracklist);
+    }
+
+    @Override
+    public Tracklist addTrackIntoTracklist(Tracklist tracklist, Track track) {
+        TracklistHasTrack tracklistHasTrack = new TracklistHasTrack(tracklist,track);
+        tracklistHasTrackRepository.save(tracklistHasTrack);
+        return tracklist;
     }
 
 }
