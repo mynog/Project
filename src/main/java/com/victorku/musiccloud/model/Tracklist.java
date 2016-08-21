@@ -29,6 +29,7 @@ public class Tracklist {
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "tracklist")
     private Set<TracklistHasTrack> tracklistHasTracks;
 
+    @JoinColumn(name = "account_info_id")
     @ManyToOne
     private AccountInfo accountInfo;
 

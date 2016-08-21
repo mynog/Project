@@ -27,8 +27,10 @@ public class MoreTrackInfo {
     public MoreTrackInfo() {
     }
 
-    public MoreTrackInfo(String text) {
+    public MoreTrackInfo(Track track, String text, AccountInfo accountInfo) {
         this.text = text;
+        this.accountInfo = accountInfo;
+        this.track = track;
     }
 
     public Long getId() {

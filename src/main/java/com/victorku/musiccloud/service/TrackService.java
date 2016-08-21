@@ -24,6 +24,8 @@ public interface TrackService {
     Track removeTrackGenre(Long trackId, Long genreId) throws TrackIsNotExistsException, GenreIsNotExistsException, TrackHasNotGenreException;
 
     Track addTrackMood(Track track, Mood mood, AccountInfo accountInfo);
+
+    Track addMoreTrackInfo(Track track, String text, AccountInfo accountInfo);
 }
 
 

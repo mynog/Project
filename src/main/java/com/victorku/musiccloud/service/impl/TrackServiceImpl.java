@@ -20,11 +20,12 @@ public class TrackServiceImpl implements TrackService {
     @Autowired
     private TrackRepository trackRepository;
     @Autowired
-    private GenreService genreService;
-    @Autowired
-    private TracklistService tracklistService;
-    @Autowired
     private TrackHasMoodRepository trackHasMoodRepository;
+    @Autowired
+    private MoreTrackInfoRepository moreTrackInfoRepository;
+    @Autowired
+    private GenreService genreService;
+
 
     @Override
     public Track getTrackById(Long id) {
@@ -113,6 +114,13 @@ public class TrackServiceImpl implements TrackService {
     public Track addTrackMood(Track track, Mood mood, AccountInfo accountInfo) {
         TrackHasMood trackHasMood = new TrackHasMood(track,mood,accountInfo);
         trackHasMoodRepository.save(trackHasMood);
+        return track;
+    }
+
+    @Override
+    public Track addMoreTrackInfo(Track track, String text, AccountInfo accountInfo) {
+        MoreTrackInfo moreTrackInfo = new MoreTrackInfo(track,text,accountInfo);
+        moreTrackInfoRepository.save(moreTrackInfo);
         return track;
     }
 

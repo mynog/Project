@@ -154,7 +154,7 @@ public class TrackController {
     }
 
     @RequestMapping(value = "{id}/mood", method = RequestMethod.PUT)
-    public ResponseEntity<?> addTrackMood(@PathVariable("id") Long trackId, @RequestParam("moodId") Long moodId, @RequestParam("accountInfoId") Long acccountInfoId) {
+    public ResponseEntity<?> addTrackMood(@PathVariable("id") Long trackId, @RequestParam("moodId") Long moodId, @RequestParam("accountInfoId") Long accountInfoId) {
 
         Track track = trackService.getTrackById(trackId);
         if (track == null) {
@@ -164,7 +164,7 @@ public class TrackController {
         if (mood == null) {
             return getErrorResponseBody(ApplicationErrorTypes.MOOD_ID_NOT_FOUND);
         }
-        AccountInfo accountInfo = accountInfoService.getAccountInfoById(acccountInfoId);
+        AccountInfo accountInfo = accountInfoService.getAccountInfoById(accountInfoId);
         if (accountInfo == null) {
             return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_ID_NOT_FOUND);
         }
@@ -172,7 +172,22 @@ public class TrackController {
         return new ResponseEntity<>(convert(track),HttpStatus.OK);
     }
 
-        @RequestMapping(value = "/more_track_info/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "{id}/more_track_info", method = RequestMethod.PUT)
+    public ResponseEntity<?> addMoreTrackInfo(@PathVariable("id") Long trackId, @RequestParam("text") String text, @RequestParam("accountInfoId") Long accountInfoId) {
+
+        Track track = trackService.getTrackById(trackId);
+        if (track == null) {
+            return getErrorResponseBody(ApplicationErrorTypes.TRACK_ID_NOT_FOUND);
+        }
+        AccountInfo accountInfo = accountInfoService.getAccountInfoById(accountInfoId);
+        if (accountInfo == null) {
+            return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_ID_NOT_FOUND);
+        }
+        track = trackService.addMoreTrackInfo(track,text,accountInfo);
+        return new ResponseEntity<>(convert(track),HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/more_track_info/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getMoreTrackInfo(@PathVariable("id") Long moreTrackInfoId){
         MoreTrackInfo moreTrackInfo = moreTrackInfoService.getMoreTrackInfoById(moreTrackInfoId);
         if (moreTrackInfo == null) {
