@@ -24,8 +24,6 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private AccountInfoRepository accountInfoRepository;
     @Autowired
-    private TrackRepository trackRepository;
-    @Autowired
     private AccountRoleService accountRoleService;
     @Autowired
     private AccountInfoService accountInfoService;
@@ -173,9 +171,9 @@ public class AccountServiceImpl implements AccountService {
         if (track == null) {
             throw new TrackIsNotExistsException();
         }
-        Set<AccountInfo> accountInfos = track.getAccountInfos();
-        accountInfos.add(accountInfo);
-        track.setAccountInfos(accountInfos);
-        trackRepository.save(track);
+        Set<Track> tracks = accountInfo.getTracks();
+        tracks.add(track);
+        accountInfo.setTracks(tracks);
+        accountInfoRepository.save(accountInfo);
     }
 }
