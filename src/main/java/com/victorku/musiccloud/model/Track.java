@@ -48,6 +48,15 @@ public class Track {
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "track")
     private Set<TrackHasMood> trackHasMoods;
 
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "track")
+    private Set<Comments> commentses;
+
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "track")
+    private Set<Rating> ratings;
+
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "track")
+    private Set<MoreTrackInfo> moreTrackInfos;
+
     @ManyToMany(fetch = FetchType.EAGER, mappedBy = "tracks")
     private Set<AccountInfo> accountInfos;
 
@@ -158,6 +167,30 @@ public class Track {
 
     public void setTracklistHasTracks(Set<TracklistHasTrack> tracklistHasTracks) {
         this.tracklistHasTracks = tracklistHasTracks;
+    }
+
+    public Set<Comments> getCommentses() {
+        return commentses;
+    }
+
+    public void setCommentses(Set<Comments> commentses) {
+        this.commentses = commentses;
+    }
+
+    public Set<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(Set<Rating> ratings) {
+        this.ratings = ratings;
+    }
+
+    public Set<MoreTrackInfo> getMoreTrackInfos() {
+        return moreTrackInfos;
+    }
+
+    public void setMoreTrackInfos(Set<MoreTrackInfo> moreTrackInfos) {
+        this.moreTrackInfos = moreTrackInfos;
     }
 
     @Override

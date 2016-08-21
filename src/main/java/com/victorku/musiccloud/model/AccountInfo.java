@@ -57,6 +57,15 @@ public class AccountInfo {
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "accountInfo")
     private Set<Tracklist> tracklists;
 
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "accountInfo")
+    private Set<Comments> commentses;
+
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "accountInfo")
+    private Set<Rating> ratings;
+
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "accountInfo")
+    private Set<MoreTrackInfo> moreTrackInfos;
+
     public AccountInfo() {
     }
 
@@ -145,6 +154,30 @@ public class AccountInfo {
 
     public void setTracklists(Set<Tracklist> tracklists) {
         this.tracklists = tracklists;
+    }
+
+    public Set<Comments> getCommentses() {
+        return commentses;
+    }
+
+    public void setCommentses(Set<Comments> commentses) {
+        this.commentses = commentses;
+    }
+
+    public Set<Rating> getRatings() {
+        return ratings;
+    }
+
+    public void setRatings(Set<Rating> ratings) {
+        this.ratings = ratings;
+    }
+
+    public Set<MoreTrackInfo> getMoreTrackInfos() {
+        return moreTrackInfos;
+    }
+
+    public void setMoreTrackInfos(Set<MoreTrackInfo> moreTrackInfos) {
+        this.moreTrackInfos = moreTrackInfos;
     }
 
     @Override
