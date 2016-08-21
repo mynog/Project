@@ -160,7 +160,7 @@ CREATE UNIQUE INDEX name_UNIQUE2 ON mood (name ASC);
 DROP TABLE IF EXISTS track_has_mood ;
 
 CREATE TABLE IF NOT EXISTS track_has_mood (
-  id INT NOT NULL,
+  id INT NOT NULL DEFAULT nextval('hibernate_sequence'),
   track_id INT NOT NULL,
   mood_id INT NOT NULL,
   account_info_id INT NOT NULL,
