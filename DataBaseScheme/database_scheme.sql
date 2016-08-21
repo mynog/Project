@@ -216,9 +216,10 @@ CREATE INDEX fk_tracklist_account_info1_idx ON tracklist (account_info_id ASC);
 DROP TABLE IF EXISTS tracklist_has_track ;
 
 CREATE TABLE IF NOT EXISTS tracklist_has_track (
+  id INT NOT NULL DEFAULT nextval('hibernate_sequence'),
   tracklist_id INT NOT NULL,
   track_id INT NOT NULL,
-  PRIMARY KEY (tracklist_id, track_id),
+  PRIMARY KEY (id),
   CONSTRAINT fk_tracklist_has_track_tracklist1
     FOREIGN KEY (tracklist_id)
     REFERENCES tracklist (id)
@@ -231,9 +232,9 @@ CREATE TABLE IF NOT EXISTS tracklist_has_track (
     ON UPDATE NO ACTION)
 ;
 
-CREATE INDEX fk_tracklist_has_track_track1_idx ON tracklist_has_track (track_id ASC);
+CREATE INDEX fk_tracklist_has_track_track1_idx ON mydb.tracklist_has_track (track_id ASC);
 
-CREATE INDEX fk_tracklist_has_track_tracklist1_idx ON tracklist_has_track (tracklist_id ASC);
+CREATE INDEX fk_tracklist_has_track_tracklist1_idx ON mydb.tracklist_has_track (tracklist_id ASC);
 
 -- -----------------------------------------------------
 -- Table `chat`
