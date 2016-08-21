@@ -11,6 +11,7 @@ public class TracklistDTO {
     private Long id;
     private String name;
     private DateDTO dateCreate;
+    private Set<TrackDTO> tracks;
 
     public TracklistDTO() {
     }
@@ -55,4 +56,8 @@ public class TracklistDTO {
     public void setDateCreate(DateDTO dateCreate) {
         this.dateCreate = dateCreate;
     }
+
+    public Set<TrackDTO> getTracks() { return tracks; }
+
+    public void setTracks(Set<TrackDTO> tracks) { this.tracks = tracks; }
 }

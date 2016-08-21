@@ -1,15 +1,14 @@
 package com.victorku.musiccloud.service.impl;
 
 import com.victorku.musiccloud.exceptions.*;
-import com.victorku.musiccloud.model.Account;
-import com.victorku.musiccloud.model.AccountInfo;
-import com.victorku.musiccloud.model.AccountRole;
-import com.victorku.musiccloud.model.UserRole;
+import com.victorku.musiccloud.model.*;
 import com.victorku.musiccloud.repository.AccountInfoRepository;
 import com.victorku.musiccloud.repository.AccountRepository;
+import com.victorku.musiccloud.repository.TrackRepository;
 import com.victorku.musiccloud.service.AccountInfoService;
 import com.victorku.musiccloud.service.AccountRoleService;
 import com.victorku.musiccloud.service.AccountService;
+import com.victorku.musiccloud.service.TrackService;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,9 +24,13 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private AccountInfoRepository accountInfoRepository;
     @Autowired
+    private TrackRepository trackRepository;
+    @Autowired
     private AccountRoleService accountRoleService;
     @Autowired
     private AccountInfoService accountInfoService;
+    @Autowired
+    private TrackService trackService;
 
     @Override
     public Account getAccountById(Long id) {
@@ -160,4 +163,19 @@ public class AccountServiceImpl implements AccountService {
         accountInfoRepository.save(friend);
     }
 
+    @Override
+    public void addTrackIntoAccount(Long accountInfoId,Long trackId) throws AccountIsNotExistsException, TrackIsNotExistsException {
+        AccountInfo accountInfo = accountInfoService.getAccountInfoById(accountInfoId);
+        if (accountInfo == null) {
+            throw new AccountIsNotExistsException();
+        }
+        Track track = trackService.getTrackById(trackId);
+        if (track == null) {
+            throw new TrackIsNotExistsException();
+        }
+        Set<AccountInfo> accountInfos = track.getAccountInfos();
+        accountInfos.add(accountInfo);
+        track.setAccountInfos(accountInfos);
+        trackRepository.save(track);
+    }
 }

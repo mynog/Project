@@ -115,6 +115,18 @@ public class AccountController {
         return new ResponseEntity<>(convert(null), HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/{id}/track", method = RequestMethod.PUT)
+    public ResponseEntity<?> addTrackIntoAccount(@PathVariable("id") Long accountInfoId, @RequestParam("trackId") Long trackId) {
+        try {
+            accountService.addTrackIntoAccount(accountInfoId,trackId);
+        } catch (AccountIsNotExistsException accountIsNotExists) {
+            return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_ID_NOT_FOUND);
+        } catch (TrackIsNotExistsException e) {
+            return getErrorResponseBody(ApplicationErrorTypes.TRACK_ID_NOT_FOUND);
+        }
+        return new ResponseEntity<>(convert(null), HttpStatus.OK);
+    }
+
     private AccountDTO convert(Account dbModel) {
         return (dbModel == null) ? null : new AccountDTO(dbModel);
     }

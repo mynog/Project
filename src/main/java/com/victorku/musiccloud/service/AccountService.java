@@ -23,4 +23,6 @@ public interface AccountService {
     void addFriend(Long inviterId,Long friendId) throws AccountIsNotExistsException;
 
     void removeFriend(Long removerId,Long friendId) throws AccountIsNotExistsException, AccountHasNotFriendException;
+
+    void addTrackIntoAccount(Long accountInfoId, Long trackId) throws AccountIsNotExistsException, TrackIsNotExistsException;
 }
