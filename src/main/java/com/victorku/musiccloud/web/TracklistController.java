@@ -1,7 +1,9 @@
 package com.victorku.musiccloud.web;
 
 import com.victorku.musiccloud.exceptions.*;
+import com.victorku.musiccloud.model.AccountInfo;
 import com.victorku.musiccloud.model.Tracklist;
+import com.victorku.musiccloud.service.AccountInfoService;
 import com.victorku.musiccloud.service.TracklistService;
 import com.victorku.musiccloud.web.model.DateDTO;
 import com.victorku.musiccloud.web.model.ErrorResponseBody;
@@ -17,6 +19,8 @@ public class TracklistController {
 
     @Autowired
     private TracklistService tracklistService;
+    @Autowired
+    private AccountInfoService accountInfoService;
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getTracklist(@PathVariable("id") Long tracklistId){
@@ -25,6 +29,26 @@ public class TracklistController {
             return getErrorResponseBody(ApplicationErrorTypes.TRACKLIST_ID_NOT_FOUND);
         }
         return new ResponseEntity<>(convert(tracklist),HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    public ResponseEntity<?> createTracklist(@RequestParam("name") String name, @RequestParam("accountInfoId") Long accountInfoId) {
+        AccountInfo accountInfo;
+        if (accountInfoId == null) {
+            accountInfo = null;
+        } else {
+            accountInfo = accountInfoService.getAccountInfoById(accountInfoId);
+            if (accountInfo == null) {
+                return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_ID_NOT_FOUND);
+            }
+        }
+        Tracklist tracklist = null;
+        try {
+            tracklist = tracklistService.createTracklist(name,accountInfo);
+        } catch (TracklistHasExistsException tracklistHasExists) {
+            return getErrorResponseBody(ApplicationErrorTypes.TRACKLIST_HAS_EXISTS);
+        }
+        return new ResponseEntity<>(convert(tracklist), HttpStatus.OK);
     }
 
     private TracklistDTO convert(Tracklist dbModel){

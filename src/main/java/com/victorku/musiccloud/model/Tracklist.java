@@ -36,9 +36,10 @@ public class Tracklist {
     public Tracklist() {this.dateCreate = new LocalDate();
     }
 
-    public Tracklist(String name) {
+    public Tracklist(String name, AccountInfo accountInfo) {
         this();
         this.name = name;
+        this.accountInfo = accountInfo;
     }
 
     public Long getId() {
