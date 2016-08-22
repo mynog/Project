@@ -1,5 +1,7 @@
 package com.victorku.musiccloud.web.model;
 
+import com.victorku.musiccloud.model.Message;
+
 public class MessageDTO {
 
     private Long id;
@@ -9,11 +11,18 @@ public class MessageDTO {
     public MessageDTO() {
     }
 
-    public MessageDTO(Long id, String nick, DateDTO createMessage) {
-        this.id = id;
-        this.text = nick;
-        this.createMessage = createMessage;
+    public MessageDTO(Message dbModel) {
+
+        if (dbModel == null) {
+            return;
+        }
+
+        this.id = dbModel.getId();
+        this.text = dbModel.getText();
+        this.createMessage = new DateDTO(dbModel.getCreateMessage());
+
     }
+
 
     public Long getId() {
         return id;

@@ -1,5 +1,7 @@
 package com.victorku.musiccloud.web.model;
 
+import com.victorku.musiccloud.model.Mood;
+
 public class MoodDTO {
 
     private Long id;
@@ -8,9 +10,14 @@ public class MoodDTO {
     public MoodDTO() {
     }
 
-    public MoodDTO(Long id, String name) {
-        this.id = id;
-        this.name = name;
+    public MoodDTO(Mood dbModel) {
+
+        if (dbModel == null) {
+            return;
+        }
+
+        this.id = dbModel.getId();
+        this.name = dbModel.getName();
     }
 
     public Long getId() {

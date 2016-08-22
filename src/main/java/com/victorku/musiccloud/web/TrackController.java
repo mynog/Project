@@ -237,7 +237,7 @@ public class TrackController {
         return new ResponseEntity<>(convert(moreTrackInfo),HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}/rating", method = RequestMethod.GET)
+    @RequestMapping(value = "/rating/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getRating(@PathVariable("id") Long ratingId){
         Rating rating = ratingService.getRatingById(ratingId);
         if (rating == null) {
@@ -246,7 +246,7 @@ public class TrackController {
         return new ResponseEntity<>(convert(rating), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/{id}/comments", method = RequestMethod.GET)
+    @RequestMapping(value = "/comments/{id}", method = RequestMethod.GET)
     public ResponseEntity<?> getComments(@PathVariable("id") Long commentsId){
         Comments comments = commentsService.getCommentsById(commentsId);
         if (comments == null) {
@@ -255,20 +255,13 @@ public class TrackController {
         return new ResponseEntity<>(convert(comments),HttpStatus.OK);
     }
 
-    private MoreTrackInfoDTO convert(MoreTrackInfo dbModel){
-        MoreTrackInfoDTO jsonModel = new MoreTrackInfoDTO(dbModel.getId(),dbModel.getText());
-        return jsonModel;
-    }
+    private MoreTrackInfoDTO convert(MoreTrackInfo dbModel){ return (dbModel == null) ? null : new MoreTrackInfoDTO(dbModel); }
 
     private RatingDTO convert(Rating dbModel){
-        RatingDTO jsonModel = new RatingDTO(dbModel.getId(),dbModel.getRatingValue());
-        return jsonModel;
+        return (dbModel == null) ? null : new RatingDTO(dbModel);
     }
 
-    private CommentsDTO convert(Comments dbModel){
-        CommentsDTO jsonModel = new CommentsDTO(dbModel.getId(),dbModel.getText(),dbModel.getOrderComments());
-        return jsonModel;
-    }
+    private CommentsDTO convert(Comments dbModel){ return (dbModel == null) ? null : new CommentsDTO(dbModel); }
     
     private TrackDTO convert(Track dbModel){
         return (dbModel == null) ? null : new TrackDTO(dbModel);

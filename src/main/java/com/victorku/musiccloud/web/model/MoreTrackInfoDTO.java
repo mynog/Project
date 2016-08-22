@@ -1,5 +1,7 @@
 package com.victorku.musiccloud.web.model;
 
+import com.victorku.musiccloud.model.MoreTrackInfo;
+
 public class MoreTrackInfoDTO {
 
     private Long id;
@@ -8,9 +10,15 @@ public class MoreTrackInfoDTO {
     public MoreTrackInfoDTO() {
     }
 
-    public MoreTrackInfoDTO(Long id, String text) {
-        this.id = id;
-        this.text = text;
+    public MoreTrackInfoDTO(MoreTrackInfo dbModel) {
+
+        if (dbModel == null) {
+            return;
+        }
+
+        this.id = dbModel.getId();
+        this.text = dbModel.getText();
+
     }
 
     public Long getId() {

@@ -49,10 +49,7 @@ public class MoodController {
         return new ResponseEntity<>(convert(mood), HttpStatus.OK);
     }
 
-    private MoodDTO convert(Mood dbModel){
-        MoodDTO jsonModel = new MoodDTO(dbModel.getId(),dbModel.getName());
-        return jsonModel;
-    }
+    private MoodDTO convert(Mood dbModel){ return (dbModel == null) ? null : new MoodDTO(dbModel); }
 
     private ResponseEntity<ErrorResponseBody> getErrorResponseBody(ApplicationErrorTypes errorType) {
         return new ResponseEntity<>(new ErrorResponseBody(errorType), HttpStatus.NOT_FOUND);

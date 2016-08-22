@@ -1,5 +1,7 @@
 package com.victorku.musiccloud.web.model;
 
+import com.victorku.musiccloud.model.Rating;
+
 public class RatingDTO {
 
     private Long id;
@@ -8,9 +10,14 @@ public class RatingDTO {
     public RatingDTO() {
     }
 
-    public RatingDTO(Long id, Integer text) {
-        this.id = id;
-        this.ratingValue = text;
+    public RatingDTO(Rating dbModel) {
+
+        if (dbModel == null) {
+            return;
+        }
+
+        this.id = dbModel.getId();
+        this.ratingValue = dbModel.getRatingValue();
     }
 
     public Long getId() {

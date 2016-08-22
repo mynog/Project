@@ -127,9 +127,7 @@ public class AccountController {
         return new ResponseEntity<>(convert(null), HttpStatus.OK);
     }
 
-    private AccountDTO convert(Account dbModel) {
-        return (dbModel == null) ? null : new AccountDTO(dbModel);
-    }
+    private AccountDTO convert(Account dbModel) { return (dbModel == null) ? null : new AccountDTO(dbModel); }
 
     private ResponseEntity<ErrorResponseBody> getErrorResponseBody(ApplicationErrorTypes errorType) {
         return new ResponseEntity<>(new ErrorResponseBody(errorType), HttpStatus.NOT_FOUND);

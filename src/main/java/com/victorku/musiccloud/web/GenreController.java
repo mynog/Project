@@ -49,10 +49,7 @@ public class GenreController {
         return new ResponseEntity<>(convert(genre), HttpStatus.OK);
     }
 
-    private GenreDTO convert(Genre dbModel){
-        GenreDTO jsonModel = new GenreDTO(dbModel.getId(),dbModel.getName());
-        return jsonModel;
-    }
+    private GenreDTO convert(Genre dbModel){ return (dbModel == null) ? null : new GenreDTO(dbModel); }
 
     private ResponseEntity<ErrorResponseBody> getErrorResponseBody(ApplicationErrorTypes errorType) {
         return new ResponseEntity<>(new ErrorResponseBody(errorType), HttpStatus.NOT_FOUND);

@@ -45,24 +45,21 @@ public class ChatServiceImpl implements ChatService {
     }
 
     @Override
-    public Chat createChat(String name, Long accountInfoIdFirst,Long accountInfoIdSecond) throws AccountIsNotExistsException {
+    public Chat createChat(String name, Set<Long> accountIds) throws AccountIsNotExistsException {
+        Set<AccountInfo> accountInfos = new HashSet<>(accountIds.size());
+        for (Long accountId : accountIds) {
+            AccountInfo account = accountInfoService.getAccountInfoById(accountId);
+            if (account == null) {
+                throw new AccountIsNotExistsException();
+            }
+            accountInfos.add(account);
+        }
+
         Chat chat = new Chat(name);
-        AccountInfo first = accountInfoService.getAccountInfoById(accountInfoIdFirst);
-        if (first == null) {
-            throw new AccountIsNotExistsException();
-        }
-        AccountInfo second = accountInfoService.getAccountInfoById(accountInfoIdSecond);
-        if (second == null) {
-            throw new AccountIsNotExistsException();
-        }
-        Set<Chat> chats = first.getChats();
-        chats.add(chat);
-        first.setChats(chats);
-        second.setChats(chats);
-        accountInfoRepository.save(first);
-        accountInfoRepository.save(second);
-        return chat;
+        chat.setAccountInfos(accountInfos);
+        return chatRepository.save(chat);
     }
+
 
     @Override
     public Chat addMessageIntoChat(Chat chat, String text) {

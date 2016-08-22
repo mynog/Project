@@ -1,6 +1,8 @@
 package com.victorku.musiccloud.web.model;
 
 
+import com.victorku.musiccloud.model.Comments;
+
 public class CommentsDTO {
 
     private Long id;
@@ -10,10 +12,16 @@ public class CommentsDTO {
     public CommentsDTO() {
     }
 
-    public CommentsDTO(Long id, String text, Integer orderComments) {
-        this.id = id;
-        this.text = text;
-        this.orderComments = orderComments;
+    public CommentsDTO(Comments dbModel) {
+
+        if (dbModel == null) {
+            return;
+        }
+
+        this.id = dbModel.getId();
+        this.text = dbModel.getText();
+        this.orderComments = dbModel.getOrderComments();
+
     }
 
     public Long getId() {

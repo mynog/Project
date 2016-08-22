@@ -1,5 +1,7 @@
 package com.victorku.musiccloud.web.model;
 
+import com.victorku.musiccloud.model.Chat;
+
 public class ChatDTO {
 
     private Long id;
@@ -9,10 +11,16 @@ public class ChatDTO {
     public ChatDTO() {
     }
 
-    public ChatDTO(Long id, String name) {
-        this.id = id;
-        this.name = name;
+    public ChatDTO(Chat dbModel) {
+
+        if (dbModel == null) {
+            return;
+        }
+
+        this.id = dbModel.getId();
+        this.name = dbModel.getName();
     }
+
 
     public Long getId() {
         return id;
