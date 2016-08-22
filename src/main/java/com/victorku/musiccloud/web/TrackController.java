@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/track")
@@ -40,6 +41,9 @@ public class TrackController {
     public ResponseEntity<?> uploadFile(@RequestParam("uploadedFile") MultipartFile uploadedFileRef) throws TracklistIsNotExistsException, TrackIsNotExistsException, GenreHasExistsException, GenreIsNotExistsException, FileIOException {
         // Получаем имя загруженного файла
         String fileName = uploadedFileRef.getOriginalFilename();
+        // Генерируем уникальное имя файла
+        UUID uuid = UUID.randomUUID();
+        fileName = uuid.toString();
         // Путь, где загруженный файл будет сохранен.
         String path = "/home/kyluginvv/Project/Download/" + fileName;
         // Буффер для хранения данных из uploadedFileRef
