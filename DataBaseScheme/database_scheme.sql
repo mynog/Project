@@ -232,9 +232,9 @@ CREATE TABLE IF NOT EXISTS tracklist_has_track (
     ON UPDATE NO ACTION)
 ;
 
-CREATE INDEX fk_tracklist_has_track_track1_idx ON mydb.tracklist_has_track (track_id ASC);
+CREATE INDEX fk_tracklist_has_track_track1_idx ON tracklist_has_track (track_id ASC);
 
-CREATE INDEX fk_tracklist_has_track_tracklist1_idx ON mydb.tracklist_has_track (tracklist_id ASC);
+CREATE INDEX fk_tracklist_has_track_tracklist1_idx ON tracklist_has_track (tracklist_id ASC);
 
 -- -----------------------------------------------------
 -- Table `chat`
@@ -250,22 +250,33 @@ CREATE TABLE IF NOT EXISTS chat (
 -- -----------------------------------------------------
 -- Table `message`
 -- -----------------------------------------------------
+
 DROP TABLE IF EXISTS message ;
 
 CREATE TABLE IF NOT EXISTS message (
-  id INT NOT NULL DEFAULT nextval('hibernate_sequence'),
+ id INT NOT NULL DEFAULT nextval('hibernate_sequence'),
   create_message TIMESTAMP NULL DEFAULT current_timestamp,
   text VARCHAR(1024) NOT NULL,
-  chat_id INT NULL,
+  chat_id INT NOT NULL,
+  account_info_id INT NOT NULL,
   PRIMARY KEY (id),
   CONSTRAINT fk_message_chat1
     FOREIGN KEY (chat_id)
     REFERENCES chat (id)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT fk_message_account_info1
+    FOREIGN KEY (account_info_id)
+    REFERENCES account_info (id)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ;
 
 CREATE INDEX fk_message_chat1_idx ON message (chat_id ASC);
+
+CREATE INDEX fk_message_account_info1_idx ON message (account_info_id ASC);
+
+
 
 -- -----------------------------------------------------
 -- Table `rating`

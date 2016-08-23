@@ -43,7 +43,7 @@ public class TrackController {
         String fileName = uploadedFileRef.getOriginalFilename();
         // Генерируем уникальное имя файла
         UUID uuid = UUID.randomUUID();
-        fileName = uuid.toString();
+        fileName = uuid.toString() + ".mp3";
         // Путь, где загруженный файл будет сохранен.
         String path = "/home/kyluginvv/Project/Download/" + fileName;
         // Буффер для хранения данных из uploadedFileRef
