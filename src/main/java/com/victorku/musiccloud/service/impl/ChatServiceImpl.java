@@ -62,14 +62,18 @@ public class ChatServiceImpl implements ChatService {
 
 
     @Override
-    public Chat addMessageIntoChat(Chat chat, String text) {
-        Message message = messageService.createMessage(text);
+    public Chat addMessageInChat(Chat chat, String text, Long accountInfoId) throws AccountIsNotExistsException {
+        AccountInfo accountInfo = accountInfoService.getAccountInfoById(accountInfoId);
+        if (accountInfo == null) {
+            throw new AccountIsNotExistsException();
+        }
+        Message message = messageService.createMessage(text,accountInfo);
         message.setChat(chat);
+        message.setAccountInfo(accountInfo);
         messageRepository.save(message);
         Set<Message> messages = chat.getMessages();
         messages.add(message);
         chat.setMessages(messages);
         return chatRepository.save(chat);
     }
-
 }

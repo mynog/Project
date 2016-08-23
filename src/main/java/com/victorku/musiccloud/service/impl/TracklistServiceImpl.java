@@ -44,7 +44,7 @@ public class TracklistServiceImpl implements TracklistService {
     }
 
     @Override
-    public Tracklist addTrackIntoTracklist(Tracklist tracklist, Track track) {
+    public Tracklist addTrackInTracklist(Tracklist tracklist, Track track) {
         TracklistHasTrack tracklistHasTrack = new TracklistHasTrack(tracklist,track);
         tracklistHasTrackRepository.save(tracklistHasTrack);
         return tracklist;

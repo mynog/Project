@@ -7,6 +7,7 @@ public class MessageDTO {
     private Long id;
     private String text;
     private DateDTO createMessage;
+    private AccountInfoDTO accountInfo;
 
     public MessageDTO() {
     }
@@ -20,6 +21,7 @@ public class MessageDTO {
         this.id = dbModel.getId();
         this.text = dbModel.getText();
         this.createMessage = new DateDTO(dbModel.getCreateMessage());
+        this.accountInfo = new AccountInfoDTO(dbModel.getAccountInfo());
 
     }
 
@@ -48,4 +50,7 @@ public class MessageDTO {
         this.createMessage = createMessage;
     }
 
+    public AccountInfoDTO getAccountInfo() { return accountInfo; }
+
+    public void setAccountInfo(AccountInfoDTO accountInfo) { this.accountInfo = accountInfo; }
 }

@@ -66,9 +66,14 @@ public class ChatController {
     }
 
     @RequestMapping(value = "/{id}/message", method = RequestMethod.PUT)
-    public ResponseEntity<?> addMessageIntoChat(@PathVariable("id") Long chatId,@RequestParam("text") String text) {
+    public ResponseEntity<?> addMessageInChat(@PathVariable("id") Long chatId,@RequestBody MessageDTO message,
+                                              @RequestParam("accountInfoId") Long accountInfoId) {
         Chat chat = chatService.getChatById(chatId);
-        chat = chatService.addMessageIntoChat(chat,text);
+        try {
+            chat = chatService.addMessageInChat(chat,message.getText(),accountInfoId);
+        } catch (AccountIsNotExistsException accountIsNotExists) {
+            return getErrorResponseBody(ApplicationErrorTypes.ACCOUNT_ID_NOT_FOUND);
+        }
         return new ResponseEntity<>(convert(chat), HttpStatus.OK);
     }
 

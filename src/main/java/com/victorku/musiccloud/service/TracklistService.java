@@ -16,5 +16,5 @@ public interface TracklistService {
 
     Tracklist createTracklist(String name, AccountInfo accountInfo) throws TracklistHasExistsException;
 
-    Tracklist addTrackIntoTracklist(Tracklist tracklist, Track track);
+    Tracklist addTrackInTracklist(Tracklist tracklist, Track track);
 }

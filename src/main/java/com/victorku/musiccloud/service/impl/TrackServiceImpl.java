@@ -221,20 +221,20 @@ public class TrackServiceImpl implements TrackService {
         if (genre != null) {
             try {
                 tracklist = tracklistService.createTracklist(genre,null);
-                tracklist = tracklistService.addTrackIntoTracklist(tracklist,track);
+                tracklist = tracklistService.addTrackInTracklist(tracklist,track);
             } catch (TracklistHasExistsException tracklistHasExists) {
                 tracklist = tracklistService.getTracklistByName(genre);
-                tracklist = tracklistService.addTrackIntoTracklist(tracklist,track);
+                tracklist = tracklistService.addTrackInTracklist(tracklist,track);
             }
         }
         // По альбому
         if (album != null) {
             try {
                 tracklist = tracklistService.createTracklist(album,null);
-                tracklist = tracklistService.addTrackIntoTracklist(tracklist, track);
+                tracklist = tracklistService.addTrackInTracklist(tracklist, track);
             } catch (TracklistHasExistsException tracklistHasExists) {
                 tracklist = tracklistService.getTracklistByName(album);
-                tracklist = tracklistService.addTrackIntoTracklist(tracklist,track);
+                tracklist = tracklistService.addTrackInTracklist(tracklist,track);
             }
         }
         return track;

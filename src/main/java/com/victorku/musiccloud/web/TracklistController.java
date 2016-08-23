@@ -56,7 +56,7 @@ public class TracklistController {
     }
 
     @RequestMapping(value = "{id}/track", method = RequestMethod.PUT)
-    public ResponseEntity<?> addTrackIntoTracklist(@PathVariable("id") Long tracklistId, @RequestParam("trackId") Long trackId) {
+    public ResponseEntity<?> addTrackInTracklist(@PathVariable("id") Long tracklistId, @RequestParam("trackId") Long trackId) {
 
         Tracklist tracklist = tracklistService.getTracklistById(tracklistId);
         if (tracklist == null) {
@@ -66,7 +66,7 @@ public class TracklistController {
         if (track == null) {
             return getErrorResponseBody(ApplicationErrorTypes.TRACK_ID_NOT_FOUND);
         }
-        tracklist = tracklistService.addTrackIntoTracklist(tracklist,track);
+        tracklist = tracklistService.addTrackInTracklist(tracklist,track);
         return new ResponseEntity<>(convert(tracklist),HttpStatus.OK);
     }
 

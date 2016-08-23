@@ -66,6 +66,9 @@ public class AccountInfo {
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "accountInfo")
     private Set<MoreTrackInfo> moreTrackInfos;
 
+    @OneToMany(fetch = FetchType.EAGER,mappedBy = "accountInfo")
+    private Set<Message> messages;
+
     public AccountInfo() {
     }
 
@@ -179,6 +182,10 @@ public class AccountInfo {
     public void setMoreTrackInfos(Set<MoreTrackInfo> moreTrackInfos) {
         this.moreTrackInfos = moreTrackInfos;
     }
+
+    public Set<Message> getMessages() { return messages; }
+
+    public void setMessages(Set<Message> messages) { this.messages = messages; }
 
     @Override
     public int hashCode() {

@@ -24,15 +24,20 @@ public class Message {
     @DateTimeFormat(pattern = "yyyy/dd/mm")
     private LocalDate createMessage;
 
-    @ManyToOne
     @JoinColumn(name = "chat_id")
+    @ManyToOne
     private Chat chat;
+
+    @JoinColumn(name = "account_info_id")
+    @ManyToOne
+    private AccountInfo accountInfo;
 
     public Message() {this.createMessage = new LocalDate();}
 
-    public Message(String text) {
+    public Message(String text, AccountInfo accountInfo) {
         this();
         this.text = text;
+        this.accountInfo = accountInfo;
     }
 
     public Long getId() {
@@ -63,4 +68,7 @@ public class Message {
 
     public void setChat(Chat chat) { this.chat = chat; }
 
+    public AccountInfo getAccountInfo() { return accountInfo; }
+
+    public void setAccountInfo(AccountInfo accountInfo) { this.accountInfo = accountInfo; }
 }
