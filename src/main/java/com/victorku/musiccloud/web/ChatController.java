@@ -3,15 +3,11 @@ package com.victorku.musiccloud.web;
 import com.victorku.musiccloud.exceptions.AccountIsNotExistsException;
 import com.victorku.musiccloud.exceptions.ApplicationErrorTypes;
 import com.victorku.musiccloud.exceptions.ChatIsNotExistsException;
-import com.victorku.musiccloud.exceptions.MessageIsNotExistsException;
-import com.victorku.musiccloud.model.AccountInfo;
 import com.victorku.musiccloud.model.Chat;
 import com.victorku.musiccloud.model.Message;
-import com.victorku.musiccloud.service.AccountInfoService;
 import com.victorku.musiccloud.service.ChatService;
 import com.victorku.musiccloud.service.MessageService;
 import com.victorku.musiccloud.web.model.ChatDTO;
-import com.victorku.musiccloud.web.model.DateDTO;
 import com.victorku.musiccloud.web.model.ErrorResponseBody;
 import com.victorku.musiccloud.web.model.MessageDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +46,7 @@ public class ChatController {
         return new ResponseEntity<>(null,HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    @RequestMapping(value = "/create", method = RequestMethod.PUT) // todo: почему-то не находила этот метод без create. надо что-то придумать
     public ResponseEntity<?> createChat(@RequestParam("name") String name, @RequestParam("accountInfoIdFirst") Long accountInfoIdFirst,
                                         @RequestParam("accountInfoIdSecond") Long accountInfoIdSecond) {
         Chat chat = null;

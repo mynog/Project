@@ -1,7 +1,6 @@
 package com.victorku.musiccloud.model;
 
 import org.hibernate.annotations.Type;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -45,10 +44,7 @@ public class AccountInfo {
             inverseJoinColumns = @JoinColumn(name = "account_info_id"))
     private Set<Track> tracks;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "account_info_has_chat",
-            joinColumns = @JoinColumn(name = "account_info_id"),
-            inverseJoinColumns = @JoinColumn(name = "chat_id"))
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "accountInfos")
     private Set<Chat> chats;
 
     @OneToMany(fetch = FetchType.EAGER,mappedBy = "accountInfo")

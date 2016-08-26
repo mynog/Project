@@ -1,6 +1,7 @@
 package com.victorku.musiccloud.service.impl;
 
 import com.victorku.musiccloud.model.AccountInfo;
+import com.victorku.musiccloud.model.Chat;
 import com.victorku.musiccloud.model.Message;
 import com.victorku.musiccloud.repository.MessageRepository;
 import com.victorku.musiccloud.service.MessageService;
@@ -19,8 +20,8 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public Message createMessage(String text, AccountInfo accountInfo) {
-        Message message = new Message(text,accountInfo);
+    public Message createMessage(String text, AccountInfo accountInfo, Chat chat) {
+        Message message = new Message(text,accountInfo, chat);
         return messageRepository.save(message);
     }
 

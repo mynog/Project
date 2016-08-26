@@ -67,10 +67,10 @@ public class ChatServiceImpl implements ChatService {
         if (accountInfo == null) {
             throw new AccountIsNotExistsException();
         }
-        Message message = messageService.createMessage(text,accountInfo);
-        message.setChat(chat);
-        message.setAccountInfo(accountInfo);
-        messageRepository.save(message);
+        Message message = messageService.createMessage(text,accountInfo,chat);
+//        message.setChat(chat);
+//        message.setAccountInfo(accountInfo);
+//        messageRepository.save(message);
         Set<Message> messages = chat.getMessages();
         messages.add(message);
         chat.setMessages(messages);

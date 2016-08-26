@@ -34,10 +34,11 @@ public class Message {
 
     public Message() {this.createMessage = new LocalDate();}
 
-    public Message(String text, AccountInfo accountInfo) {
+    public Message(String text, AccountInfo accountInfo, Chat chat) {
         this();
         this.text = text;
         this.accountInfo = accountInfo;
+        this.chat = chat;
     }
 
     public Long getId() {
